@@ -1,0 +1,6 @@
+export { HeroBadge } from "./HeroBadge";
+export { HeroTitle } from "./HeroTitle";
+export { HeroDescription } from "./HeroDescription";
+export { HeroButtons } from "./HeroButtons";
+export { HeroSocialProof } from "./HeroSocialProof";
+export { HeroBackground } from "./HeroBackground";
