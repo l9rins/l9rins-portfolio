@@ -20,11 +20,11 @@ import {
   Briefcase,
   Music,
   Play,
-  Sparkles
+  Sparkles,
+  ArrowRight
 } from "lucide-react";
 import { SpotlightCard } from "@/components/SpotlightCard";
 import { TechMarquee } from "@/components/TechMarquee";
-import { MacDock } from "@/components/MacDock";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { Timeline } from "@/components/Timeline";
 import { Footer } from "@/components/Footer";
@@ -35,11 +35,20 @@ import { TechHighlights } from "@/components/TechHighlights";
 import { FAQ } from "@/components/FAQ";
 import { CaseStudies } from "@/components/CaseStudies";
 import { GlowDivider } from "@/components/ui/GlowDivider";
+import { AnimatedGridBackground } from "@/components/ui/AnimatedGridBackground";
+import { StatsBar } from "@/components/ui/StatsCounter";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// V21-style credibility stats
+const heroStats = [
+  { value: 50, suffix: "+", label: "Projects Shipped" },
+  { value: 15, suffix: "M", label: "Users Impacted" },
+  { value: 99, suffix: "%", label: "Client Satisfaction" },
+  { value: 5, suffix: "+", label: "Years Experience" },
+];
 
 export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -58,151 +67,229 @@ export default function Home() {
       {/* Navbar */}
       <Navbar />
 
-      {/* Background Glow Orbs - Subtle (reduced 50% per UX audit) */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Main orange glow at top - reduced opacity */}
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[--accent]/10 rounded-full blur-[150px]" />
-        <div ref={orb1Ref} className="absolute top-1/3 left-1/5 w-[250px] h-[250px] bg-[--accent]/5 rounded-full blur-[100px] animate-pulse-slow" />
-        <div ref={orb2Ref} className="absolute bottom-1/3 right-1/5 w-[200px] h-[200px] bg-[--accent-secondary]/4 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+      {/* Global Animated Grid Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <AnimatedGridBackground variant="default" className="absolute inset-0" />
       </div>
 
-      {/* Bento Grid Hero Section */}
-      <section id="hero" className="relative z-10 min-h-screen pt-4 pb-20 max-w-7xl mx-auto px-4 flex items-center">
-        {/* The 12-Column Grid Wrapper */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[minmax(180px,auto)]">
+      {/* Background Subtle Glows - Monochrome */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Main subtle glow at top */}
+        <motion.div
+          className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/[0.02] rounded-full blur-[150px]"
+          animate={{
+            opacity: [0.02, 0.04, 0.02],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
 
-          {/* 1. BIO CARD: The "Anchor" */}
-          <SpotlightCard className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[400px]">
+      {/* ===== HERO SECTION - V21 STUDIO INSPIRED ===== */}
+      <section id="hero" className="relative z-10 min-h-screen pt-24 pb-12 max-w-7xl mx-auto px-4 flex flex-col">
+        {/* Main Bento Grid */}
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[minmax(180px,auto)]">
+
+          {/* 1. BIO CARD: The "Anchor" - Enhanced */}
+          <SpotlightCard className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[420px]">
             <div className="p-2">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="mb-4"
+                className="mb-6"
               >
-                <Badge className="bg-[--accent]/10 text-[--accent] border-[--accent]/30 px-3 py-1 text-xs font-mono tracking-wide uppercase">
+                <Badge className="bg-[--accent]/10 text-[--accent] border-[--accent]/30 px-4 py-1.5 text-xs font-mono tracking-wide uppercase animate-border-glow">
                   <Sparkles className="w-3 h-3 mr-2" />
                   Open to work
                 </Badge>
               </motion.div>
 
-              <h1 className="h1 mb-6">
-                Engineering the future of{' '}
-                <span className='gradient-text'>web experiences</span>
-              </h1>
-              <p className="body text-zinc-400 max-w-2xl mt-4 mb-8 text-lg leading-relaxed">
+              {/* V21-Style Large Typography */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 leading-[1.05]"
+              >
+                <span className="text-zinc-400">Engineering the</span>
+                <br />
+                <span className="text-white">Future of </span>
+                <span className='text-gradient-animated'>Web Experiences</span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="body text-zinc-400 max-w-xl mt-4 mb-8 text-base md:text-lg leading-relaxed"
+              >
                 Design Engineer & Developer crafting{' '}
                 <span className="text-white font-semibold">high-performance</span>{' '}
-                digital products that users love
-              </p>
+                digital products that users{' '}
+                <span className="text-[--accent] font-semibold">love</span>.
+              </motion.p>
             </div>
-            {/* Buttons pinned to bottom */}
-            <div className="flex gap-4 mt-auto flex-wrap">
-              <Button className="bg-gradient-to-r from-[--accent] to-orange-400 text-black hover:shadow-[0_0_40px_rgba(255,107,0,0.5)] font-bold text-base px-8 py-3 rounded-xl transition-all duration-300">
+
+            {/* Buttons with monochrome styling */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex gap-4 mt-auto flex-wrap"
+            >
+              <motion.button
+                whileHover={{ scale: 1.03, boxShadow: "0 0 50px rgba(255, 255, 255, 0.3)" }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 bg-white text-black font-600 text-base px-8 py-4 rounded-2xl shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all duration-300"
+              >
                 View Work
-              </Button>
-              <Button variant="outline" className="border-white/20 text-white hover:text-white hover:border-white/40 hover:bg-white/5 font-bold text-base px-8 py-3 rounded-xl transition-all duration-300">
-                Contact
-              </Button>
-            </div>
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.03, borderColor: "rgba(255,255,255,0.6)" }}
+                whileTap={{ scale: 0.97 }}
+                className="border-2 border-white/30 text-white hover:bg-white/10 font-600 text-base px-8 py-4 rounded-2xl transition-all duration-300"
+              >
+                Contact Me
+              </motion.button>
+            </motion.div>
           </SpotlightCard>
 
-          {/* 2. PROFILE CARD */}
-          <SpotlightCard className="md:col-span-4 h-full min-h-[200px] flex flex-col items-center justify-center">
-            <div className="relative flex flex-col items-center">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[--accent]/30 to-orange-600/30 border-2 border-[--accent] flex items-center justify-center mb-2">
-                <User className="w-10 h-10 text-[--accent]" />
+          {/* 2. PROFILE CARD - Enhanced with glow */}
+          <SpotlightCard className="md:col-span-4 h-full min-h-[200px] flex flex-col items-center justify-center group">
+            <motion.div
+              className="relative flex flex-col items-center"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="relative">
+                <motion.div
+                  className="w-28 h-28 rounded-full bg-gradient-to-br from-white/20 to-white/10 border-2 border-white/30 flex items-center justify-center mb-2 shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+                  animate={{
+                    boxShadow: [
+                      "0 0 30px rgba(255, 255, 255, 0.08)",
+                      "0 0 50px rgba(255, 255, 255, 0.12)",
+                      "0 0 30px rgba(255, 255, 255, 0.08)",
+                    ],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  <User className="w-12 h-12 text-white" />
+                </motion.div>
+                <motion.div
+                  className="absolute bottom-2 right-0 w-7 h-7 bg-green-500 rounded-full border-4 border-black"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
               </div>
-              <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-black" />
-              <span className="body text-xs text-zinc-500 mt-2 uppercase tracking-widest">Profile</span>
-            </div>
+              <span className="body text-xs text-zinc-500 mt-3 uppercase tracking-[0.2em] font-medium">Profile</span>
+            </motion.div>
           </SpotlightCard>
 
           {/* 3. MAP CARD */}
           <SpotlightCard className="md:col-span-2 h-full min-h-[180px] flex flex-col items-center justify-center">
-            <MapPin className="w-6 h-6 text-[--accent] mb-2" />
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              className="mb-3"
+            >
+              <MapPin className="w-7 h-7 text-white" />
+            </motion.div>
             <div className="text-center">
-              <p className="font-mono text-xs text-zinc-500 uppercase tracking-widest">Based In</p>
-              <p className="body font-semibold text-white">SF, CA</p>
+              <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-1">Based In</p>
+              <p className="body font-semibold text-white text-lg">SF, CA</p>
             </div>
           </SpotlightCard>
 
           {/* 4. MUSIC CARD */}
           <SpotlightCard className="md:col-span-2 h-full min-h-[180px] flex flex-col items-center justify-center">
-            <div className="flex gap-1 items-end mb-2 h-4">
-              {[1, 2, 3].map(i => (
+            <div className="flex gap-1 items-end mb-3 h-5">
+              {[1, 2, 3, 4].map(i => (
                 <motion.div
                   key={i}
-                  className="w-1 bg-green-500"
-                  animate={{ height: [8, 16, 8] }}
+                  className="w-1.5 bg-green-500 rounded-full"
+                  animate={{ height: [8, 20, 8] }}
                   transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.1 }}
                 />
               ))}
             </div>
             <div className="text-center">
-              <p className="font-mono text-xs text-zinc-500 uppercase tracking-widest">Listening</p>
-              <p className="body font-semibold text-white">Lo-Fi</p>
+              <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-1">Listening</p>
+              <p className="body font-semibold text-white text-lg">Lo-Fi</p>
             </div>
           </SpotlightCard>
 
           {/* 5. TECH STACK */}
-          <SpotlightCard id="stack" className="md:col-span-12 p-6">
+          <SpotlightCard id="stack" className="md:col-span-12 p-4 min-h-[120px]">
             <div className="flex items-center gap-4 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
               <TechMarquee />
-              <span className="font-mono text-xs text-zinc-500 ml-4 uppercase tracking-widest">Tech Stack</span>
+              <span className="font-mono text-xs text-zinc-500 ml-4 uppercase tracking-[0.2em]">Tech Stack</span>
             </div>
           </SpotlightCard>
 
         </div>
+
+        {/* V21-Style Credibility Stats Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="mt-12 pt-8 border-t border-white/5"
+        >
+          <StatsBar
+            stats={heroStats}
+            className="bg-zinc-900/30 backdrop-blur-sm rounded-3xl border border-white/5"
+          />
+        </motion.div>
       </section>
 
-      {/* Orange Glow Divider */}
-      <GlowDivider />
+      {/* Dramatic Glow Divider with particles */}
+      <GlowDivider variant="dramatic" showParticles />
 
-      {/* What I Build Section - NO duplicate title wrapper */}
-      <section className="bg-black py-24">
+      {/* What I Build Section */}
+      <section id="services" className="relative z-10 bg-black py-1">
         <div className="max-w-7xl mx-auto px-4">
           <WhatIBuild />
         </div>
       </section>
 
-      {/* Orange Glow Divider */}
-      <GlowDivider />
+      {/* Standard Glow Divider */}
+      <GlowDivider variant="standard" />
 
-      {/* Projects Section - NO duplicate title wrapper */}
-      <section className="bg-black py-24">
+      {/* Projects Section */}
+      <section className="relative z-10 bg-black py-14">
         <div className="max-w-7xl mx-auto px-4">
           <ProjectsSection />
         </div>
       </section>
 
-      {/* Orange Glow Divider */}
-      <GlowDivider />
+      {/* Subtle Blue Divider for variety */}
+      <GlowDivider variant="subtle" color="blue" />
 
-      {/* Timeline Section - NO duplicate title wrapper */}
-      <section className="bg-black py-24">
+      {/* Timeline Section */}
+      <section id="about" className="relative z-10 bg-black py-14">
         <div className="max-w-7xl mx-auto px-4">
           <Timeline />
         </div>
       </section>
 
-      {/* Orange Glow Divider */}
-      <GlowDivider />
+      {/* Standard Glow Divider */}
+      <GlowDivider variant="standard" />
 
-      {/* Tech Highlights Section - Component Highlights like aniq-ui */}
+      {/* Tech Highlights Section */}
       <TechHighlights />
 
-      {/* Orange Glow Divider */}
-      <GlowDivider />
+      {/* Purple accent divider */}
+      <GlowDivider variant="subtle" color="purple" />
 
-      {/* Case Studies Section - Success Stories like aniq-ui */}
+      {/* Case Studies Section */}
       <CaseStudies />
 
-      {/* Footer Section (includes integrated FAQ per UX audit - removed duplicate) */}
+      {/* Footer Section (includes integrated FAQ) */}
       <Footer />
-
-      {/* Mac Dock Navigation */}
-      <MacDock />
 
       {/* Command Menu */}
       <CommandMenu />

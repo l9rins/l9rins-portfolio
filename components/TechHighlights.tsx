@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Terminal, Folder, FileCode, ChevronRight, Server, Globe, Zap } from "lucide-react";
 import { useState, useEffect, useRef, MouseEvent } from "react";
+import { BlurRevealText } from "@/components/ui/BlurRevealText";
 
 // ============================================
 // SPOTLIGHT CARD - Premium hover effect
@@ -13,7 +14,7 @@ interface SpotlightBentoCardProps {
     glowColor?: string;
 }
 
-function SpotlightBentoCard({ children, className = "", glowColor = "rgba(255, 107, 0, 0.15)" }: SpotlightBentoCardProps) {
+function SpotlightBentoCard({ children, className = "", glowColor = "rgba(255, 255, 255, 0.08)" }: SpotlightBentoCardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -44,7 +45,7 @@ function SpotlightBentoCard({ children, className = "", glowColor = "rgba(255, 1
             {/* Border glow on hover */}
             <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{
-                    boxShadow: `inset 0 0 0 1px rgba(255, 107, 0, 0.2), 0 0 40px rgba(255, 107, 0, 0.1)`,
+                    boxShadow: `inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 40px rgba(255, 255, 255, 0.05)`,
                 }}
             />
             <div className="relative z-10">{children}</div>
@@ -58,7 +59,7 @@ function SpotlightBentoCard({ children, className = "", glowColor = "rgba(255, 1
 function ScoreCircle({ score, label, delay = 0 }: { score: number; label: string; delay?: number }) {
     const circumference = 2 * Math.PI * 36;
     const strokeDashoffset = circumference - (score / 100) * circumference;
-    const color = score >= 90 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
+    const color = score >= 90 ? '#ffffff' : score >= 50 ? '#cccccc' : '#999999';
 
     return (
         <motion.div
@@ -108,6 +109,7 @@ function ScoreCircle({ score, label, delay = 0 }: { score: number; label: string
 // ============================================
 function TerminalCard() {
     const [currentLine, setCurrentLine] = useState(0);
+    const [isComplete, setIsComplete] = useState(false);
     const lines = [
         { text: "> git checkout main && npm install", type: "command" },
         { text: "Checking dependencies...", type: "info" },
@@ -117,14 +119,31 @@ function TerminalCard() {
     ];
 
     useEffect(() => {
+        if (isComplete) return;
+
         const interval = setInterval(() => {
-            setCurrentLine((prev) => (prev < lines.length - 1 ? prev + 1 : 0));
+            setCurrentLine((prev) => {
+                if (prev < lines.length - 1) {
+                    return prev + 1;
+                } else {
+                    setIsComplete(true);
+                    return prev;
+                }
+            });
         }, 1200);
         return () => clearInterval(interval);
-    }, []);
+    }, [isComplete, lines.length]);
+
+    const handleRestart = () => {
+        setCurrentLine(0);
+        setIsComplete(false);
+    };
 
     return (
-        <div className="bg-black/60 rounded-xl border border-white/10 overflow-hidden backdrop-blur-sm">
+        <div
+            className="bg-black/60 rounded-xl border border-white/10 overflow-hidden backdrop-blur-sm cursor-pointer transition-colors hover:border-white/20"
+            onMouseEnter={handleRestart}
+        >
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-zinc-900/80">
                 <div className="w-3 h-3 rounded-full bg-red-500/80" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -244,20 +263,35 @@ function PerformanceMetrics() {
 // ============================================
 export function TechHighlights() {
     return (
-        <section className="py-24 bg-black">
-            <div className="max-w-7xl mx-auto px-4">
-                {/* Section Header - Renamed per Round 2 audit */}
+        <section className="py-14 bg-black relative overflow-hidden">
+            {/* Background subtle gradient */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[--accent]/[0.03] rounded-full blur-[150px]" />
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+                {/* Section Header - V21 Style */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-white/60 mb-4 block font-medium">What I Deliver</span>
-                    <h2 className="h2 mb-4">
-                        Technical <span className="text-white">Expertise</span>
-                    </h2>
-                    <p className="text-zinc-400 max-w-xl mx-auto text-sm leading-relaxed">
+                    <motion.span
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="inline-block text-[10px] uppercase tracking-[0.4em] text-white/60 mb-4 font-semibold"
+                    >
+                        ✦ Proof of Work
+                    </motion.span>
+                    <BlurRevealText delay={0.1}>
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tighter mb-4">
+                            <span className="text-zinc-500">Technical</span>{" "}
+                            <span className="text-white">Expertise</span>
+                        </h2>
+                    </BlurRevealText>
+                    <p className="text-zinc-500 max-w-xl mx-auto text-sm leading-relaxed">
                         Real metrics from recent projects. Optimized dashboards, automated deployments, and scalable infrastructure.
                     </p>
                 </motion.div>
@@ -267,8 +301,8 @@ export function TechHighlights() {
                     {/* Lighthouse Performance - Large Card */}
                     <SpotlightBentoCard className="lg:col-span-2">
                         <div className="flex items-center gap-2 mb-6">
-                            <div className="w-8 h-8 rounded-lg bg-[--accent]/10 flex items-center justify-center">
-                                <Zap className="w-4 h-4 text-[--accent]" />
+                            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                                <Zap className="w-4 h-4 text-white" />
                             </div>
                             <h3 className="text-base font-semibold text-white">Lighthouse Performance</h3>
                         </div>
@@ -295,8 +329,8 @@ export function TechHighlights() {
                     {/* Deployment Pipeline */}
                     <SpotlightBentoCard>
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 rounded-lg bg-[--accent]/10 flex items-center justify-center">
-                                <Terminal className="w-4 h-4 text-[--accent]" />
+                            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                                <Terminal className="w-4 h-4 text-white" />
                             </div>
                             <h3 className="text-base font-semibold text-white">Deployment Pipeline</h3>
                         </div>
@@ -319,8 +353,8 @@ export function TechHighlights() {
                     {/* Project Structure */}
                     <SpotlightBentoCard>
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 rounded-lg bg-[--accent]/10 flex items-center justify-center">
-                                <Folder className="w-4 h-4 text-[--accent]" />
+                            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                                <Folder className="w-4 h-4 text-white" />
                             </div>
                             <div>
                                 <h3 className="text-base font-semibold text-white">Ideal Project Structure</h3>
@@ -333,8 +367,8 @@ export function TechHighlights() {
                     {/* Resource Scaling */}
                     <SpotlightBentoCard>
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 rounded-lg bg-[--accent]/10 flex items-center justify-center">
-                                <Server className="w-4 h-4 text-[--accent]" />
+                            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                                <Server className="w-4 h-4 text-white" />
                             </div>
                             <h3 className="text-base font-semibold text-white">Resource Scaling</h3>
                         </div>
@@ -344,12 +378,12 @@ export function TechHighlights() {
                                 {[40, 65, 45, 80, 55, 70, 60, 75, 50, 85, 65, 78].map((h, i) => (
                                     <motion.div
                                         key={i}
-                                        className="flex-1 bg-gradient-to-t from-[--accent] to-[--accent-light] rounded-t"
+                                        className="flex-1 bg-gradient-to-t from-white to-white/60 rounded-t"
                                         initial={{ height: 0 }}
                                         whileInView={{ height: `${h}%` }}
                                         transition={{ delay: i * 0.04, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                                         viewport={{ once: true }}
-                                        style={{ filter: 'drop-shadow(0 0 4px rgba(255, 107, 0, 0.3))' }}
+                                        style={{ filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.2))' }}
                                     />
                                 ))}
                             </div>
@@ -365,8 +399,8 @@ export function TechHighlights() {
                     <SpotlightBentoCard>
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-lg bg-[--accent]/10 flex items-center justify-center">
-                                    <Globe className="w-4 h-4 text-[--accent]" />
+                                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                                    <Globe className="w-4 h-4 text-white" />
                                 </div>
                                 <h3 className="text-base font-semibold text-white">Global Deployments</h3>
                             </div>

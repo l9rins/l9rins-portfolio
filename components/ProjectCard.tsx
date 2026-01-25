@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Github, Eye } from "lucide-react";
+import { ArrowUpRight, Github, Eye, TrendingUp, Users, Zap } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
@@ -22,9 +22,10 @@ interface ProjectProps {
     link: string;
     color: string;
   };
+  featured?: boolean;
 }
 
-export function ProjectCard({ project }: ProjectProps) {
+export function ProjectCard({ project, featured = false }: ProjectProps) {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -61,32 +62,188 @@ export function ProjectCard({ project }: ProjectProps) {
     }
   };
 
+  // Featured card layout (larger, with stats)
+  if (featured) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+        className="group relative w-full rounded-3xl overflow-hidden border border-white/10 bg-zinc-900 cursor-pointer transition-all duration-500 hover:border-[--accent]/40"
+        onMouseEnter={handleHoverStart}
+        onMouseLeave={handleHoverEnd}
+        whileHover={{ y: -4 }}
+        style={{
+          boxShadow: isHovered ? `0 0 80px rgba(255, 255, 255, 0.15)` : 'none'
+        }}
+      >
+        <div className="grid md:grid-cols-2 min-h-[400px]">
+          {/* Left: Image/Video */}
+          <div className="relative aspect-video md:aspect-auto overflow-hidden">
+            {/* Gradient accent bar */}
+            <div
+              className="absolute top-0 left-0 right-0 h-1.5 z-40"
+              style={{
+                background: `linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)`,
+              }}
+            />
+
+            {/* Static thumbnail */}
+            <div ref={imageRef} className={`absolute inset-0 z-20 transition-all duration-700 ${isHovered ? "opacity-0 scale-110" : "opacity-100 scale-100"}`}>
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+            </div>
+
+            {/* Video layer */}
+            <div className="absolute inset-0 z-10">
+              <video
+                ref={videoRef}
+                src={project.video}
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Colored overlay on hover */}
+            <motion.div
+              className="absolute inset-0 z-25 pointer-events-none"
+              animate={{ opacity: isHovered ? 0.15 : 0 }}
+              style={{ backgroundColor: project.color }}
+            />
+          </div>
+
+          {/* Right: Content */}
+          <div className="relative p-8 md:p-10 flex flex-col justify-between bg-gradient-to-br from-zinc-900 to-zinc-950">
+            {/* Top section */}
+            <div>
+              {/* Featured badge */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 text-[10px] uppercase tracking-wider font-bold rounded-full border"
+                style={{
+                  borderColor: `${project.color}40`,
+                  backgroundColor: `${project.color}15`,
+                  color: project.color,
+                }}
+              >
+                <Zap className="w-3 h-3" />
+                Featured Project
+              </motion.div>
+
+              <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-4 group-hover:text-[--foreground] transition-colors">
+                {project.title}
+              </h3>
+
+              <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-6">
+                {project.description}
+              </p>
+
+              {/* Tech Pills */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                {project.tech.map((t) => (
+                  <Badge
+                    key={t}
+                    className="bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-400 text-xs px-3 py-1.5 font-medium hover:border-[--accent]/50 hover:text-white transition-colors"
+                  >
+                    {t}
+                  </Badge>
+                ))}
+              </div>
+
+              {/* Mock Stats */}
+              <div className="grid grid-cols-3 gap-4 py-4 border-t border-b border-white/5">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-white">4.2M</div>
+                  <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Users</div>
+                </div>
+                <div className="text-center border-x border-white/5">
+                  <div className="text-xl font-bold text-white">99%</div>
+                  <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Uptime</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-white">0.8s</div>
+                  <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Load Time</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom: CTA */}
+            <div className="flex gap-3 mt-6">
+              <motion.a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-black transition-all"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                  boxShadow: `0 0 30px rgba(255, 255, 255, 0.2)`,
+                }}
+              >
+                View Project
+                <ArrowUpRight className="w-4 h-4" />
+              </motion.a>
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm text-white bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+              >
+                <Github className="w-4 h-4" />
+                Source
+              </motion.a>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // Standard card layout
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="group relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 cursor-pointer transition-all duration-300 hover:border-[--accent]/40"
+      className="group relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 cursor-pointer transition-all duration-500 hover:border-[--accent]/40"
       onMouseEnter={handleHoverStart}
       onMouseLeave={handleHoverEnd}
       whileHover={{ y: -4 }}
       style={{
-        boxShadow: isHovered ? '0 0 60px rgba(255, 107, 0, 0.15)' : 'none'
+        boxShadow: isHovered ? `0 0 60px rgba(255, 255, 255, 0.1)` : 'none'
       }}
     >
-      {/* 1. STATIC THUMBNAIL - Brightened per UX audit */}
+      {/* Gradient accent bar at top */}
+      <div
+        className="absolute top-0 left-0 right-0 h-1 z-40"
+        style={{
+          background: `linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)`,
+        }}
+      />
+
+      {/* Static thumbnail */}
       <div ref={imageRef} className={`absolute inset-0 z-20 transition-all duration-700 ${isHovered ? "opacity-0 scale-110" : "opacity-100 scale-100"}`}>
         <Image
           src={project.image}
           alt={project.title}
           fill
-          className={`object-cover transition-all duration-700 ${isHovered ? "opacity-100 grayscale-0" : "opacity-85 grayscale-[30%]"}`}
+          className={`object-cover transition-all duration-700 ${isHovered ? "opacity-100 grayscale-0" : "opacity-90 grayscale-[20%]"}`}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
       </div>
 
-      {/* 2. VIDEO LAYER */}
+      {/* Video layer */}
       <div className="absolute inset-0 z-10">
         <video
           ref={videoRef}
@@ -94,51 +251,64 @@ export function ProjectCard({ project }: ProjectProps) {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover grayscale-0 opacity-100"
+          className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
       </div>
 
-      {/* Orange glow effect on hover */}
-      <div className={`absolute inset-0 z-15 transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-0"}`}>
-        <div className="absolute inset-0 bg-gradient-to-t from-[--accent]/15 via-transparent to-transparent" />
-      </div>
+      {/* Colored glow overlay */}
+      <motion.div
+        className="absolute inset-0 z-25 pointer-events-none"
+        animate={{ opacity: isHovered ? 0.08 : 0 }}
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+      />
 
-      {/* 3. CONTENT OVERLAY */}
-      <div className="absolute inset-0 z-30 p-6 flex flex-col justify-between">
-
-        {/* Top: Links */}
+      {/* Content overlay */}
+      <div className="absolute inset-0 z-30 p-5 flex flex-col justify-between">
+        {/* Top: Action buttons */}
         <div className="flex justify-end gap-2 translate-y-[-20px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-          <button className="p-2 bg-black/50 backdrop-blur-sm border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300">
-            <Eye className="w-5 h-5" />
-          </button>
-          <Link href={project.link} target="_blank" className="p-2 bg-[--accent]/20 backdrop-blur-sm border border-[--accent]/30 rounded-full hover:bg-[--accent] text-white hover:text-black transition-all duration-300">
-            <ArrowUpRight className="w-5 h-5" />
-          </Link>
-          <Link href="#" className="p-2 bg-black/50 backdrop-blur-sm border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300">
-            <Github className="w-5 h-5" />
-          </Link>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300"
+          >
+            <Eye className="w-4 h-4" />
+          </motion.button>
+          <motion.a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="p-2.5 backdrop-blur-md border rounded-full transition-all duration-300"
+            style={{
+              backgroundColor: `rgba(255, 255, 255, 0.15)`,
+              borderColor: `rgba(255, 255, 255, 0.25)`,
+            }}
+          >
+            <ArrowUpRight className="w-4 h-4 text-white" />
+          </motion.a>
         </div>
 
         {/* Bottom: Title & Info */}
         <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-          <div className="flex items-center gap-3 mb-3">
-            <h3 className="text-2xl font-bold tracking-tight text-white drop-shadow-lg">{project.title}</h3>
-          </div>
+          <h3 className="text-xl font-bold tracking-tight text-white mb-2 drop-shadow-lg">
+            {project.title}
+          </h3>
 
-          {/* Tech Pills */}
-          <div className="flex flex-wrap gap-2 mb-3 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-            {project.tech.map((t, i) => (
+          {/* Tech Pills - show on hover */}
+          <div className="flex flex-wrap gap-1.5 mb-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+            {project.tech.slice(0, 3).map((t) => (
               <Badge
                 key={t}
-                className="bg-black/50 backdrop-blur-sm border border-white/10 text-white text-xs px-3 py-1 font-medium hover:border-[--accent]/50 hover:text-[--accent] transition-colors"
+                className="bg-black/50 backdrop-blur-sm border border-white/10 text-white/80 text-[10px] px-2 py-0.5 font-medium"
               >
                 {t}
               </Badge>
             ))}
           </div>
 
-          <p className="text-zinc-400 text-sm max-w-md line-clamp-2 group-hover:line-clamp-none transition-all duration-500">
+          <p className="text-zinc-400 text-xs line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-150">
             {project.description}
           </p>
         </div>

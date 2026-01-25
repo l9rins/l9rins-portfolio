@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowUpRight, TrendingUp, Users, DollarSign, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { BlurRevealText } from "@/components/ui/BlurRevealText";
 
 interface CaseStudy {
     id: number;
@@ -33,8 +34,8 @@ const caseStudies: CaseStudy[] = [
         testimonial: "The redesign completely transformed how users perceive our platform. Conversion rates tripled within the first month.",
         author: "Alex Chen",
         role: "CEO, HypurrFi",
-        gradient: "from-purple-500 via-violet-500 to-indigo-500",
-        accentColor: "#8b5cf6",
+        gradient: "from-white/20 via-white/15 to-white/10",
+        accentColor: "#ffffff",
     },
     {
         id: 2,
@@ -50,8 +51,8 @@ const caseStudies: CaseStudy[] = [
         testimonial: "They delivered beyond our expectations. The attention to detail and performance optimization is world-class.",
         author: "Sarah Kim",
         role: "Founder, KingdomlyApp",
-        gradient: "from-orange-500 via-amber-500 to-yellow-500",
-        accentColor: "#f59e0b",
+        gradient: "from-white/15 via-white/10 to-white/5",
+        accentColor: "#e5e5e5",
     },
     {
         id: 3,
@@ -67,8 +68,8 @@ const caseStudies: CaseStudy[] = [
         testimonial: "This dashboard revolutionized how our team monitors and deploys ML models. Absolutely transformative.",
         author: "Michael Torres",
         role: "CTO, NeuraStack",
-        gradient: "from-cyan-500 via-teal-500 to-emerald-500",
-        accentColor: "#14b8a6",
+        gradient: "from-gray-500/15 via-gray-500/10 to-white/5",
+        accentColor: "#cccccc",
     },
 ];
 
@@ -195,21 +196,34 @@ export function CaseStudies() {
     };
 
     return (
-        <section className="py-24 bg-black overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4">
-                {/* Section Header */}
+        <section className="py-24 bg-black overflow-hidden relative">
+            {/* Background subtle gradient */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/[0.02] rounded-full blur-[150px]" />
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+                {/* Section Header - V21 Style */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-[--accent] mb-4 block font-medium">
-                        Case Studies
-                    </span>
-                    <h2 className="h2 mb-4">
-                        Our <span className="gradient-text">Success Stories</span>
-                    </h2>
+                    <motion.span
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="inline-block text-[10px] uppercase tracking-[0.4em] text-[--accent] mb-4 font-semibold"
+                    >
+                        ✦ Case Studies
+                    </motion.span>
+                    <BlurRevealText delay={0.1}>
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tighter mb-4">
+                            <span className="text-zinc-500">Our</span>{" "}
+                            <span className="text-gradient-animated">Success Stories</span>
+                        </h2>
+                    </BlurRevealText>
                     <p className="text-zinc-500 max-w-xl mx-auto text-sm leading-relaxed">
                         Real results from real partnerships. Explore how we've helped companies transform their digital presence.
                     </p>
@@ -266,7 +280,7 @@ export function CaseStudies() {
                                     }`}
                                 whileHover={{ scale: 1.2 }}
                                 style={{
-                                    boxShadow: i === activeIndex ? '0 0 12px rgba(255, 107, 0, 0.5)' : 'none',
+                                    boxShadow: i === activeIndex ? '0 0 12px rgba(255, 255, 255, 0.3)' : 'none',
                                 }}
                             />
                         ))}

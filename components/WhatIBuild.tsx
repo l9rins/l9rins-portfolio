@@ -1,38 +1,42 @@
 "use client";
 
 import { motion, useMotionValue } from "framer-motion";
-import { Globe, Palette, Code, Play, Sparkles } from "lucide-react";
+import { Globe, Palette, Code, Play, Sparkles, ArrowUpRight } from "lucide-react";
 import { useRef, MouseEvent } from "react";
 
 const services = [
   {
     icon: Globe,
     title: "Website & Product Design",
-    description: "Optimised for results, with stunning design in mind.",
-    color: "from-blue-500 to-cyan-500",
-    accentColor: "#0ea5e9",
+    description: "Optimised for results, with stunning design in mind. Creating experiences users remember.",
+    color: "from-white/20 to-white/10",
+    accentColor: "#ffffff",
+    stats: { value: "30+", label: "Projects" },
   },
   {
     icon: Palette,
     title: "Branding & Pitch Decks",
-    description: "Visual identity with deep brand strategy and guidelines in place.",
-    color: "from-purple-500 to-pink-500",
-    accentColor: "#a855f7",
+    description: "Visual identity with deep brand strategy and guidelines in place. Make your startup stand out.",
+    color: "from-white/15 to-white/5",
+    accentColor: "#e5e5e5",
+    stats: { value: "50+", label: "Brands" },
   },
   {
     icon: Code,
     title: "Full-stack & Smart Contract Development",
-    description: "Showcases your project's value through animations & experience.",
-    color: "from-orange-500 to-amber-500",
-    accentColor: "#f59e0b",
+    description: "Showcases your project's value through animations & experience. Built for performance.",
+    color: "from-white/10 to-gray-500/10",
+    accentColor: "#cccccc",
+    stats: { value: "99%", label: "Uptime" },
   },
   {
     icon: Play,
     title: "Launch Videos",
-    description: "Make sure no one misses your next launch or update!",
-    color: "from-emerald-500 to-teal-500",
-    accentColor: "#10b981",
+    description: "Make sure no one misses your next launch or update! Cinematic quality that converts.",
+    color: "from-gray-500/10 to-white/5",
+    accentColor: "#b4b4b4",
     isNew: true,
+    stats: { value: "2M+", label: "Views" },
   },
 ];
 
@@ -68,49 +72,54 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       <motion.div
         className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: `radial-gradient(600px circle at ${mouseX}px ${mouseY}px, ${service.accentColor}25, transparent 40%)`,
+          background: `radial-gradient(600px circle at ${mouseX}px ${mouseY}px, ${service.accentColor}30, transparent 40%)`,
         }}
       />
 
       {/* Card container */}
-      <div className="relative h-full bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-7 hover:border-white/20 transition-all duration-500 overflow-hidden min-h-[320px] flex flex-col group-hover:shadow-2xl">
+      <div className="relative h-full bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-8 hover:border-white/20 transition-all duration-500 overflow-hidden min-h-[380px] flex flex-col group-hover:shadow-2xl">
         {/* Atmospheric corner glow - top right */}
         <div
-          className={`absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br ${service.color} opacity-[0.06] rounded-full blur-3xl group-hover:opacity-[0.12] group-hover:scale-125 transition-all duration-700`}
+          className={`absolute -top-24 -right-24 w-56 h-56 bg-gradient-to-br ${service.color} opacity-[0.06] rounded-full blur-3xl group-hover:opacity-[0.15] group-hover:scale-125 transition-all duration-700`}
         />
 
         {/* Secondary glow - bottom left */}
         <div
-          className={`absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr ${service.color} opacity-0 rounded-full blur-3xl group-hover:opacity-[0.08] transition-opacity duration-700`}
+          className={`absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr ${service.color} opacity-0 rounded-full blur-3xl group-hover:opacity-[0.1] transition-opacity duration-700`}
         />
 
         {/* Animated gradient line at top */}
-        <div className="absolute top-0 left-0 right-0 h-px">
-          <motion.div
-            className="h-full"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${service.accentColor}50, transparent)`,
-            }}
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.8, delay: index * 0.1 + 0.3 }}
-          />
-        </div>
+        <motion.div
+          className="absolute top-0 left-0 right-0 h-[2px]"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${service.accentColor}60, transparent)`,
+          }}
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          transition={{ duration: 1, delay: index * 0.1 + 0.3 }}
+        />
 
         <div className="relative z-10 flex flex-col h-full">
           {/* Header with icon and NEW badge */}
-          <div className="flex items-start justify-between mb-5">
+          <div className="flex items-start justify-between mb-6">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ type: "spring", stiffness: 400 }}
-              className="w-14 h-14 rounded-2xl border-2 flex items-center justify-center"
+              className="w-16 h-16 rounded-2xl border-2 flex items-center justify-center relative overflow-hidden"
               style={{
-                borderColor: `${service.accentColor}30`,
-                background: `linear-gradient(135deg, ${service.accentColor}15, ${service.accentColor}05)`,
-                boxShadow: `0 8px 32px ${service.accentColor}15`,
+                borderColor: `${service.accentColor}40`,
+                background: `linear-gradient(135deg, ${service.accentColor}20, ${service.accentColor}05)`,
+                boxShadow: `0 8px 32px ${service.accentColor}20`,
               }}
             >
-              <Icon className="w-6 h-6" style={{ color: service.accentColor }} />
+              <Icon className="w-7 h-7" style={{ color: service.accentColor }} />
+              {/* Shimmer effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "100%" }}
+                transition={{ duration: 0.6 }}
+              />
             </motion.div>
             {service.isNew && (
               <motion.span
@@ -130,50 +139,36 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           </h3>
 
           {/* Description */}
-          <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-6 group-hover:text-zinc-300 transition-colors">
+          <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-6 group-hover:text-zinc-300 transition-colors flex-grow">
             {service.description}
           </p>
 
-          {/* Preview visual - animated gradient box */}
-          <div className="mt-auto">
-            <motion.div
-              className={`w-full h-28 rounded-2xl bg-gradient-to-br ${service.color} opacity-15 group-hover:opacity-25 transition-all duration-500 relative overflow-hidden`}
-              style={{
-                boxShadow: `0 12px 40px ${service.accentColor}15`,
-              }}
-            >
-              {/* Animated shimmer effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-              />
-
-              {/* Floating particles */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-1.5 h-1.5 rounded-full bg-white/30"
-                    style={{
-                      left: `${25 + i * 25}%`,
-                      top: `${30 + i * 15}%`,
-                    }}
-                    animate={{
-                      y: [-5, 5, -5],
-                      opacity: [0.3, 0.7, 0.3],
-                    }}
-                    transition={{
-                      duration: 2,
-                      delay: i * 0.3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                ))}
+          {/* Bottom section: Stats + CTA */}
+          <div className="flex items-end justify-between mt-auto pt-6 border-t border-white/5">
+            {/* Stats */}
+            {service.stats && (
+              <div>
+                <div
+                  className="text-2xl font-black"
+                  style={{ color: service.accentColor }}
+                >
+                  {service.stats.value}
+                </div>
+                <div className="text-[10px] text-zinc-500 uppercase tracking-wider">
+                  {service.stats.label}
+                </div>
               </div>
-            </motion.div>
+            )}
+
+            {/* View Project CTA */}
+            <motion.button
+              whileHover={{ scale: 1.05, x: 3 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors group/btn"
+            >
+              Learn More
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </motion.button>
           </div>
         </div>
       </div>
@@ -183,7 +178,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 
 export function WhatIBuild() {
   return (
-    <section id="services" className="relative z-10">
+    <section className="relative z-10">
       {/* Atmospheric background glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[700px] bg-[--accent]/[0.03] rounded-full blur-[180px]" />
@@ -199,20 +194,20 @@ export function WhatIBuild() {
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="text-center mb-16"
       >
-        {/* Label pill - subtle styling per Round 2 audit */}
+        {/* Label pill */}
         <motion.span
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="inline-block text-[10px] uppercase tracking-[0.4em] text-white/60 mb-8 px-5 py-2 border border-white/20 rounded-full font-semibold backdrop-blur-sm bg-white/5"
+          className="inline-block text-[10px] uppercase tracking-[0.4em] text-[--accent] mb-8 px-5 py-2.5 border border-[--accent]/30 rounded-full font-semibold backdrop-blur-sm bg-[--accent]/5 shadow-[0_0_20px_rgba(255,107,0,0.1)]"
         >
-          Services
+          ✦ Services
         </motion.span>
 
-        {/* Two-tone heading - White text, no vibrating gradient per Round 2 audit */}
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6">
-          <span className="text-zinc-400">TAILOR MADE</span>{" "}
-          <span className="text-white">SOLUTIONS</span>
+        {/* Two-tone heading - V21 Style */}
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-600 tracking-tighter mb-6">
+          <span className="text-zinc-500">Tailor Made</span>{" "}
+          <span className="text-white">Solutions</span>
         </h2>
 
         {/* Subtle subtext */}

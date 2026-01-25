@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Dev Server",
+			"type": "shell",
+			"command": "cd 'c:\\Users\\Mark Lorenz\\Desktop\\portfolio'; npx next dev -p 3059",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
