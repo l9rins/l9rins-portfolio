@@ -7,7 +7,11 @@ import {
   Search, Plus, HelpCircle, FileText, Code, MessageCircle, Layers
 } from "lucide-react";
 import Link from "next/link";
+// components/ui/SuccessAnimation.tsx - Assuming it has colors, but for now removing import if unused or checking valid usage
+// Actually, let's keep it but maybe it needs monochrome update? 
+// For now, let's focus on visible Footer elements.
 import { SuccessAnimation } from "@/components/ui/SuccessAnimation";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 const navLinks = [
   { label: "Home", href: "#" },
@@ -22,72 +26,10 @@ const legalLinks = [
   { label: "Return Policy", href: "#" },
 ];
 
-const faqCategories = [
-  { id: "all", label: "All", count: 6 },
-  { id: "templates", label: "Templates", count: 3 },
-  { id: "licensing", label: "Licensing", count: 3 },
-  { id: "components", label: "Components", count: 2 },
-  { id: "support", label: "Support", count: 2 },
-];
 
-const faqs = [
-  {
-    category: "templates",
-    question: "How do I download the templates after purchase?",
-  },
-  {
-    category: "templates",
-    question: "Can I request custom modifications to the templates?",
-  },
-  {
-    category: "templates",
-    question: "Do the templates work on mobile devices?",
-  },
-  {
-    category: "licensing",
-    question: "What license do the templates come with?",
-  },
-  {
-    category: "licensing",
-    question: "Can I use templates for commercial projects?",
-  },
-  {
-    category: "components",
-    question: "Are components compatible with Next.js 14+?",
-  },
-];
-
-function FAQItem({ faq, index }: { faq: typeof faqs[0]; index: number }) {
-  // Monochrome category styling
-  const categoryColors: Record<string, string> = {
-    templates: "text-white bg-white/10 border-white/20",
-    licensing: "text-white bg-white/10 border-white/20",
-    components: "text-white bg-white/10 border-white/20",
-    support: "text-white bg-white/10 border-white/20",
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05 }}
-      viewport={{ once: true }}
-      className="group flex items-center justify-between p-4 bg-zinc-900/50 border border-white/[0.06] rounded-2xl hover:border-white/15 hover:bg-zinc-900/70 transition-all duration-300 cursor-pointer"
-    >
-      <span className="text-zinc-300 text-sm group-hover:text-white transition-colors pr-4">
-        {faq.question}
-      </span>
-      <span className={`flex-shrink-0 px-3 py-1 text-[10px] uppercase tracking-wider font-medium rounded-full border ${categoryColors[faq.category]}`}>
-        {faq.category}
-      </span>
-    </motion.div>
-  );
-}
 
 export function Footer() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -103,14 +45,11 @@ export function Footer() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const filteredFaqs = faqs.filter((faq) => {
-    const matchesCategory = activeCategory === "all" || faq.category === activeCategory;
-    const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
   return (
     <footer id="contact" className="relative z-10 bg-black overflow-hidden">
+      {/* Bottom Stage Light - smooth fade instead of hard edge */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
+
       {/* Success Animation */}
       <SuccessAnimation
         show={showSuccess}
@@ -132,138 +71,26 @@ export function Footer() {
         </div>
       </div>
 
-      {/* ===== FAQ SECTION ===== */}
-      <div className="relative py-16">
-        {/* Subtle grid background */}
-        <div className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        <div className="max-w-4xl mx-auto px-4">
-          {/* FAQ Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <span className="text-[10px] uppercase tracking-[0.4em] text-white/60 mb-4 block font-semibold">
-              Frequently Asked Questions
-            </span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-4">
-              Got <span className="gradient-text">Questions?</span>
-            </h2>
-            <p className="text-zinc-500 max-w-lg mx-auto text-sm leading-relaxed">
-              Find answers to common questions about our templates, components, and licensing options.
-            </p>
-          </motion.div>
-
-          {/* Search Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="relative mb-8"
-          >
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
-            <input
-              type="text"
-              placeholder="Search questions..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-zinc-800/80 backdrop-blur-sm border-2 border-zinc-700 rounded-2xl py-4 px-14 text-sm text-white placeholder-zinc-400 focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/20 focus:bg-zinc-800 transition-all min-h-[48px]"
-            />
-          </motion.div>
-
-          {/* Category Tabs with counts */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-3 mb-10"
-          >
-            {faqCategories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold transition-all duration-300 min-h-[44px] ${activeCategory === cat.id
-                  ? "bg-white text-black shadow-[0_0_25px_rgba(255,255,255,0.2)]"
-                  : "bg-zinc-900/80 text-zinc-400 hover:text-white border border-white/10 hover:border-white/20"
-                  }`}
-              >
-                {cat.label}
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${activeCategory === cat.id
-                  ? "bg-black/20 text-black"
-                  : "bg-zinc-800 text-zinc-500"
-                  }`}>
-                  {cat.count}
-                </span>
-              </button>
-            ))}
-          </motion.div>
-
-          {/* FAQ Items */}
-          <div className="space-y-3 mb-12">
-            {filteredFaqs.map((faq, i) => (
-              <FAQItem key={i} faq={faq} index={i} />
-            ))}
-            {filteredFaqs.length === 0 && (
-              <div className="text-center py-12 text-zinc-500 text-sm">
-                No questions found matching your search.
-              </div>
-            )}
-          </div>
-
-          {/* Still have questions CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center p-8 bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 border border-white/[0.08] rounded-3xl"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 50%)',
-            }}
-          >
-            <h3 className="text-lg font-bold text-white mb-2">Still have questions?</h3>
-            <p className="text-zinc-500 text-sm mb-6">
-              Can't find the answer you're looking for? Please contact our support team.
-            </p>
-            <motion.a
-              href="#contact-form"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-black text-sm font-semibold rounded-full hover:bg-white/90 transition-colors shadow-[0_0_35px_rgba(255,255,255,0.15)] min-h-[48px]"
-            >
-              <MessageCircle className="w-4 h-4" />
-              Contact Support
-            </motion.a>
-          </motion.div>
-        </div>
-      </div>
-
       {/* ===== GLOBAL COMMUNITY SECTION ===== */}
       <div className="relative py-16 border-t border-white/5">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-7xl mx-auto px-4 text-center"
+          className="max-w-[1100px] mx-auto px-6 md:px-12 text-center"
         >
           <div className="inline-flex items-center gap-2 mb-4">
-            <Globe className="w-5 h-5 text-white" />
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/60 font-semibold">
-              Global User Community
+            <Globe className="w-5 h-5 text-zinc-500" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[--accent] font-semibold">
+              Availability
             </span>
           </div>
-          <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-4">
-            Join thousands of developers worldwide
+          <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">
+            Let's Build Something <span className="text-[--accent]">Scalable.</span>
           </h2>
-          <p className="text-zinc-500 max-w-xl mx-auto text-sm leading-relaxed">
-            Our templates are being used across the globe to create stunning web experiences.
-            Join the community and build something amazing.
+          <p className="text-zinc-500 max-w-xl mx-auto text-base leading-relaxed">
+            Currently open to senior-level front-end roles or high-impact design systems projects.
+            I specialize in performance, shipping, and polish.
           </p>
 
           {/* Navigation Links */}
@@ -283,7 +110,7 @@ export function Footer() {
       </div>
 
       {/* ===== CONTACT FORM SECTION ===== */}
-      <div id="contact-form" className="max-w-7xl mx-auto px-4 py-10 border-t border-white/5">
+      <div id="contact-form" className="max-w-[1100px] mx-auto px-6 md:px-12 py-10 border-t border-white/5">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Left: Brand & Info */}
           <motion.div
@@ -295,33 +122,34 @@ export function Footer() {
             <div className="flex items-center gap-4 mb-8">
               <motion.div
                 whileHover={{ rotate: 5, scale: 1.05 }}
-                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center text-white font-semibold text-lg shadow-[0_0_30px_rgba(255,255,255,0.1)] border border-white/20"
+                className="w-14 h-14 rounded-lg bg-white text-black flex items-center justify-center font-bold text-lg shadow-[0_0_30px_rgba(255,255,255,0.2)]"
               >
                 JD
               </motion.div>
               <div>
                 <div className="text-xl font-bold text-white">John Doe</div>
-                <div className="text-zinc-500 text-sm">your@email.com</div>
+                <div className="text-zinc-500 text-sm">hello@example.com</div>
               </div>
             </div>
 
             {/* Social Links */}
             <div className="flex gap-3 mb-8">
               {[
-                { icon: Github, href: "#" },
-                { icon: Twitter, href: "#" },
-                { icon: Linkedin, href: "#" },
-                { icon: Mail, href: "#" },
+                { icon: Github, href: "https://github.com" },
+                { icon: Twitter, href: "https://twitter.com" },
+                { icon: Linkedin, href: "https://linkedin.com" },
+                { icon: Mail, href: "mailto:hello@example.com" },
               ].map(({ icon: Icon, href }, i) => (
-                <motion.a
-                  key={i}
-                  href={href}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-12 h-12 rounded-2xl bg-zinc-900/80 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all min-h-[44px] min-w-[44px]"
-                >
-                  <Icon className="w-5 h-5" />
-                </motion.a>
+                <Magnetic key={i} strength={0.4}>
+                  <motion.a
+                    href={href}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-12 h-12 rounded-lg bg-zinc-900/80 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all min-h-[48px] min-w-[48px]"
+                  >
+                    <Icon className="w-5 h-5" />
+                  </motion.a>
+                </Magnetic>
               ))}
             </div>
 
@@ -345,31 +173,31 @@ export function Footer() {
                   placeholder="John Doe"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="bg-zinc-900/60 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/20 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all min-h-[48px]"
+                  className="bg-white/[0.03] border border-white/[0.1] rounded-lg px-5 py-4 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.5)] transition-all min-h-[48px]"
                 />
                 <input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="hello@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-zinc-900/60 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/20 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all min-h-[48px]"
+                  className="bg-white/[0.03] border border-white/[0.1] rounded-lg px-5 py-4 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.5)] transition-all min-h-[48px]"
                 />
               </div>
               <textarea
-                placeholder="Tell us about your project requirements, custom work needs, or reskin requests..."
+                placeholder="Tell me about your project, timeline, and goals..."
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 rows={5}
-                className="w-full bg-zinc-900/60 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/20 focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all resize-none min-h-[120px]"
+                className="w-full bg-white/[0.03] border border-white/[0.1] rounded-lg px-5 py-4 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.5)] transition-all resize-none min-h-[120px]"
               />
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-3 bg-white text-black font-semibold py-4 rounded-2xl hover:bg-white/90 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] transition-all min-h-[52px]"
+                className="w-full flex items-center justify-center gap-3 bg-white text-black font-semibold py-4 rounded-lg hover:bg-white/90 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] transition-all min-h-[52px]"
               >
                 <Send className="w-5 h-5" />
-                Send Message
+                Start Conversation
               </motion.button>
             </form>
           </motion.div>
@@ -378,12 +206,24 @@ export function Footer() {
 
       {/* ===== BOTTOM BAR ===== */}
       <div className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-[1100px] mx-auto px-6 md:px-12 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Copyright */}
+            {/* Signature - Personal Engineering Credit */}
             <p className="text-zinc-600 text-xs">
-              © 2026 Aniq-ui - Next.js UI Templates
+              Designed in Figma. Engineered in Next.js. Deployed on Vercel.
             </p>
+
+            {/* Performance Badge - Easter Egg */}
+            <div className="hidden md:flex items-center gap-4 px-3 py-1.5 rounded-full bg-zinc-900 border border-white/5 text-[10px] font-mono text-zinc-500 hover:border-white/20 hover:text-zinc-300 transition-colors cursor-help group">
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                <span>Next.js 15</span>
+              </div>
+              <div className="h-3 w-px bg-white/10" />
+              <span>Vercel PRO</span>
+              <div className="h-3 w-px bg-white/10" />
+              <span className="group-hover:text-white transition-colors">0.8s Load Time</span>
+            </div>
 
             {/* Legal Links */}
             <div className="flex flex-wrap items-center justify-center gap-6">
@@ -399,14 +239,16 @@ export function Footer() {
             </div>
 
             {/* Scroll to top */}
-            <motion.button
-              onClick={scrollToTop}
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all min-h-[44px] min-w-[44px]"
-            >
-              <ArrowUp className="w-5 h-5" />
-            </motion.button>
+            <Magnetic>
+              <motion.button
+                onClick={scrollToTop}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-12 h-12 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all min-h-[44px] min-w-[44px]"
+              >
+                <ArrowUp className="w-5 h-5" />
+              </motion.button>
+            </Magnetic>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Sun, Moon, ArrowRight } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 const navLinks = [
   { id: "work", label: "Work" },
@@ -13,7 +14,7 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const [status] = useState<"available" | "busy">("available");
+
   const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -52,8 +53,6 @@ export function Navbar() {
     }
   };
 
-  const statusColor = status === "available" ? "bg-green-500" : "bg-red-500";
-  const statusText = status === "available" ? "Available for work" : "Currently busy";
 
   return (
     <motion.nav
@@ -64,81 +63,82 @@ export function Navbar() {
     >
       <motion.div
         className={`h-14 px-2 rounded-full backdrop-blur-xl border flex items-center gap-1 transition-all duration-500 ${isScrolled
-          ? "bg-black/90 border-white/15 shadow-[0_0_30px_rgba(0,0,0,0.5)]"
-          : "bg-black/70 border-white/10"
+          ? "bg-black/50 border-white/15 shadow-[0_0_30px_rgba(0,0,0,0.5)]"
+          : "bg-black/40 border-white/10"
           }`}
         style={{ opacity: navOpacity }}
       >
-        {/* Monogram with glow */}
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-10 h-10 rounded-full bg-gradient-to-br from-[--accent] to-orange-600 flex items-center justify-center text-black font-black text-sm cursor-pointer shadow-[0_0_20px_rgba(255,107,0,0.3)] ml-1"
-          onClick={() => scrollToSection("hero")}
-        >
-          JD
-        </motion.div>
+        {/* Monogram - Monochrome - Wrapped in Magnetic */}
+        <Magnetic strength={0.3}>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="hidden md:block bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_35px_rgba(255,255,255,0.4)] transition-shadow"
+            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+          >
+            JD
+          </motion.button>
+        </Magnetic>
 
         {/* Navigation Links */}
         <div className="flex items-center gap-1 mx-2">
           {navLinks.map((link) => (
-            <motion.button
-              key={link.id}
-              onClick={() => scrollToSection(link.id)}
-              className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${activeSection === link.id
-                ? "text-white"
-                : "text-zinc-400 hover:text-white"
-                }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {link.label}
-              {/* Active indicator */}
-              {activeSection === link.id && (
-                <motion.div
-                  layoutId="activeSection"
-                  className="absolute inset-0 bg-white/10 rounded-full border border-white/10"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-            </motion.button>
+            <Magnetic key={link.id} strength={0.5}>
+              <motion.button
+                onClick={() => scrollToSection(link.id)}
+                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 z-10 ${activeSection === link.id ? "text-black" : "text-zinc-400 hover:text-white"
+                  }`}
+                whileTap={{ scale: 0.95 }}
+              >
+                {link.label}
+                {/* Active indicator - Fluid Spring */}
+                {activeSection === link.id && (
+                  <motion.div
+                    layoutId="activeSection"
+                    className="absolute inset-0 bg-white rounded-full -z-10"
+                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  />
+                )}
+              </motion.button>
+            </Magnetic>
           ))}
         </div>
 
         {/* Divider */}
         <div className="w-px h-6 bg-white/10" />
 
-        {/* Theme Toggle */}
-        <motion.button
-          onClick={toggleTheme}
-          whileHover={{ scale: 1.1, rotate: 15 }}
-          whileTap={{ scale: 0.9 }}
-          className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors ml-1"
-          aria-label="Toggle theme"
-        >
-          {theme === "dark" ? (
-            <Sun className="w-4 h-4 text-zinc-400" />
-          ) : (
-            <Moon className="w-4 h-4 text-zinc-400" />
-          )}
-        </motion.button>
+        {/* Theme Toggle - Wrapped in Magnetic */}
+        <Magnetic strength={0.3}>
+          <motion.button
+            onClick={toggleTheme}
+            whileHover={{ scale: 1.1, rotate: 15 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors ml-1"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-4 h-4 text-zinc-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-zinc-400" />
+            )}
+          </motion.button>
+        </Magnetic>
 
-        {/* Status Dot */}
-        <div
-          className={`w-2.5 h-2.5 rounded-full ${statusColor} cursor-pointer animate-pulse`}
-          title={statusText}
-        />
+        {/* Let's Talk CTA - Monochrome - Constant Shimmer */}
+        <Magnetic strength={0.2}>
+          <motion.button
+            onClick={() => scrollToSection("contact")}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative flex items-center gap-2 px-5 py-2 ml-1 mr-1 bg-white text-black text-sm font-bold rounded-full overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-300 min-h-[48px]"
+          >
+            {/* Shimmer overlay - Constant subtle animation */}
+            <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-black/10 opacity-30 animate-shimmer" />
 
-        {/* Let's Talk CTA - V21 Inspired */}
-        <motion.button
-          onClick={() => scrollToSection("contact")}
-          whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 107, 0, 0.4)" }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 px-5 py-2 ml-1 mr-1 bg-gradient-to-r from-[--accent] to-orange-500 text-black text-sm font-bold rounded-full shadow-[0_0_20px_rgba(255,107,0,0.3)] hover:shadow-[0_0_30px_rgba(255,107,0,0.5)] transition-all duration-300"
-        >
-          Let's Talk
-          <ArrowRight className="w-4 h-4" />
-        </motion.button>
+            <span className="relative z-10">Let's Talk</span>
+            <ArrowRight className="w-4 h-4 relative z-10" />
+          </motion.button>
+        </Magnetic>
       </motion.div>
     </motion.nav>
   );

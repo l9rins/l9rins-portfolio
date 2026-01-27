@@ -94,7 +94,7 @@ export function StatsCounter({
             transition={{ delay, duration: 0.6 }}
             viewport={{ once: true }}
         >
-            <div className={`text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight ${valueClassName}`}>
+            <div className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight ${valueClassName}`}>
                 {prefix}
                 {displayValue}
                 {suffix}

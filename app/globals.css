@@ -5,7 +5,8 @@
   --background: #000000;
   --background-elevated: #0a0a0a;
   --foreground: #ffffff;
-  --foreground-muted: #e0e0e0;
+  --foreground-muted: #71717a;
+  /* zinc-500 - pushed back for text hierarchy */
   /* MONOCHROME PALETTE - Black and White Only */
   --accent: #ffffff;
   --accent-light: #f5f5f5;
@@ -14,6 +15,48 @@
   --accent-pink: #c4c4c4;
   --accent-cyan: #b4b4b4;
   --border: rgba(255, 255, 255, 0.1);
+
+  /* ========================================
+     SHADCN-INSPIRED DESIGN TOKENS
+     ======================================== */
+
+  /* Spacing Scale (8px base) */
+  --space-1: 0.25rem;
+  /* 4px */
+  --space-2: 0.5rem;
+  /* 8px */
+  --space-3: 0.75rem;
+  /* 12px */
+  --space-4: 1rem;
+  /* 16px */
+  --space-5: 1.25rem;
+  /* 20px */
+  --space-6: 1.5rem;
+  /* 24px */
+  --space-8: 2rem;
+  /* 32px */
+  --space-10: 2.5rem;
+  /* 40px */
+  --space-12: 3rem;
+  /* 48px */
+
+  /* Border Radius Scale (STRICT - only 3 values) */
+  --radius-sm: 0.375rem;
+  /* 6px - badges, tags */
+  --radius-md: 0.5rem;
+  /* 8px - inputs, small elements */
+  --radius-lg: 0.75rem;
+  /* 12px - buttons, cards */
+  --radius-xl: 1rem;
+  /* 16px - modals, large cards */
+
+  /* Transitions (shadcn-style, purposeful) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+
   /* Typography - Inter for headings, Onest for body */
   --font-display: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body: 'Onest', var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -43,7 +86,91 @@ body {
   font-size: clamp(16px, 1.1vw, 18px);
 }
 
-/* NO NOISE TEXTURE - clean like references */
+/* STRICT MONOCHROME ENFORCEMENT */
+img,
+video {
+  filter: grayscale(100%);
+}
+
+/* ============================================
+   STAGE LIGHT - Creates "lit room" atmosphere
+   Makes glass borders actually shine
+   ============================================ */
+.stage-light {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 500px;
+  /* Boosted opacity from 0.08 to 0.15 for visibility */
+  background: radial-gradient(50% 50% at 50% 0%,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0) 100%);
+  /* Subtle emerald/teal tint for brand warmth */
+  box-shadow: inset 0 0 100px rgba(16, 185, 129, 0.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stage-light-subtle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 600px;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.06), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================
+   GRID TEXTURE - Gives "void" scale reference
+   ============================================ */
+.bg-grid-white {
+  background-size: 50px 50px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Fade mask - makes grid disappear as you scroll */
+.mask-gradient {
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+}
+
+/* CINEMATIC NOISE TEXTURE (FILM GRAIN) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.07;
+  /* Slightly increased for visibility against dark theme */
+  /* Higher frequency for finer, film-like grain vs digital blockiness */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* BASE TYPOGRAPHY - REFINED WEIGHTS */
+/* Enforcing Semibold (600) max for refined feel per user request */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3 {
+  font-weight: 600 !important;
+  /* Override any ExtraBold/Black utils */
+}
 
 /* Selection */
 ::selection {
@@ -67,6 +194,22 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ============================================
+   GLASS BORDER DEPTH EFFECT
+   Creates a "double border" for simulated glass thickness
+   ============================================ */
+.glass-border {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  /* Inner Ring */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  /* Outer Ring */
+}
+
+.glass-border-hover:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 /* Custom scrollbar - orange accent */
@@ -377,6 +520,13 @@ body {
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.03), inset 0 0 40px rgba(255, 255, 255, 0.01);
 }
 
+/* Dark Mode Neumorphism 2.0 */
+.neumorphic-dark {
+  background: #0b0b0b;
+  box-shadow: 5px 5px 10px #050505, -5px -5px 10px #202020;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
 /* ============================================
    MAGNETIC BUTTON EFFECT
    ============================================ */
@@ -497,6 +647,50 @@ body {
 .card-glow:hover {
   border-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 50px rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================
+   PREMIUM CARD SYSTEM - "Glass Edge" Effect
+   ============================================ */
+
+.card-premium {
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  /* Inner "light catch" highlight for 3D tactile quality */
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-premium:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   PAGE-LEVEL SPOTLIGHT GLOW
+   ============================================ */
+
+.page-spotlight {
+  background:
+    radial-gradient(ellipse 800px 400px at 50% 0%, rgba(255, 255, 255, 0.03), transparent 70%),
+    #000000;
+}
+
+/* ============================================
+   TYPOGRAPHY HIERARCHY - Depth System
+   ============================================ */
+
+.text-body-receded {
+  color: #71717a;
+  /* zinc-500 - pushed back */
+}
+
+.text-meta-receded {
+  color: #52525b;
+  /* zinc-600 - even further back */
 }
 
 /* ============================================

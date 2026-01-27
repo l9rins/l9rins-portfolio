@@ -36,6 +36,16 @@ const services = [
     },
 ];
 
+const iconVariants = {
+    initial: { scale: 1, rotate: 0 },
+    hover: { scale: 1.1, rotate: 5, transition: { type: "spring" as const, stiffness: 300 } }
+};
+
+const glowVariants = {
+    initial: { opacity: 0, scale: 0.8 },
+    hover: { opacity: 1, scale: 1.2, transition: { duration: 0.5 } }
+};
+
 function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
     const cardRef = useRef<HTMLDivElement>(null);
     const mouseX = useMotionValue(0);
@@ -58,60 +68,61 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className="relative group"
+            className="relative group h-full"
         >
             {/* Hover border reveal effect */}
             <motion.div
-                className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
                 style={{
-                    background: `radial-gradient(400px circle at ${mouseX}px ${mouseY}px, ${service.accentColor}20, transparent 40%)`,
+                    background: `radial-gradient(500px circle at ${mouseX}px ${mouseY}px, ${service.accentColor}30, transparent 40%)`,
                 }}
             />
 
-            <div className="relative h-full bg-zinc-900/60 border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-300 overflow-hidden min-h-[280px] flex flex-col">
+            <div className="relative h-full bg-[#0a0a0a] border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all duration-300 overflow-hidden flex flex-col z-10 hover:shadow-[0_0_30px_rgba(255,255,255,0.03)]">
                 {/* Atmospheric corner glow */}
-                <div
-                    className={`absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br ${service.color} opacity-[0.08] rounded-full blur-3xl group-hover:opacity-[0.15] transition-opacity duration-500`}
+                <motion.div
+                    className={`absolute -top-20 -right-20 w-56 h-56 bg-gradient-to-br ${service.color} rounded-full blur-[80px] pointer-events-none`}
+                    variants={glowVariants}
+                    initial="initial"
+                    whileHover="hover"
                 />
 
                 <div className="relative z-10 flex flex-col h-full">
                     {/* Header with icon and NEW badge */}
-                    <div className="flex items-start justify-between mb-4">
-                        <div
-                            className="w-12 h-12 rounded-xl border flex items-center justify-center"
+                    <div className="flex items-start justify-between mb-6">
+                        <motion.div
+                            className="w-14 h-14 rounded-2xl border flex items-center justify-center backdrop-blur-md"
                             style={{
-                                borderColor: `${service.accentColor}30`,
-                                background: `${service.accentColor}10`,
+                                borderColor: `${service.accentColor}20`,
+                                background: `${service.accentColor}05`,
                             }}
+                            variants={iconVariants}
+                            whileHover="hover"
                         >
-                            <Icon className="w-5 h-5" style={{ color: service.accentColor }} />
-                        </div>
+                            <Icon className="w-6 h-6" style={{ color: service.accentColor }} />
+                        </motion.div>
                         {service.isNew && (
-                            <span className="flex items-center gap-1 px-2 py-1 text-[10px] font-bold uppercase tracking-wider bg-red-500/20 text-red-400 border border-red-500/30 rounded-full">
+                            <span className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20 rounded-full animate-pulse">
                                 <Sparkles className="w-3 h-3" />
-                                NEW!
+                                NEW
                             </span>
                         )}
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-white tracking-tight mb-3 leading-tight">
+                    <h3 className="text-2xl font-bold text-white tracking-tight mb-4 leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-zinc-400 transition-all">
                         {service.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-zinc-500 text-sm leading-relaxed mb-6">
+                    <p className="text-zinc-500 text-sm leading-relaxed mb-8 flex-grow">
                         {service.description}
                     </p>
 
-                    {/* Preview placeholder - gradient box */}
-                    <div className="mt-auto">
-                        <div
-                            className={`w-full h-24 rounded-xl bg-gradient-to-br ${service.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}
-                            style={{
-                                boxShadow: `0 8px 32px ${service.accentColor}20`,
-                            }}
-                        />
+                    {/* Call to action arrow (Subtle) */}
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-zinc-600 group-hover:text-white/80 transition-colors mt-auto">
+                        <span>Learn more</span>
+                        <div className="w-4 h-px bg-current transition-all group-hover:w-8" />
                     </div>
                 </div>
             </div>

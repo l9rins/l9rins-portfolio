@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 interface GlowDividerProps {
     variant?: "subtle" | "standard" | "dramatic";
-    color?: "orange" | "blue" | "purple" | "cyan";
+    color?: "orange" | "blue" | "purple" | "cyan" | "white";
     showParticles?: boolean;
     className?: string;
 }
@@ -15,7 +15,7 @@ interface GlowDividerProps {
  */
 export function GlowDivider({
     variant = "standard",
-    color = "orange",
+    color = "white",
     showParticles = false,
     className = "",
 }: GlowDividerProps) {
@@ -39,6 +39,11 @@ export function GlowDivider({
             primary: "#00c2ff",
             secondary: "rgba(0, 194, 255, 0.15)",
             tertiary: "rgba(0, 194, 255, 0.08)",
+        },
+        white: {
+            primary: "#ffffff",
+            secondary: "rgba(255, 255, 255, 0.15)",
+            tertiary: "rgba(255, 255, 255, 0.08)",
         },
     };
 

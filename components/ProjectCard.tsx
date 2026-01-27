@@ -78,7 +78,13 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
           boxShadow: isHovered ? `0 0 80px rgba(255, 255, 255, 0.15)` : 'none'
         }}
       >
-        <div className="grid md:grid-cols-2 min-h-[400px]">
+        {/* Visual Fill - Dot Grid Pattern */}
+        <div className="absolute inset-0 z-0 opacity-[0.07] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] rounded-3xl" />
+
+        {/* Corner gradient blob */}
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-[60px] pointer-events-none" />
+
+        <div className="grid md:grid-cols-2 min-h-[400px] relative z-10">
           {/* Left: Image/Video */}
           <div className="relative aspect-video md:aspect-auto overflow-hidden">
             {/* Gradient accent bar */}
@@ -120,10 +126,16 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
             />
           </div>
 
-          {/* Right: Content */}
-          <div className="relative p-8 md:p-10 flex flex-col justify-between bg-gradient-to-br from-zinc-900 to-zinc-950">
+          {/* Right: Content - The "Control Panel" with texture */}
+          <div className="relative p-8 md:p-10 flex flex-col justify-between bg-gradient-to-br from-zinc-900 to-zinc-950 overflow-hidden">
+            {/* Info Panel Texture - Dot Grid for precision feel */}
+            <div className="absolute inset-0 z-0 opacity-[0.05] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+
+            {/* Inner glow from corner */}
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-[60px] pointer-events-none" />
+
             {/* Top section */}
-            <div>
+            <div className="relative z-10">
               {/* Featured badge */}
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -182,9 +194,9 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-black transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-black transition-all min-h-[48px]"
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.9)',
                   boxShadow: `0 0 30px rgba(255, 255, 255, 0.2)`,
@@ -195,9 +207,9 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
               </motion.a>
               <motion.a
                 href="#"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm text-white bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm text-white bg-white/5 border border-white/10 hover:border-white/20 transition-all min-h-[48px]"
               >
                 <Github className="w-4 h-4" />
                 Source
@@ -224,6 +236,12 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
         boxShadow: isHovered ? `0 0 60px rgba(255, 255, 255, 0.1)` : 'none'
       }}
     >
+      {/* Visual Fill - Dot Grid Pattern */}
+      <div className="absolute inset-0 z-[5] opacity-[0.07] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] rounded-2xl pointer-events-none" />
+
+      {/* Corner gradient blob */}
+      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/20 blur-[50px] pointer-events-none" />
+
       {/* Gradient accent bar at top */}
       <div
         className="absolute top-0 left-0 right-0 h-1 z-40"
@@ -268,9 +286,9 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
         {/* Top: Action buttons */}
         <div className="flex justify-end gap-2 translate-y-[-20px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
           <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center"
           >
             <Eye className="w-4 h-4" />
           </motion.button>
@@ -278,9 +296,9 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-2.5 backdrop-blur-md border rounded-full transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-2.5 backdrop-blur-md border rounded-full transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center"
             style={{
               backgroundColor: `rgba(255, 255, 255, 0.15)`,
               borderColor: `rgba(255, 255, 255, 0.25)`,

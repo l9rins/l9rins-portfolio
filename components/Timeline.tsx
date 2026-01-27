@@ -1,251 +1,177 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, Trophy, Rocket, Star, ChevronRight } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { Briefcase, Calendar, ChevronRight } from "lucide-react";
 
-const timelineData = [
-  {
-    year: "2026",
-    title: "Senior Design Engineer",
-    company: "Vercel (Fictional)",
-    description: "Leading the design system migration to React Server Components. Building the future of web development.",
-    icon: Rocket,
-    iconColor: "#ff6b00",
-    tags: ["Next.js 15", "Turborepo", "Design Systems"],
-    isCurrent: true,
-    achievement: "Led team of 8",
-  },
-  {
-    year: "2024",
-    title: "Full Stack Developer",
-    company: "Freelance",
-    description: "Shipped 15+ products for Series A startups. 95+ Lighthouse scores across all projects.",
-    icon: Trophy,
-    iconColor: "#22c55e",
-    tags: ["React", "Supabase", "Stripe"],
-    achievement: "$1.2M+ Generated",
-  },
-  {
-    year: "2023",
-    title: "BS Computer Science",
-    company: "University of Technology",
-    description: "Specialized in Human-Computer Interaction and WebGL performance. Graduated with honors.",
-    icon: GraduationCap,
-    iconColor: "#0070f3",
-    tags: ["Thesis", "3.8 GPA", "HCI"],
-    achievement: "Magna Cum Laude",
-  },
-];
-
-function TimelineItem({
-  item,
-  index,
-  isLast,
-}: {
-  item: typeof timelineData[0];
-  index: number;
-  isLast: boolean;
-}) {
-  const Icon = item.icon;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.15, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="relative pl-12 md:pl-16 pb-12 last:pb-0"
-    >
-      {/* Connecting Line */}
-      {!isLast && (
-        <div className="absolute left-[13px] md:left-[21px] top-12 bottom-0 w-px">
-          <motion.div
-            className="h-full w-full"
-            style={{
-              background: `linear-gradient(to bottom, ${item.iconColor}40, transparent)`,
-            }}
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.15 + 0.3, duration: 0.8 }}
-          />
-        </div>
-      )}
-
-      {/* Timeline Dot with glow */}
-      <motion.div
-        className="absolute left-0 md:left-2 top-0 flex items-center justify-center"
-        initial={{ scale: 0 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: index * 0.15 + 0.1, type: "spring", stiffness: 200 }}
-      >
-        <div
-          className="w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2 relative"
-          style={{
-            borderColor: `${item.iconColor}60`,
-            background: `linear-gradient(135deg, ${item.iconColor}20, ${item.iconColor}05)`,
-            boxShadow: `0 0 20px ${item.iconColor}30`,
-          }}
-        >
-          <Icon className="w-3 h-3 md:w-5 md:h-5" style={{ color: item.iconColor }} />
-          {/* Pulse ring for current */}
-          {item.isCurrent && (
-            <motion.div
-              className="absolute inset-0 rounded-full border-2"
-              style={{ borderColor: item.iconColor }}
-              animate={{
-                scale: [1, 1.5],
-                opacity: [0.6, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeOut",
-              }}
-            />
-          )}
-        </div>
-      </motion.div>
-
-      {/* Date Badge */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: index * 0.15 + 0.2 }}
-        className="flex items-center gap-3 mb-3"
-      >
-        <span
-          className="text-xs md:text-sm font-bold px-3 py-1 rounded-full"
-          style={{
-            color: item.iconColor,
-            backgroundColor: `${item.iconColor}15`,
-            border: `1px solid ${item.iconColor}30`,
-          }}
-        >
-          {item.year}
-        </span>
-        {item.isCurrent && (
-          <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-green-400 px-2 py-1 bg-green-400/10 rounded-full border border-green-400/30">
-            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-            Present
-          </span>
-        )}
-      </motion.div>
-
-      {/* Card */}
-      <motion.div
-        className="group relative bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-500 rounded-2xl p-6 md:p-8"
-        whileHover={{ y: -2, boxShadow: `0 0 40px ${item.iconColor}15` }}
-      >
-        {/* Top gradient line */}
-        <div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${item.iconColor}40, transparent)`,
-          }}
-        />
-
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-          <div>
-            <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight mb-1 group-hover:text-white/90 transition-colors">
-              {item.title}
-            </h3>
-            <p className="text-zinc-500 text-sm font-medium">{item.company}</p>
-          </div>
-
-          {/* Achievement badge */}
-          {item.achievement && (
-            <div
-              className="flex items-center gap-2 px-3 py-2 rounded-xl border text-sm font-medium"
-              style={{
-                borderColor: `${item.iconColor}30`,
-                backgroundColor: `${item.iconColor}10`,
-                color: item.iconColor,
-              }}
-            >
-              <Star className="w-4 h-4" />
-              {item.achievement}
-            </div>
-          )}
-        </div>
-
-        {/* Description */}
-        <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-5">
-          {item.description}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2">
-          {item.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs font-medium text-zinc-500 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 transition-colors cursor-default"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Hover arrow indicator */}
-        <motion.div
-          className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          whileHover={{ x: 3 }}
-        >
-          <ChevronRight className="w-5 h-5 text-zinc-600" />
-        </motion.div>
-      </motion.div>
-    </motion.div>
-  );
+interface TimelineItem {
+  id: number;
+  title: string;
+  company: string;
+  period: string;
+  description: string;
+  achievements: string[];
+  techStack: string[];
 }
 
-export function Timeline() {
-  return (
-    <motion.section
-      id="timeline"
-      className="max-w-3xl mx-auto py-1 px-4"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-    >
-      {/* Section Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-16"
-      >
-        <motion.span
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          className="inline-block text-[10px] uppercase tracking-[0.4em] text-white/60 mb-4 font-semibold"
-        >
-          ✦ Experience
-        </motion.span>
-        <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-4">
-          <span className="text-zinc-500">Career</span>{" "}
-          <span className="text-white">History</span>
-        </h2>
-        <p className="text-zinc-500 text-sm max-w-md mx-auto">
-          A journey through design, development, and digital craft.
-        </p>
-      </motion.div>
+const timelineData: TimelineItem[] = [
+  {
+    id: 1,
+    title: "Senior Product Engineer",
+    company: "Vercel (Contract)",
+    period: "2024 - Present",
+    description: "Leading the frontend architecture for next-generation developer tools. Focused on edge computing performance and collaborative features.",
+    achievements: [
+      "Reduced build times by 40% through TurboRepo implementation",
+      "Architected the new collaborative comment system used by 50k+ devs",
+      "Mentored 3 junior engineers on React patterns and performance"
+    ],
+    techStack: ["Next.js", "TypeScript", "TurboRepo", "Rust"]
+  },
+  {
+    id: 2,
+    title: "Lead Frontend Developer",
+    company: "Stripe",
+    period: "2021 - 2024",
+    description: "Spearheaded the UI/UX overhaul of the checkout experience. Improved conversion rates and accessibility compliance across the platform.",
+    achievements: [
+      "Increased checkout conversion rate by 12% ($4M+ annual revenue)",
+      "Implemented a comprehensive design system used across 4 products",
+      "Achieved WCAG 2.1 AA compliance for core payment flows"
+    ],
+    techStack: ["React", "Babel", "GraphQL", "Framer Motion"]
+  },
+  {
+    id: 3,
+    title: "UI Engineer",
+    company: "Airbnb",
+    period: "2018 - 2021",
+    description: "Developed key components of the design system and waiting side applications. Focused on animation fluidity and cross-browser compatibility.",
+    achievements: [
+      "Built the 'Experiences' booking flow from 0 to 1",
+      "Optimized animation frame rates to constant 60fps on mobile",
+      "Authored 5 internal libraries for date manipulation and i18n"
+    ],
+    techStack: ["React", "Redux", "SCSS", "Jest"]
+  }
+];
 
-      {/* Timeline Items */}
-      <div className="relative">
-        {timelineData.map((item, index) => (
-          <TimelineItem
-            key={index}
-            item={item}
-            index={index}
-            isLast={index === timelineData.length - 1}
-          />
-        ))}
+export function Timeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  return (
+    <section id="history" className="py-32 bg-black relative overflow-hidden">
+      <div className="max-w-[1100px] mx-auto px-6 md:px-12 relative z-10" ref={containerRef}>
+
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-24"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+            Career <span className="text-zinc-500">History</span>
+          </h2>
+          <p className="text-zinc-500 max-w-lg mx-auto text-lg">
+            A non-linear journey through product engineering, design systems, and high-impact shipping.
+          </p>
+        </motion.div>
+
+        {/* Timeline Container */}
+        <div className="relative">
+          {/* The "Thread" - Central Line */}
+          <div
+            className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2"
+            style={{ background: 'linear-gradient(to bottom, transparent 0%, #27272a 10%, #27272a 90%, transparent 100%)' }}
+          >
+            <motion.div
+              style={{ height: lineHeight }}
+              className="w-full bg-gradient-to-b from-white via-white to-transparent shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+            />
+          </div>
+
+          <div className="space-y-16 md:space-y-32">
+            {timelineData.map((item, index) => (
+              <div key={item.id} className={`relative flex flex-col md:flex-row gap-8 md:gap-0 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+
+                {/* Timeline Dot */}
+                <div className="absolute left-[20px] md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black border-2 border-white rounded-full z-20 shadow-[0_0_10px_rgba(255,255,255,0.5)] mt-1.5 md:mt-0 group-hover:scale-125 transition-transform duration-300">
+                  <div className="absolute inset-0 bg-white rounded-full animate-ping opacity-20" />
+                </div>
+
+                {/* Content Side (Role & Achievements) */}
+                <div className="flex-1 md:w-1/2 pl-12 md:pl-0 md:px-16">
+                  <motion.div
+                    initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="group"
+                  >
+                    <div className="flex items-center gap-2 mb-2 md:hidden">
+                      <span className="text-xs font-mono text-zinc-400">{item.period}</span>
+                    </div>
+                    <h3 className="text-3xl font-bold text-white mb-2 group-hover:text-zinc-300 transition-colors">{item.title}</h3>
+                    <div className="text-zinc-400 font-medium mb-6 flex items-center gap-2 text-lg">
+                      <Briefcase className="w-5 h-5" />
+                      {item.company}
+                    </div>
+
+                    <p className="text-zinc-400 leading-relaxed mb-8 text-base">
+                      {item.description}
+                    </p>
+
+                    <ul className="space-y-4 mb-8">
+                      {item.achievements.map((achievement, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-zinc-300">
+                          <ChevronRight className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                          {achievement}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Tech Pill Integration */}
+                    <div className="flex flex-wrap gap-2">
+                      {item.techStack.map(tech => (
+                        <span key={tech} className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-zinc-500 bg-zinc-900 border border-zinc-800 rounded hover:border-zinc-600 hover:text-zinc-300 transition-colors cursor-default">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Date/Meta Side (Desktop Only - for Balance) */}
+                <div className="hidden md:flex flex-1 md:w-1/2 justify-end md:px-16 items-start">
+                  <motion.div
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className={`text-${index % 2 === 0 ? 'right' : 'left'} w-full relative`}
+                  >
+                    <div className={`text-8xl font-black text-white/[0.05] select-none absolute top-0 ${index % 2 === 0 ? 'right-0' : 'left-0'} -z-10 leading-none`}>
+                      {item.period.split(' ')[0]}
+                    </div>
+                    <div className={`text-sm font-mono text-zinc-500 mt-4 border-t border-zinc-800 pt-4 inline-block ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+                      {item.period}
+                      <br />
+                      <span className="text-xs text-zinc-700 uppercase tracking-widest mt-1 block">Full Time</span>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

@@ -58,35 +58,42 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.6,
-        delay: index * 0.12,
-        ease: [0.16, 1, 0.3, 1]
+        duration: 0.4,
+        delay: index * 0.08,
+        ease: [0.25, 0.8, 0.25, 1]
       }}
       viewport={{ once: true }}
       className="relative group"
     >
-      {/* Hover border reveal effect - mouse tracking glow */}
+      {/* Hover spotlight - subtle */}
       <motion.div
-        className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
         style={{
-          background: `radial-gradient(600px circle at ${mouseX}px ${mouseY}px, ${service.accentColor}30, transparent 40%)`,
+          background: `radial-gradient(400px circle at ${mouseX}px ${mouseY}px, ${service.accentColor}15, transparent 40%)`,
         }}
       />
 
-      {/* Card container */}
-      <div className="relative h-full bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-8 hover:border-white/20 transition-all duration-500 overflow-hidden min-h-[380px] flex flex-col group-hover:shadow-2xl">
-        {/* Atmospheric corner glow - top right */}
+      {/* Card container - simplified */}
+      <div className="relative h-full bg-zinc-900/80 border border-white/[0.08] rounded-xl p-6 hover:border-white/15 transition-all duration-200 overflow-hidden min-h-[340px] flex flex-col focus-within:ring-2 focus-within:ring-white/20 focus-within:ring-offset-2 focus-within:ring-offset-black">
+        {/* Subtle corner glow */}
         <div
-          className={`absolute -top-24 -right-24 w-56 h-56 bg-gradient-to-br ${service.color} opacity-[0.06] rounded-full blur-3xl group-hover:opacity-[0.15] group-hover:scale-125 transition-all duration-700`}
+          className={`absolute -top-20 -right-20 w-48 h-48 bg-gradient-to-br ${service.color} opacity-[0.07] rounded-full blur-3xl group-hover:opacity-[0.08] transition-opacity duration-300`}
         />
 
-        {/* Secondary glow - bottom left */}
-        <div
-          className={`absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-to-tr ${service.color} opacity-0 rounded-full blur-3xl group-hover:opacity-[0.1] transition-opacity duration-700`}
-        />
+        {/* Visual Fill - Varied patterns based on card type */}
+        {index % 2 === 0 ? (
+          // Dot Grid Pattern for Architecture/Code cards
+          <div className="absolute inset-0 z-0 opacity-[0.07] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+        ) : (
+          // Gradient Blob for Design/Creative cards
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-[60px]" />
+        )}
+
+        {/* Bottom gradient texture - adds depth */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
 
         {/* Animated gradient line at top */}
         <motion.div
@@ -99,13 +106,13 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           transition={{ duration: 1, delay: index * 0.1 + 0.3 }}
         />
 
-        <div className="relative z-10 flex flex-col h-full">
+        <div className="relative z-10 flex flex-col h-full transform-gpu" style={{ transform: "translateZ(20px)" }}>
           {/* Header with icon and NEW badge */}
           <div className="flex items-start justify-between mb-6">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ type: "spring", stiffness: 400 }}
-              className="w-16 h-16 rounded-2xl border-2 flex items-center justify-center relative overflow-hidden"
+              className="w-16 h-16 rounded-lg border-2 flex items-center justify-center relative overflow-hidden"
               style={{
                 borderColor: `${service.accentColor}40`,
                 background: `linear-gradient(135deg, ${service.accentColor}20, ${service.accentColor}05)`,
@@ -125,7 +132,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
               <motion.span
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider bg-gradient-to-r from-red-500/20 to-orange-500/20 text-red-400 border border-red-500/30 rounded-full shadow-[0_0_20px_rgba(239,68,68,0.3)]"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-white/20 text-white border border-white/20 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)]"
               >
                 <Sparkles className="w-3 h-3 animate-pulse" />
                 NEW!
@@ -139,7 +146,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           </h3>
 
           {/* Description */}
-          <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-6 group-hover:text-zinc-300 transition-colors flex-grow">
+          <p className="text-zinc-500 text-sm md:text-base leading-relaxed mb-6 group-hover:text-zinc-400 transition-colors flex-grow">
             {service.description}
           </p>
 
@@ -149,7 +156,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             {service.stats && (
               <div>
                 <div
-                  className="text-2xl font-black"
+                  className="text-2xl font-bold"
                   style={{ color: service.accentColor }}
                 >
                   {service.stats.value}
@@ -199,13 +206,13 @@ export function WhatIBuild() {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="inline-block text-[10px] uppercase tracking-[0.4em] text-[--accent] mb-8 px-5 py-2.5 border border-[--accent]/30 rounded-full font-semibold backdrop-blur-sm bg-[--accent]/5 shadow-[0_0_20px_rgba(255,107,0,0.1)]"
+          className="inline-block text-[10px] uppercase tracking-[0.4em] text-[--accent] mb-8 px-5 py-2.5 border border-[--accent]/30 rounded-full font-semibold backdrop-blur-sm bg-[--accent]/5 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
         >
           ✦ Services
         </motion.span>
 
         {/* Two-tone heading - V21 Style */}
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-600 tracking-tighter mb-6">
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6">
           <span className="text-zinc-500">Tailor Made</span>{" "}
           <span className="text-white">Solutions</span>
         </h2>
@@ -217,7 +224,7 @@ export function WhatIBuild() {
       </motion.div>
 
       {/* 2x2 Bento Grid with enhanced spacing */}
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {services.map((service, index) => (
           <ServiceCard key={service.title} service={service} index={index} />
         ))}
