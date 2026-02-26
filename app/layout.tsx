@@ -16,14 +16,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "John Doe - Design Engineer & Developer",
+  title: "Mark Lorenz Barangan - Design Engineer & Developer",
   description: "Building innovative digital experiences that people love. Full-stack developer passionate about creating seamless user experiences.",
   icons: {
     icon: "/favicon.ico",
   },
   manifest: "/manifest.json",
   openGraph: {
-    title: "John Doe - Design Engineer & Developer",
+    title: "Mark Lorenz Barangan - Design Engineer & Developer",
     description: "Building innovative digital experiences that people love.",
     type: "website",
   },

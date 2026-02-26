@@ -86,11 +86,10 @@ export function Footer() {
             </span>
           </div>
           <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">
-            Let's Build Something <span className="text-[--accent]">Scalable.</span>
+            Let&apos;s Build Something <span className="text-[--accent]">Scalable.</span>
           </h2>
           <p className="text-zinc-500 max-w-xl mx-auto text-base leading-relaxed">
-            Currently open to senior-level front-end roles or high-impact design systems projects.
-            I specialize in performance, shipping, and polish.
+            Currently open to senior-level front-end roles or high-impact design systems.
           </p>
 
           {/* Navigation Links */}
@@ -124,21 +123,21 @@ export function Footer() {
                 whileHover={{ rotate: 5, scale: 1.05 }}
                 className="w-14 h-14 rounded-lg bg-white text-black flex items-center justify-center font-bold text-lg shadow-[0_0_30px_rgba(255,255,255,0.2)]"
               >
-                JD
+                MB
               </motion.div>
               <div>
-                <div className="text-xl font-bold text-white">John Doe</div>
-                <div className="text-zinc-500 text-sm">hello@example.com</div>
+                <div className="text-xl font-bold text-white">Mark Lorenz Barangan</div>
+                <div className="text-zinc-500 text-sm">marklorenzbarangan@gmail.com</div>
               </div>
             </div>
 
             {/* Social Links */}
             <div className="flex gap-3 mb-8">
               {[
-                { icon: Github, href: "https://github.com" },
-                { icon: Twitter, href: "https://twitter.com" },
-                { icon: Linkedin, href: "https://linkedin.com" },
-                { icon: Mail, href: "mailto:hello@example.com" },
+                { icon: Github, href: "https://github.com/l9rins/" },
+                { icon: Twitter, href: "https://x.com/realmarquee_dev" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/l9rinsishere/" },
+                { icon: Mail, href: "mailto:marklorenzbarangan@gmail.com" },
               ].map(({ icon: Icon, href }, i) => (
                 <Magnetic key={i} strength={0.4}>
                   <motion.a
@@ -156,7 +155,7 @@ export function Footer() {
             {/* Location */}
             <div className="flex items-center gap-2 text-zinc-500 text-sm">
               <MapPin className="w-4 h-4" />
-              <span>San Francisco, CA</span>
+              <span>Cebu City, CB</span>
             </div>
           </motion.div>
 

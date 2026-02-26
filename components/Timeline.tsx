@@ -17,42 +17,42 @@ interface TimelineItem {
 const timelineData: TimelineItem[] = [
   {
     id: 1,
-    title: "Senior Product Engineer",
-    company: "Vercel (Contract)",
-    period: "2024 - Present",
-    description: "Leading the frontend architecture for next-generation developer tools. Focused on edge computing performance and collaborative features.",
+    title: "Full Stack Web Developer",
+    company: "Graham & Doddsville",
+    period: "August 2025 - November 2025",
+    description: "Architected a custom value investing education platform from the ground up to eliminate the client's reliance on third-party tools.",
     achievements: [
-      "Reduced build times by 40% through TurboRepo implementation",
-      "Architected the new collaborative comment system used by 50k+ devs",
-      "Mentored 3 junior engineers on React patterns and performance"
+      "Owned the complete frontend to backend development lifecycle.",
+      "Accelerated the project timeline by delivering the MVP two weeks ahead of schedule.",
+      "Designed and deployed a scalable architecture tailored to the client's specific educational needs."
     ],
-    techStack: ["Next.js", "TypeScript", "TurboRepo", "Rust"]
+    techStack: ["React", "Node.js", "Full Stack", "Web Architecture"]
   },
   {
     id: 2,
-    title: "Lead Frontend Developer",
-    company: "Stripe",
-    period: "2021 - 2024",
-    description: "Spearheaded the UI/UX overhaul of the checkout experience. Improved conversion rates and accessibility compliance across the platform.",
+    title: "Head of Creative Services",
+    company: "Wildcats Esports League",
+    period: "May 2025 - February 2026",
+    description: "Directed comprehensive event coverage and creative strategies for a major collegiate esports organization.",
     achievements: [
-      "Increased checkout conversion rate by 12% ($4M+ annual revenue)",
-      "Implemented a comprehensive design system used across 4 products",
-      "Achieved WCAG 2.1 AA compliance for core payment flows"
+      "Managed and led a 9-member creative team, directly driving a 40% increase in audience reach.",
+      "Secured and integrated high-profile sponsorships from industry giants like Globe Telecom and Mountain Dew.",
+      "Spearheaded the successful organization of a tri-school Esports League, uniting top collegiate talent."
     ],
-    techStack: ["React", "Babel", "GraphQL", "Framer Motion"]
+    techStack: ["Creative Direction", "Team Leadership", "Adobe Creative Suite", "Figma"]
   },
   {
     id: 3,
-    title: "UI Engineer",
-    company: "Airbnb",
-    period: "2018 - 2021",
-    description: "Developed key components of the design system and waiting side applications. Focused on animation fluidity and cross-browser compatibility.",
+    title: "Social Media Manager & Strategist",
+    company: "Freelance",
+    period: "July 2020 - February 2025",
+    description: "Managed and scaled digital presence for multiple brands targeting the United States market.",
     achievements: [
-      "Built the 'Experiences' booking flow from 0 to 1",
-      "Optimized animation frame rates to constant 60fps on mobile",
-      "Authored 5 internal libraries for date manipulation and i18n"
+      "Achieved over 830,000 views in a single 28-day period by successfully scaling two Facebook pages.",
+      "Drove a massive 1,000% increase in organic reach through strategic content deployment.",
+      "Generated over 53,000 engagements and managed 613+ direct messaging conversations for conversion."
     ],
-    techStack: ["React", "Redux", "SCSS", "Jest"]
+    techStack: ["Digital Strategy", "Meta Business Suite", "Growth Marketing", "Community Building"]
   }
 ];
 
@@ -79,8 +79,8 @@ export function Timeline() {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
             Career <span className="text-zinc-500">History</span>
           </h2>
-          <p className="text-zinc-500 max-w-lg mx-auto text-lg">
-            A non-linear journey through product engineering, design systems, and high-impact shipping.
+          <p className="text-zinc-500 max-w-lg mx-auto text-lg leading-relaxed">
+            A dynamic journey through full-stack development, creative team leadership, and high-impact digital strategy.
           </p>
         </motion.div>
 

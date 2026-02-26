@@ -33,12 +33,10 @@ import { Navbar } from "@/components/Navbar";
 import { WhatIBuild } from "@/components/WhatIBuild";
 import { TechHighlights } from "@/components/TechHighlights";
 import { FAQ } from "@/components/FAQ";
-import { CaseStudies } from "@/components/CaseStudies";
 import { GlowDivider } from "@/components/ui/GlowDivider";
 import { AnimatedGridBackground } from "@/components/ui/AnimatedGridBackground";
 import { StatsBar } from "@/components/ui/StatsCounter";
 import { HeroGraphic } from "@/components/ui/HeroGraphic";
-import { ProofOfWork } from "@/components/ProofOfWork";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -127,10 +125,10 @@ export default function Home() {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="text-4xl md:text-5xl lg:text-7xl font-semibold tracking-tighter mb-6 leading-[0.95]"
               >
-                <span className="text-zinc-400">Crafting</span>
+                <span className="text-zinc-400">Full Stack</span>
                 <br />
-                <span className="text-white">High-Performance </span>
-                <span className='text-gradient-animated'>Interfaces at Scale</span>
+                <span className="text-white">Engineer </span>
+                <span className='text-gradient-animated'>Building Scalable Systems</span>
               </motion.h1>
 
               <motion.p
@@ -163,14 +161,16 @@ export default function Home() {
                 View Work
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
-              <motion.button
+              <motion.a
+                href="/Barangan_Resume.pdf"
+                download="Barangan_Resume.pdf"
                 whileHover={{ scale: 1.05, borderColor: "rgba(255,255,255,0.6)" }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="border-2 border-white/30 text-white hover:bg-white/10 font-bold text-base px-8 py-4 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="border-2 border-white/30 text-white hover:bg-white/10 font-bold text-base px-8 py-4 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black cursor-pointer inline-flex items-center justify-center"
               >
-                Contact Me
-              </motion.button>
+                Download CV
+              </motion.a>
             </motion.div>
           </SpotlightCard>
 
@@ -189,7 +189,7 @@ export default function Home() {
             </motion.div>
             <div className="text-center">
               <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-1">Based In</p>
-              <p className="body font-semibold text-white text-lg">SF, CA</p>
+              <p className="body font-semibold text-white text-lg">CEBU, PH</p>
             </div>
           </SpotlightCard>
 
@@ -268,20 +268,6 @@ export default function Home() {
       {/* Standard Glow Divider */}
       <GlowDivider variant="standard" />
 
-      {/* Tech Highlights Section */}
-      <TechHighlights />
-
-      {/* Proof of Work Metrics */}
-      <GlowDivider variant="subtle" />
-      <ProofOfWork />
-
-      {/* Purple accent divider */}
-      <GlowDivider variant="subtle" />
-
-      {/* Case Studies Section */}
-      <CaseStudies />
-
-      {/* FAQ Section */}
       <FAQ />
 
       {/* Footer Section */}

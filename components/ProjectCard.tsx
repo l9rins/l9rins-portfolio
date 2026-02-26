@@ -20,6 +20,8 @@ interface ProjectProps {
     image: string;
     video: string;
     link: string;
+    github?: string;
+    stats?: { label: string; value: string }[];
     color: string;
   };
   featured?: boolean;
@@ -173,18 +175,29 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
 
               {/* Mock Stats */}
               <div className="grid grid-cols-3 gap-4 py-4 border-t border-b border-white/5">
-                <div className="text-center">
-                  <div className="text-xl font-bold text-white">4.2M</div>
-                  <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Users</div>
-                </div>
-                <div className="text-center border-x border-white/5">
-                  <div className="text-xl font-bold text-white">99%</div>
-                  <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Uptime</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-xl font-bold text-white">0.8s</div>
-                  <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Load Time</div>
-                </div>
+                {project.stats ? (
+                  project.stats.map((s) => (
+                    <div key={s.label} className="text-center group/stat">
+                      <div className="text-xl font-bold text-white group-hover/stat:text-[--accent] transition-colors">{s.value}</div>
+                      <div className="text-[10px] text-zinc-500 uppercase tracking-wider">{s.label}</div>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-white">4.2M</div>
+                      <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Users</div>
+                    </div>
+                    <div className="text-center border-x border-white/5">
+                      <div className="text-xl font-bold text-white">99%</div>
+                      <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Uptime</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-white">0.8s</div>
+                      <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Load Time</div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
@@ -206,7 +219,9 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
                 <ArrowUpRight className="w-4 h-4" />
               </motion.a>
               <motion.a
-                href="#"
+                href={project.github || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm text-white bg-white/5 border border-white/10 hover:border-white/20 transition-all min-h-[48px]"
@@ -285,27 +300,28 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
       <div className="absolute inset-0 z-30 p-5 flex flex-col justify-between">
         {/* Top: Action buttons */}
         <div className="flex justify-end gap-2 translate-y-[-20px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center"
-          >
-            <Eye className="w-4 h-4" />
-          </motion.button>
           <motion.a
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-2.5 backdrop-blur-md border rounded-full transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center"
-            style={{
-              backgroundColor: `rgba(255, 255, 255, 0.15)`,
-              borderColor: `rgba(255, 255, 255, 0.25)`,
-            }}
+            className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center"
           >
-            <ArrowUpRight className="w-4 h-4 text-white" />
+            <Eye className="w-4 h-4" />
           </motion.a>
+          {project.github && (
+            <motion.a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center"
+            >
+              <Github className="w-4 h-4" />
+            </motion.a>
+          )}
         </div>
 
         {/* Bottom: Title & Info */}
@@ -326,9 +342,21 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
             ))}
           </div>
 
-          <p className="text-zinc-400 text-xs line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-150">
+          <p className="text-zinc-400 text-xs line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-150 mb-3">
             {project.description}
           </p>
+
+          {/* Project Stats - show on hover */}
+          {project.stats && (
+            <div className="flex justify-between gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 py-2 border-t border-white/5">
+              {project.stats.map((s) => (
+                <div key={s.label} className="flex flex-col">
+                  <span className="text-white font-bold text-[10px]">{s.value}</span>
+                  <span className="text-zinc-500 text-[8px] uppercase tracking-tighter">{s.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
