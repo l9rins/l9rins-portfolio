@@ -115,16 +115,18 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
             </div>
 
             {/* Video layer */}
-            <div className="absolute inset-0 z-10">
-              <video
-                ref={videoRef}
-                src={project.video}
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {project.video && (
+              <div className="absolute inset-0 z-10">
+                <video
+                  ref={videoRef}
+                  src={project.video}
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
 
             {/* Colored overlay on hover */}
             <motion.div
@@ -284,17 +286,19 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
       </div>
 
       {/* Video layer */}
-      <div className="absolute inset-0 z-10">
-        <video
-          ref={videoRef}
-          src={project.video}
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-      </div>
+      {project.video && (
+        <div className="absolute inset-0 z-10">
+          <video
+            ref={videoRef}
+            src={project.video}
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        </div>
+      )}
 
       {/* Colored glow overlay */}
       <motion.div
