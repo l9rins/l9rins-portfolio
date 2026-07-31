@@ -50,16 +50,16 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50"
       >
         {/* Desktop Nav */}
         <motion.div
-          className={`hidden md:flex h-14 px-2 rounded-full backdrop-blur-xl border items-center gap-1 transition-all duration-500 ${
+          className={`hidden md:flex h-10 px-1.5 rounded-full backdrop-blur-xl border items-center gap-0.5 transition-all duration-300 ${
             isScrolled
-              ? "bg-black/50 border-white/15 shadow-[0_0_30px_rgba(0,0,0,0.5)]"
+              ? "bg-black/50 border-white/15 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
               : "bg-black/40 border-white/10"
           }`}
           style={{ opacity: navOpacity }}
@@ -68,20 +68,20 @@ export function Navbar() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_35px_rgba(255,255,255,0.4)] transition-shadow"
+              className="bg-white text-black px-4 py-1.5 rounded-full text-[11px] font-bold shadow-[0_0_15px_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.3)] transition-shadow"
               onClick={() => scrollToSection("contact")}
             >
               MB
             </motion.button>
           </Magnetic>
 
-          <div className="flex items-center gap-1 mx-2">
+          <div className="flex items-center gap-0.5 mx-1">
             {navLinks.map((link) => (
               <Magnetic key={link.id} strength={0.5}>
                 <motion.button
                   onClick={() => scrollToSection(link.id)}
-                  className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 z-10 ${
-                    activeSection === link.id ? "text-black" : "text-zinc-400 hover:text-white"
+                  className={`relative px-3 py-1.5 text-[11px] font-medium rounded-full transition-all duration-200 z-10 ${
+                    activeSection === link.id ? "text-black" : "text-zinc-500 hover:text-white"
                   }`}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -98,48 +98,48 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="w-px h-6 bg-white/10" />
+          <div className="w-px h-4 bg-white/[0.08]" />
 
           <Magnetic strength={0.2}>
             <motion.button
               onClick={() => scrollToSection("contact")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative flex items-center gap-2 px-5 py-2 ml-1 mr-1 bg-white text-black text-sm font-bold rounded-full overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-300 min-h-[48px]"
+              className="group relative flex items-center gap-1.5 px-4 py-1.5 ml-0.5 mr-0.5 bg-white text-black text-[11px] font-bold rounded-full overflow-hidden shadow-[0_0_15px_rgba(255,255,255,0.15)] transition-all duration-200"
             >
               <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-black/10 opacity-30 animate-[shimmer_2s_infinite]" />
               <span className="relative z-10">Let&apos;s Talk</span>
-              <ArrowRight className="w-4 h-4 relative z-10" />
+              <ArrowRight className="w-3 h-3 relative z-10" />
             </motion.button>
           </Magnetic>
         </motion.div>
       </motion.nav>
 
-      {/* Mobile Nav - Floating pill */}
-      <div className="md:hidden fixed top-4 left-4 right-4 z-50">
+      {/* Mobile Nav */}
+      <div className="md:hidden fixed top-3 left-3 right-3 z-50">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className={`flex items-center justify-between h-14 px-4 rounded-2xl backdrop-blur-xl border transition-all duration-500 ${
+          className={`flex items-center justify-between h-11 px-3 rounded-xl backdrop-blur-xl border transition-all duration-300 ${
             isScrolled
-              ? "bg-black/60 border-white/15 shadow-[0_0_30px_rgba(0,0,0,0.5)]"
+              ? "bg-black/60 border-white/15 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
               : "bg-black/40 border-white/10"
           }`}
         >
           <button
             onClick={() => scrollToSection("contact")}
-            className="bg-white text-black px-4 py-1.5 rounded-full text-sm font-bold"
+            className="bg-white text-black px-3 py-1 rounded-full text-[11px] font-bold"
           >
             MB
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
+            className="w-8 h-8 rounded-lg bg-white/5 border border-white/[0.06] flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
           >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </motion.div>
       </div>
@@ -148,18 +148,18 @@ export function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden fixed top-20 left-4 right-4 z-50 bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.15 }}
+            className="md:hidden fixed top-16 left-3 right-3 z-50 bg-zinc-900/95 backdrop-blur-xl border border-white/[0.08] rounded-xl p-3 shadow-2xl"
           >
-            <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
+            <nav className="flex flex-col gap-0.5" aria-label="Mobile navigation">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className={`text-left px-4 py-3 rounded-xl text-base font-medium transition-all ${
+                  className={`text-left px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                     activeSection === link.id
                       ? "bg-white text-black"
                       : "text-zinc-400 hover:text-white hover:bg-white/5"
@@ -168,13 +168,13 @@ export function Navbar() {
                   {link.label}
                 </button>
               ))}
-              <div className="h-px bg-white/10 my-2" />
+              <div className="h-px bg-white/[0.06] my-1.5" />
               <button
                 onClick={() => scrollToSection("contact")}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-white text-black font-bold rounded-xl"
+                className="flex items-center justify-center gap-1.5 px-3 py-2 bg-white text-black font-bold rounded-lg text-xs"
               >
                 Let&apos;s Talk
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3 h-3" />
               </button>
             </nav>
           </motion.div>

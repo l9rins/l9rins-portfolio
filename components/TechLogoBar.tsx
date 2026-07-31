@@ -19,19 +19,18 @@ const techLogos = [
 
 /**
  * TechLogoBar - Horizontal scrolling tech trust bar
- * Aniq UI inspired: minimal logos between hero and content
  */
 export function TechLogoBar() {
     const doubled = [...techLogos, ...techLogos];
 
     return (
-        <div className="relative w-full py-8 overflow-hidden">
+        <div className="relative w-full py-5 overflow-hidden">
             {/* Fade masks */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
             <motion.div
-                className="flex gap-10 items-center"
+                className="flex gap-8 items-center"
                 animate={{ x: ['0%', '-50%'] }}
                 transition={{
                     x: {
@@ -45,7 +44,7 @@ export function TechLogoBar() {
                 {doubled.map((tech, i) => (
                     <div
                         key={`${tech.name}-${i}`}
-                        className="flex-shrink-0 text-[11px] font-mono text-zinc-600 uppercase tracking-widest select-none"
+                        className="flex-shrink-0 text-[9px] font-mono text-zinc-700 uppercase tracking-widest select-none"
                     >
                         {tech.abbr}
                     </div>

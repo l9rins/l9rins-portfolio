@@ -50,15 +50,15 @@ const testimonials: Testimonial[] = [
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
     return (
-        <div className="flex-shrink-0 w-[300px] mx-3 p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
-            <p className="text-sm text-zinc-400 leading-relaxed mb-4">&ldquo;{testimonial.quote}&rdquo;</p>
-            <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
-                    <span className="text-[10px] font-mono text-zinc-500">{testimonial.initials}</span>
+        <div className="flex-shrink-0 w-[260px] mx-2 p-3.5 rounded-xl border border-white/[0.05] bg-white/[0.015] backdrop-blur-sm hover:border-white/[0.10] transition-colors duration-200">
+            <p className="text-[11px] text-zinc-400 leading-relaxed mb-3">&ldquo;{testimonial.quote}&rdquo;</p>
+            <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-white/[0.06] flex items-center justify-center">
+                    <span className="text-[8px] font-mono text-zinc-600">{testimonial.initials}</span>
                 </div>
                 <div>
-                    <p className="text-xs font-medium text-zinc-300">{testimonial.name}</p>
-                    <p className="text-[10px] text-zinc-600">{testimonial.role}</p>
+                    <p className="text-[10px] font-medium text-zinc-400">{testimonial.name}</p>
+                    <p className="text-[8px] text-zinc-600">{testimonial.role}</p>
                 </div>
             </div>
         </div>
@@ -66,22 +66,22 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 }
 
 /**
- * TestimonialMarquee - Auto-scrolling testimonials inspired by Aniq UI
+ * TestimonialMarquee - Auto-scrolling testimonials
  */
 export function TestimonialMarquee() {
     const doubled = [...testimonials, ...testimonials];
 
     return (
-        <section className="relative py-20 overflow-hidden">
-            <div className="text-center mb-10">
-                <h2 className="text-sm font-mono text-zinc-500 uppercase tracking-widest mb-2">What People Say</h2>
-                <div className="w-8 h-[1px] bg-white/10 mx-auto" />
+        <section className="relative py-12 overflow-hidden">
+            <div className="text-center mb-6">
+                <h2 className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-1.5">What People Say</h2>
+                <div className="w-6 h-px bg-white/10 mx-auto" />
             </div>
 
             <div className="relative">
-                {/* Left/right fade masks */}
-                <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                {/* Fade masks */}
+                <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
                 <motion.div
                     className="flex"

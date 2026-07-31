@@ -1,4 +1,3 @@
-// components/ProjectsSection.tsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -20,42 +19,40 @@ export function ProjectsSection() {
   return (
     <motion.section
       id="work"
-      className="relative z-10 py-14 max-w-7xl mx-auto px-4"
-      initial={{ opacity: 0, y: 50 }}
+      className="relative z-10 py-10 max-w-7xl mx-auto px-4"
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
       viewport={{ once: true }}
     >
-      {/* Section Header - V21 Studio style */}
-      <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 gap-6">
+      {/* Section Header */}
+      <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-4">
         <div>
-          {/* Label */}
           <motion.span
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block text-[10px] uppercase tracking-[0.4em] text-[--accent] mb-4 font-semibold"
+            className="inline-block text-[9px] uppercase tracking-[0.4em] text-[--accent] mb-3 font-medium"
           >
             ✦ Portfolio
           </motion.span>
 
-          {/* Two-tone heading */}
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white mb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter text-white mb-2"
           >
             <span className="text-zinc-500">Selected</span>{" "}
             <span className="text-white">Works</span>
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-zinc-500 max-w-lg text-sm md:text-base leading-relaxed"
+            className="text-zinc-500 max-w-md text-xs md:text-sm leading-relaxed"
           >
             A collection of digital products focused on{' '}
             <span className="text-white font-medium">interaction</span>
@@ -64,23 +61,23 @@ export function ProjectsSection() {
           </motion.p>
         </div>
 
-        {/* Filter Tabs - Enhanced */}
+        {/* Filter Tabs */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 12 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="flex gap-2 bg-zinc-900/60 p-1.5 rounded-full border border-white/10 backdrop-blur-xl"
+          className="flex gap-1 bg-zinc-900/60 p-1 rounded-full border border-white/[0.06] backdrop-blur-xl"
         >
           {filters.map((filter) => (
             <Magnetic key={filter} strength={0.3}>
               <motion.button
                 onClick={() => setActiveFilter(filter)}
-                className={`relative px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${activeFilter === filter
+                className={`relative px-4 py-1.5 text-[11px] font-medium rounded-full transition-all duration-200 ${activeFilter === filter
                   ? 'text-black'
-                  : 'text-zinc-400 hover:text-white'
+                  : 'text-zinc-500 hover:text-white'
                   }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
                 {activeFilter === filter && (
                   <motion.div
@@ -96,24 +93,24 @@ export function ProjectsSection() {
         </motion.div>
       </div>
 
-      {/* Featured Project (First project larger) */}
+      {/* Featured Project */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mb-8"
+        className="mb-5"
       >
         <ProjectCard project={filteredProjects[0]} featured />
       </motion.div>
 
       {/* Project Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredProjects.slice(1).map((project, index) => (
           <motion.div
             key={project.id}
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
+            transition={{ duration: 0.4, delay: index * 0.08 }}
             viewport={{ once: true }}
           >
             <ProjectCard project={project} />
@@ -121,24 +118,24 @@ export function ProjectsSection() {
         ))}
       </div>
 
-      {/* View All Projects CTA */}
+      {/* View All */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="flex justify-center mt-16"
+        className="flex justify-center mt-10"
       >
         <Magnetic>
           <motion.a
             href="https://github.com/l9rins?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(255, 255, 255, 0.1)" }}
+            whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-3 px-8 py-4 bg-zinc-900/80 border border-white/10 rounded-full text-white font-medium hover:border-white/30 transition-all duration-300 group"
+            className="flex items-center gap-2 px-6 py-2.5 bg-zinc-900/80 border border-white/[0.06] rounded-full text-white text-xs font-medium hover:border-white/20 transition-all duration-200 group"
           >
             View All Projects
-            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
           </motion.a>
         </Magnetic>
       </motion.div>

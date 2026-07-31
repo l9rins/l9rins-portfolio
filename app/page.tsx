@@ -61,34 +61,34 @@ export default function Home() {
       </div>
 
       {/* ===== HERO SECTION ===== */}
-      <section id="hero" className="relative z-10 min-h-screen pt-24 pb-12 max-w-[1050px] mx-auto px-6 md:px-12 flex flex-col">
+      <section id="hero" className="relative z-10 min-h-screen pt-20 pb-8 max-w-[1050px] mx-auto px-6 md:px-10 flex flex-col">
 
-        <div className="absolute inset-0 z-0 h-[600px] w-full pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute inset-0 z-0 h-[500px] w-full pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-grid-white mask-gradient" />
         </div>
 
-        <div className="relative z-10 flex-1 grid grid-cols-1 md:grid-cols-12 gap-3 auto-rows-auto">
+        <div className="relative z-10 flex-1 grid grid-cols-1 md:grid-cols-12 gap-2 auto-rows-auto">
 
           {/* BIO CARD */}
-          <SpotlightCard className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[420px]">
-            <div className="p-2">
+          <SpotlightCard className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[360px]">
+            <div className="p-1.5">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.1 }}
-                className="mb-6"
+                className="mb-4"
               >
-                <Badge className="bg-[--accent]/10 text-[--accent] border-[--accent]/30 px-4 py-1.5 text-xs font-mono tracking-wide uppercase animate-border-glow">
-                  <Sparkles className="w-3 h-3 mr-2" />
+                <Badge className="bg-[--accent]/10 text-[--accent] border-[--accent]/30 px-3 py-1 text-[10px] font-mono tracking-wide uppercase animate-border-glow">
+                  <Sparkles className="w-2.5 h-2.5 mr-1.5" />
                   Open to work
                 </Badge>
               </motion.div>
 
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-4xl md:text-5xl lg:text-7xl font-semibold tracking-tighter mb-6 leading-[0.95]"
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tighter mb-4 leading-[0.95]"
               >
                 <span className="text-zinc-400">Full Stack</span>
                 <br />
@@ -97,39 +97,39 @@ export default function Home() {
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className="body text-zinc-500 max-w-xl mt-4 mb-8 text-base md:text-lg leading-relaxed"
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="body text-zinc-500 max-w-lg mt-3 mb-6 text-xs md:text-sm leading-relaxed"
               >
-                I specialize in bridging the gap between <span className="text-white font-semibold">complex engineering</span> and <span className="text-white font-semibold">high-end design</span>.
-                Whether architecting full-stack apps or optimizing UI, I don&apos;t just build interfaces; I engineer experiences that achieve a <span className="text-[--accent] font-bold">99+ Lighthouse score</span> by default.
+                I bridge <span className="text-white font-medium">complex engineering</span> and <span className="text-white font-medium">high-end design</span>.
+                I engineer experiences that hit a <span className="text-[--accent] font-semibold">99+ Lighthouse score</span> by default.
               </motion.p>
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
-              className="flex gap-4 mt-auto flex-wrap"
+              transition={{ delay: 0.7 }}
+              className="flex gap-3 mt-auto flex-wrap"
             >
               <motion.button
                 onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
-                whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(255, 255, 255, 0.3)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(255, 255, 255, 0.2)" }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="flex items-center gap-2 bg-white text-black font-bold text-base px-8 py-4 rounded-lg shadow-[0_0_20px_rgba(255,255,255,0.15)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="flex items-center gap-1.5 bg-white text-black font-semibold text-xs px-5 py-2.5 rounded-lg shadow-[0_0_15px_rgba(255,255,255,0.1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 View Work
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </motion.button>
               <motion.a
                 href="/Barangan_Resume.pdf"
                 download="Barangan_Resume.pdf"
-                whileHover={{ scale: 1.05, borderColor: "rgba(255,255,255,0.6)" }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03, borderColor: "rgba(255,255,255,0.5)" }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="border-2 border-white/30 text-white hover:bg-white/10 font-bold text-base px-8 py-4 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black cursor-pointer inline-flex items-center justify-center"
+                className="border border-white/20 text-white hover:bg-white/5 font-semibold text-xs px-5 py-2.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black cursor-pointer inline-flex items-center justify-center"
               >
                 Download CV
               </motion.a>
@@ -137,61 +137,62 @@ export default function Home() {
           </SpotlightCard>
 
           {/* HERO MOCKUPS */}
-          <SpotlightCard delay={1.2} className="md:col-span-4 h-full min-h-[200px] flex flex-col items-center justify-center group overflow-hidden">
+          <SpotlightCard delay={1.0} className="md:col-span-4 h-full min-h-[180px] flex flex-col items-center justify-center group overflow-hidden">
             <HeroMockups />
           </SpotlightCard>
 
           {/* MAP CARD */}
-          <SpotlightCard delay={1.4} className="md:col-span-2 h-full min-h-[180px] flex flex-col items-center justify-center">
+          <SpotlightCard delay={1.2} className="md:col-span-2 h-full min-h-[140px] flex flex-col items-center justify-center hover-glow-subtle cursor-default">
             <motion.div
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              className="mb-3"
+              whileHover={{ scale: 1.15, rotate: 8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+              className="mb-2"
             >
-              <MapPin className="w-7 h-7 text-white" />
+              <MapPin className="w-5 h-5 text-white" />
             </motion.div>
             <div className="text-center">
-              <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-1">Based In</p>
-              <p className="body font-semibold text-white text-lg">CEBU, PH</p>
+              <p className="font-mono text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-0.5">Based In</p>
+              <p className="body font-medium text-white text-sm">CEBU, PH</p>
             </div>
           </SpotlightCard>
 
           {/* MUSIC CARD */}
-          <SpotlightCard delay={1.6} className="md:col-span-2 h-full min-h-[180px] flex flex-col items-center justify-center neumorphic-dark border-none">
-            <div className="flex gap-1 items-end mb-3 h-5" aria-hidden="true">
+          <SpotlightCard delay={1.4} className="md:col-span-2 h-full min-h-[140px] flex flex-col items-center justify-center neumorphic-dark border-none hover-glow-subtle cursor-default">
+            <div className="flex gap-[3px] items-end mb-2 h-4" aria-hidden="true">
               {[1, 2, 3, 4].map(i => (
                 <motion.div
                   key={i}
-                  className="w-1.5 bg-white rounded-full"
-                  animate={{ height: [8, 20, 8] }}
-                  transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.1 }}
+                  className="w-1 bg-white rounded-full"
+                  animate={{ height: [6, 16, 6] }}
+                  transition={{ repeat: Infinity, duration: 0.7, delay: i * 0.08 }}
                 />
               ))}
             </div>
             <div className="text-center">
-              <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-1">Listening</p>
-              <p className="body font-semibold text-white text-lg">Lo-Fi</p>
+              <p className="font-mono text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-0.5">Listening</p>
+              <p className="body font-medium text-white text-sm">Lo-Fi</p>
             </div>
           </SpotlightCard>
 
           {/* TECH STACK */}
-          <SpotlightCard delay={1.8} id="stack" className="md:col-span-12 p-4 min-h-[80px]">
-            <div className="flex items-center gap-4 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
+          <SpotlightCard delay={1.6} id="stack" className="md:col-span-12 p-3 min-h-[60px]">
+            <div className="flex items-center gap-3 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
               <TechMarquee />
-              <span className="font-mono text-xs text-zinc-500 ml-4 uppercase tracking-[0.2em]">Tech Stack</span>
+              <span className="font-mono text-[10px] text-zinc-600 ml-3 uppercase tracking-[0.2em]">Tech Stack</span>
             </div>
           </SpotlightCard>
 
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.0, duration: 0.8 }}
-          className="mt-12 pt-8 border-t border-white/5"
+          transition={{ delay: 1.8, duration: 0.6 }}
+          className="mt-8 pt-6 border-t border-white/5"
         >
           <StatsBar
             stats={heroStats}
-            className="bg-zinc-900/30 backdrop-blur-sm rounded-3xl border border-white/5"
+            className="bg-zinc-900/30 backdrop-blur-sm rounded-2xl border border-white/5"
           />
         </motion.div>
       </section>
@@ -199,13 +200,13 @@ export default function Home() {
       <GlowDivider />
 
       {/* Tech Logo Trust Bar */}
-      <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
+      <div className={`${contentMaxWidth} mx-auto px-6 md:px-10`}>
         <TechLogoBar />
       </div>
 
       {/* What I Build Section */}
-      <section id="services" className="relative z-10 bg-black py-1">
-        <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
+      <section id="services" className="relative z-10 bg-black py-0.5">
+        <div className={`${contentMaxWidth} mx-auto px-6 md:px-10`}>
           <WhatIBuild />
         </div>
       </section>
@@ -213,8 +214,8 @@ export default function Home() {
       <GlowDivider />
 
       {/* Projects Section */}
-      <section className="relative z-10 bg-black py-14">
-        <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
+      <section className="relative z-10 bg-black py-10">
+        <div className={`${contentMaxWidth} mx-auto px-6 md:px-10`}>
           <ProjectsSection />
         </div>
       </section>
@@ -222,15 +223,15 @@ export default function Home() {
       <GlowDivider />
 
       {/* Testimonials */}
-      <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
+      <div className={`${contentMaxWidth} mx-auto px-6 md:px-10`}>
         <TestimonialMarquee />
       </div>
 
       <GlowDivider />
 
       {/* Timeline Section */}
-      <section id="about" className="relative z-10 bg-black py-14">
-        <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
+      <section id="about" className="relative z-10 bg-black py-10">
+        <div className={`${contentMaxWidth} mx-auto px-6 md:px-10`}>
           <Timeline />
         </div>
       </section>

@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Briefcase, Calendar, ChevronRight } from "lucide-react";
+import { Briefcase, ChevronRight } from "lucide-react";
 
 interface TimelineItem {
   id: number;
@@ -20,11 +20,11 @@ const timelineData: TimelineItem[] = [
     title: "Full Stack Web Developer",
     company: "Graham & Doddsville",
     period: "August 2025 - November 2025",
-    description: "Architected a custom value investing education platform from the ground up to eliminate the client's reliance on third-party tools.",
+    description: "Architected a custom value investing education platform from the ground up.",
     achievements: [
       "Owned the complete frontend to backend development lifecycle.",
       "Accelerated the project timeline by delivering the MVP two weeks ahead of schedule.",
-      "Designed and deployed a scalable architecture tailored to the client's specific educational needs."
+      "Designed and deployed a scalable architecture tailored to the client's needs."
     ],
     techStack: ["React", "Node.js", "Full Stack", "Web Architecture"]
   },
@@ -35,9 +35,9 @@ const timelineData: TimelineItem[] = [
     period: "May 2025 - February 2026",
     description: "Directed comprehensive event coverage and creative strategies for a major collegiate esports organization.",
     achievements: [
-      "Managed and led a 9-member creative team, directly driving a 40% increase in audience reach.",
-      "Secured and integrated high-profile sponsorships from industry giants like Globe Telecom and Mountain Dew.",
-      "Spearheaded the successful organization of a tri-school Esports League, uniting top collegiate talent."
+      "Managed and led a 9-member creative team, driving a 40% increase in audience reach.",
+      "Secured and integrated high-profile sponsorships from Globe Telecom and Mountain Dew.",
+      "Spearheaded the successful organization of a tri-school Esports League."
     ],
     techStack: ["Creative Direction", "Team Leadership", "Adobe Creative Suite", "Figma"]
   },
@@ -48,9 +48,9 @@ const timelineData: TimelineItem[] = [
     period: "July 2020 - February 2025",
     description: "Managed and scaled digital presence for multiple brands targeting the United States market.",
     achievements: [
-      "Achieved over 830,000 views in a single 28-day period by successfully scaling two Facebook pages.",
+      "Achieved over 830,000 views in a single 28-day period by scaling two Facebook pages.",
       "Drove a massive 1,000% increase in organic reach through strategic content deployment.",
-      "Generated over 53,000 engagements and managed 613+ direct messaging conversations for conversion."
+      "Generated over 53,000 engagements and managed 613+ direct messaging conversations."
     ],
     techStack: ["Digital Strategy", "Meta Business Suite", "Growth Marketing", "Community Building"]
   }
@@ -66,81 +66,81 @@ export function Timeline() {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="history" className="py-32 bg-black relative overflow-hidden">
-      <div className="max-w-[1100px] mx-auto px-6 md:px-12 relative z-10" ref={containerRef}>
+    <section id="history" className="py-16 bg-black relative overflow-hidden">
+      <div className="max-w-[1100px] mx-auto px-6 md:px-10 relative z-10" ref={containerRef}>
 
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-24"
+          className="text-center mb-14"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight">
             Career <span className="text-zinc-500">History</span>
           </h2>
-          <p className="text-zinc-500 max-w-lg mx-auto text-lg leading-relaxed">
-            A dynamic journey through full-stack development, creative team leadership, and high-impact digital strategy.
+          <p className="text-zinc-500 max-w-md mx-auto text-xs md:text-sm leading-relaxed">
+            A dynamic journey through full-stack development, creative leadership, and digital strategy.
           </p>
         </motion.div>
 
-        {/* Timeline Container */}
+        {/* Timeline */}
         <div className="relative">
-          {/* The "Thread" - Central Line */}
+          {/* Central Line */}
           <div
-            className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2"
+            className="absolute left-[18px] md:left-1/2 top-0 bottom-0 w-[1px] -translate-x-1/2"
             style={{ background: 'linear-gradient(to bottom, transparent 0%, #27272a 10%, #27272a 90%, transparent 100%)' }}
           >
             <motion.div
               style={{ height: lineHeight }}
-              className="w-full bg-gradient-to-b from-white via-white to-transparent shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+              className="w-full bg-gradient-to-b from-white via-white to-transparent shadow-[0_0_10px_rgba(255,255,255,0.4)]"
             />
           </div>
 
-          <div className="space-y-16 md:space-y-32">
+          <div className="space-y-12 md:space-y-20">
             {timelineData.map((item, index) => (
-              <div key={item.id} className={`relative flex flex-col md:flex-row gap-8 md:gap-0 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+              <div key={item.id} className={`relative flex flex-col md:flex-row gap-6 md:gap-0 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
 
                 {/* Timeline Dot */}
-                <div className="absolute left-[20px] md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black border-2 border-white rounded-full z-20 shadow-[0_0_10px_rgba(255,255,255,0.5)] mt-1.5 md:mt-0 group-hover:scale-125 transition-transform duration-300">
+                <div className="absolute left-[18px] md:left-1/2 -translate-x-1/2 w-3 h-3 bg-black border-[1.5px] border-white rounded-full z-20 shadow-[0_0_8px_rgba(255,255,255,0.4)] mt-1.5 md:mt-0 group-hover:scale-125 transition-transform duration-200">
                   <div className="absolute inset-0 bg-white rounded-full animate-ping opacity-20" />
                 </div>
 
-                {/* Content Side (Role & Achievements) */}
-                <div className="flex-1 md:w-1/2 pl-12 md:pl-0 md:px-16">
+                {/* Content */}
+                <div className="flex-1 md:w-1/2 pl-10 md:pl-0 md:px-12">
                   <motion.div
-                    initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
                     className="group"
                   >
-                    <div className="flex items-center gap-2 mb-2 md:hidden">
-                      <span className="text-xs font-mono text-zinc-400">{item.period}</span>
+                    <div className="flex items-center gap-2 mb-1.5 md:hidden">
+                      <span className="text-[10px] font-mono text-zinc-500">{item.period}</span>
                     </div>
-                    <h3 className="text-3xl font-bold text-white mb-2 group-hover:text-zinc-300 transition-colors">{item.title}</h3>
-                    <div className="text-zinc-400 font-medium mb-6 flex items-center gap-2 text-lg">
-                      <Briefcase className="w-5 h-5" />
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-1 group-hover:text-zinc-300 transition-colors">{item.title}</h3>
+                    <div className="text-zinc-400 font-medium mb-3 flex items-center gap-1.5 text-xs">
+                      <Briefcase className="w-3.5 h-3.5" />
                       {item.company}
                     </div>
 
-                    <p className="text-zinc-400 leading-relaxed mb-8 text-base">
+                    <p className="text-zinc-400 leading-relaxed mb-4 text-xs">
                       {item.description}
                     </p>
 
-                    <ul className="space-y-4 mb-8">
+                    <ul className="space-y-2 mb-4">
                       {item.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-3 text-sm text-zinc-300">
-                          <ChevronRight className="w-4 h-4 text-white shrink-0 mt-0.5" aria-hidden="true" />
+                        <li key={i} className="flex items-start gap-2 text-[11px] text-zinc-300">
+                          <ChevronRight className="w-3 h-3 text-white shrink-0 mt-0.5" aria-hidden="true" />
                           {achievement}
                         </li>
                       ))}
                     </ul>
 
-                    {/* Tech Pill Integration */}
-                    <div className="flex flex-wrap gap-2">
+                    {/* Tech Pills */}
+                    <div className="flex flex-wrap gap-1.5">
                       {item.techStack.map(tech => (
-                        <span key={tech} className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-zinc-500 bg-zinc-900 border border-zinc-800 rounded hover:border-zinc-600 hover:text-zinc-300 transition-colors cursor-default">
+                        <span key={tech} className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-zinc-500 bg-zinc-900 border border-zinc-800 rounded hover:border-zinc-600 hover:text-zinc-300 transition-colors cursor-default">
                           {tech}
                         </span>
                       ))}
@@ -148,22 +148,22 @@ export function Timeline() {
                   </motion.div>
                 </div>
 
-                {/* Date/Meta Side (Desktop Only - for Balance) */}
-                <div className="hidden md:flex flex-1 md:w-1/2 justify-end md:px-16 items-start">
+                {/* Date Side (Desktop) */}
+                <div className="hidden md:flex flex-1 md:w-1/2 justify-end md:px-12 items-start">
                   <motion.div
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
                     className={`text-${index % 2 === 0 ? 'right' : 'left'} w-full relative`}
                   >
-                    <div className={`text-8xl font-black text-white/[0.05] select-none absolute top-0 ${index % 2 === 0 ? 'right-0' : 'left-0'} -z-10 leading-none`}>
+                    <div className={`text-6xl font-black text-white/[0.04] select-none absolute top-0 ${index % 2 === 0 ? 'right-0' : 'left-0'} -z-10 leading-none`}>
                       {item.period.split(' ')[0]}
                     </div>
-                    <div className={`text-sm font-mono text-zinc-500 mt-4 border-t border-zinc-800 pt-4 inline-block ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+                    <div className={`text-[11px] font-mono text-zinc-600 mt-3 border-t border-zinc-800 pt-3 inline-block ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
                       {item.period}
                       <br />
-                      <span className="text-xs text-zinc-700 uppercase tracking-widest mt-1 block">Full Time</span>
+                      <span className="text-[9px] text-zinc-700 uppercase tracking-widest mt-0.5 block">Full Time</span>
                     </div>
                   </motion.div>
                 </div>
