@@ -5,14 +5,7 @@ import { motion } from "framer-motion";
 import {
   Github, Twitter, Linkedin, Mail, Send, MapPin, Globe, ArrowUp, Check
 } from "lucide-react";
-import Link from "next/link";
 import { Magnetic } from "@/components/ui/Magnetic";
-
-const navLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-];
 
 export function Footer() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -62,19 +55,6 @@ export function Footer() {
             Currently open to senior-level front-end roles or high-impact design systems.
           </p>
 
-          {/* Navigation Links */}
-          <nav className="flex justify-center gap-6 mt-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-zinc-500 text-[11px] font-medium hover:text-white transition-colors relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-white group-hover:w-full transition-all duration-200" />
-              </Link>
-            ))}
-          </nav>
         </motion.div>
       </div>
 
