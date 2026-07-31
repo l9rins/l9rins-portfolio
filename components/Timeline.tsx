@@ -131,7 +131,7 @@ export function Timeline() {
                     <ul className="space-y-4 mb-8">
                       {item.achievements.map((achievement, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm text-zinc-300">
-                          <ChevronRight className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                          <ChevronRight className="w-4 h-4 text-white shrink-0 mt-0.5" aria-hidden="true" />
                           {achievement}
                         </li>
                       ))}

@@ -53,6 +53,7 @@ export function DeviceMockup({
                                 src={src}
                                 alt={alt}
                                 fill
+                                sizes="(max-width: 768px) 100vw, 800px"
                                 className="object-cover"
                             />
                         ) : children ? (
@@ -92,6 +93,7 @@ export function DeviceMockup({
                                     src={src}
                                     alt={alt}
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 280px"
                                     className="object-cover"
                                 />
                             ) : children ? (
@@ -132,6 +134,7 @@ export function DeviceMockup({
                                 src={src}
                                 alt={alt}
                                 fill
+                                sizes="(max-width: 768px) 100vw, 800px"
                                 className="object-cover"
                             />
                         ) : children ? (

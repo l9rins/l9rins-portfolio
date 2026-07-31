@@ -1,25 +1,10 @@
 "use client";
 
-import dynamic from 'next/dynamic'
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  Github,
-  Twitter,
-  Mail,
   MapPin,
-  Code,
-  User,
-  Heart,
-  ExternalLink,
-  Star,
-  Users,
-  Award,
-  Briefcase,
   Music,
-  Play,
   Sparkles,
   ArrowRight
 } from "lucide-react";
@@ -31,18 +16,12 @@ import { Footer } from "@/components/Footer";
 import { CommandMenu } from "@/components/CommandMenu";
 import { Navbar } from "@/components/Navbar";
 import { WhatIBuild } from "@/components/WhatIBuild";
-import { TechHighlights } from "@/components/TechHighlights";
 import { FAQ } from "@/components/FAQ";
 import { GlowDivider } from "@/components/ui/GlowDivider";
 import { AnimatedGridBackground } from "@/components/ui/AnimatedGridBackground";
 import { StatsBar } from "@/components/ui/StatsCounter";
 import { HeroGraphic } from "@/components/ui/HeroGraphic";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
-// V21-style credibility stats
 const heroStats = [
   { value: 50, suffix: "+", label: "Projects Shipped" },
   { value: 15, suffix: "M", label: "Users Impacted" },
@@ -50,34 +29,22 @@ const heroStats = [
   { value: 5, suffix: "+", label: "Years Experience" },
 ];
 
+const contentMaxWidth = "max-w-[1100px]";
+
 export default function Home() {
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [emailCopied, setEmailCopied] = useState(false);
-  const orb1Ref = useRef<HTMLDivElement>(null);
-  const orb2Ref = useRef<HTMLDivElement>(null);
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText("hello@example.com");
-    setEmailCopied(true);
-    setTimeout(() => setEmailCopied(false), 2000);
-  };
-
   return (
     <div className="min-h-screen bg-black page-spotlight text-white relative font-body">
-      {/* Navbar */}
       <Navbar />
 
       {/* Global Animated Grid Background */}
-      <div className="fixed inset-0 pointer-events-none z-0">
+      <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
         <AnimatedGridBackground variant="default" className="absolute inset-0" />
       </div>
 
-      {/* Stage Light - Creates "lit room" atmosphere */}
-      <div className="stage-light" />
+      <div className="stage-light" aria-hidden="true" />
 
-      {/* Background Subtle Glows - Monochrome */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Main subtle glow at top */}
+      {/* Background Subtle Glows */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
         <motion.div
           className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/[0.02] rounded-full blur-[150px]"
           animate={{
@@ -92,18 +59,16 @@ export default function Home() {
         />
       </div>
 
-      {/* ===== HERO SECTION - V21 STUDIO INSPIRED ===== */}
+      {/* ===== HERO SECTION ===== */}
       <section id="hero" className="relative z-10 min-h-screen pt-24 pb-12 max-w-[1050px] mx-auto px-6 md:px-12 flex flex-col">
 
-        {/* Grid Texture Layer - gives "void" scale reference */}
-        <div className="absolute inset-0 z-0 h-[600px] w-full pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 z-0 h-[600px] w-full pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-grid-white mask-gradient" />
         </div>
 
-        {/* Main Bento Grid */}
         <div className="relative z-10 flex-1 grid grid-cols-1 md:grid-cols-12 gap-3 auto-rows-auto">
 
-          {/* 1. BIO CARD: The "Anchor" - Enhanced */}
+          {/* BIO CARD */}
           <SpotlightCard className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[420px]">
             <div className="p-2">
               <motion.div
@@ -118,7 +83,6 @@ export default function Home() {
                 </Badge>
               </motion.div>
 
-              {/* V21-Style Large Typography */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -128,7 +92,7 @@ export default function Home() {
                 <span className="text-zinc-400">Full Stack</span>
                 <br />
                 <span className="text-white">Engineer </span>
-                <span className='text-gradient-animated'>Building Scalable Systems</span>
+                <span className="text-gradient-animated">Building Scalable Systems</span>
               </motion.h1>
 
               <motion.p
@@ -140,12 +104,8 @@ export default function Home() {
                 I specialize in bridging the gap between <span className="text-white font-semibold">complex engineering</span> and <span className="text-white font-semibold">high-end design</span>.
                 Whether architecting full-stack apps or optimizing UI, I don&apos;t just build interfaces; I engineer experiences that achieve a <span className="text-[--accent] font-bold">99+ Lighthouse score</span> by default.
               </motion.p>
-
-              {/* Status Badge - moved inline for cleaner look if preferred, but user just said update 'About Me' text. 
-                  The text above covers the 'Systems Thinker' requirement. */}
             </div>
 
-            {/* Buttons with monochrome styling */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -153,6 +113,7 @@ export default function Home() {
               className="flex gap-4 mt-auto flex-wrap"
             >
               <motion.button
+                onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
                 whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(255, 255, 255, 0.3)" }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -174,12 +135,12 @@ export default function Home() {
             </motion.div>
           </SpotlightCard>
 
-          {/* 2. HERO GRAPHIC - Visual Counterweight: Floating 3D Rings */}
+          {/* HERO GRAPHIC */}
           <SpotlightCard delay={1.2} className="md:col-span-4 h-full min-h-[200px] flex flex-col items-center justify-center group overflow-hidden">
             <HeroGraphic />
           </SpotlightCard>
 
-          {/* 3. MAP CARD - Staggered */}
+          {/* MAP CARD */}
           <SpotlightCard delay={1.4} className="md:col-span-2 h-full min-h-[180px] flex flex-col items-center justify-center">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
@@ -193,9 +154,9 @@ export default function Home() {
             </div>
           </SpotlightCard>
 
-          {/* 4. MUSIC CARD - Staggered */}
+          {/* MUSIC CARD */}
           <SpotlightCard delay={1.6} className="md:col-span-2 h-full min-h-[180px] flex flex-col items-center justify-center neumorphic-dark border-none">
-            <div className="flex gap-1 items-end mb-3 h-5">
+            <div className="flex gap-1 items-end mb-3 h-5" aria-hidden="true">
               {[1, 2, 3, 4].map(i => (
                 <motion.div
                   key={i}
@@ -211,7 +172,7 @@ export default function Home() {
             </div>
           </SpotlightCard>
 
-          {/* 5. TECH STACK - Late arrival */}
+          {/* TECH STACK */}
           <SpotlightCard delay={1.8} id="stack" className="md:col-span-12 p-4 min-h-[80px]">
             <div className="flex items-center gap-4 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
               <TechMarquee />
@@ -221,7 +182,6 @@ export default function Home() {
 
         </div>
 
-        {/* V21-Style Credibility Stats Bar - Final Anchor */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -235,45 +195,39 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Dramatic Glow Divider with particles */}
       <GlowDivider variant="dramatic" showParticles />
 
       {/* What I Build Section */}
       <section id="services" className="relative z-10 bg-black py-1">
-        <div className="max-w-[1100px] mx-auto px-6 md:px-12">
+        <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
           <WhatIBuild />
         </div>
       </section>
 
-      {/* Standard Glow Divider */}
       <GlowDivider variant="standard" />
 
       {/* Projects Section */}
       <section className="relative z-10 bg-black py-14">
-        <div className="max-w-[1100px] mx-auto px-6 md:px-12">
+        <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
           <ProjectsSection />
         </div>
       </section>
 
-      {/* Subtle Blue Divider for variety */}
       <GlowDivider variant="subtle" />
 
       {/* Timeline Section */}
       <section id="about" className="relative z-10 bg-black py-14">
-        <div className="max-w-[1100px] mx-auto px-6 md:px-12">
+        <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
           <Timeline />
         </div>
       </section>
 
-      {/* Standard Glow Divider */}
       <GlowDivider variant="standard" />
 
       <FAQ />
 
-      {/* Footer Section */}
       <Footer />
 
-      {/* Command Menu */}
       <CommandMenu />
     </div>
   );

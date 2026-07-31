@@ -1,60 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  Github, Twitter, Linkedin, Mail, Send, MapPin, Globe, ArrowUp,
-  Search, Plus, HelpCircle, FileText, Code, MessageCircle, Layers
+  Github, Twitter, Linkedin, Mail, Send, MapPin, Globe, ArrowUp, Check
 } from "lucide-react";
 import Link from "next/link";
-// components/ui/SuccessAnimation.tsx - Assuming it has colors, but for now removing import if unused or checking valid usage
-// Actually, let's keep it but maybe it needs monochrome update? 
-// For now, let's focus on visible Footer elements.
-import { SuccessAnimation } from "@/components/ui/SuccessAnimation";
 import { Magnetic } from "@/components/ui/Magnetic";
 
 const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "Templates", href: "#work" },
-  { label: "Blog", href: "#about" },
+  { label: "Home", href: "#hero" },
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
 ];
-
-const legalLinks = [
-  { label: "Privacy Policy", href: "#" },
-  { label: "Cookie Policy", href: "#" },
-  { label: "Terms & Conditions", href: "#" },
-  { label: "Return Policy", href: "#" },
-];
-
-
 
 export function Footer() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    // Trigger success animation
-    setShowSuccess(true);
-    // Reset form
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
+    const body = encodeURIComponent(formData.message + `\n\nFrom: ${formData.name}\nEmail: ${formData.email}`);
+    window.location.href = `mailto:marklorenzbarangan@gmail.com?subject=${subject}&body=${body}`;
+    setSubmitted(true);
     setFormData({ name: "", email: "", message: "" });
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(() => setSubmitted(false), 4000);
   };
 
   return (
     <footer id="contact" className="relative z-10 bg-black overflow-hidden">
-      {/* Bottom Stage Light - smooth fade instead of hard edge */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[300px] bg-gradient-to-t from-white/[0.03] to-transparent pointer-events-none" />
-
-      {/* Success Animation */}
-      <SuccessAnimation
-        show={showSuccess}
-        onComplete={() => setShowSuccess(false)}
-      />
       {/* Top glow divider */}
       <div className="relative w-full h-32">
         <div className="absolute inset-0 flex items-center justify-center">
@@ -134,14 +110,17 @@ export function Footer() {
             {/* Social Links */}
             <div className="flex gap-3 mb-8">
               {[
-                { icon: Github, href: "https://github.com/l9rins/" },
-                { icon: Twitter, href: "https://x.com/realmarquee_dev" },
-                { icon: Linkedin, href: "https://www.linkedin.com/in/l9rinsishere/" },
-                { icon: Mail, href: "mailto:marklorenzbarangan@gmail.com" },
-              ].map(({ icon: Icon, href }, i) => (
+                { icon: Github, href: "https://github.com/l9rins/", label: "GitHub" },
+                { icon: Twitter, href: "https://x.com/realmarquee_dev", label: "Twitter" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/l9rinsishere/", label: "LinkedIn" },
+                { icon: Mail, href: "mailto:marklorenzbarangan@gmail.com", label: "Email" },
+              ].map(({ icon: Icon, href, label }, i) => (
                 <Magnetic key={i} strength={0.4}>
                   <motion.a
                     href={href}
+                    aria-label={label}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-12 h-12 rounded-lg bg-zinc-900/80 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all min-h-[48px] min-w-[48px]"
@@ -170,6 +149,7 @@ export function Footer() {
                 <input
                   type="text"
                   placeholder="John Doe"
+                  aria-label="Your name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="bg-white/[0.03] border border-white/[0.1] rounded-lg px-5 py-4 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.5)] transition-all min-h-[48px]"
@@ -177,6 +157,7 @@ export function Footer() {
                 <input
                   type="email"
                   placeholder="hello@example.com"
+                  aria-label="Your email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="bg-white/[0.03] border border-white/[0.1] rounded-lg px-5 py-4 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.5)] transition-all min-h-[48px]"
@@ -184,6 +165,7 @@ export function Footer() {
               </div>
               <textarea
                 placeholder="Tell me about your project, timeline, and goals..."
+                aria-label="Your message"
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 rows={5}
@@ -193,10 +175,23 @@ export function Footer() {
                 type="submit"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-3 bg-white text-black font-semibold py-4 rounded-lg hover:bg-white/90 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] transition-all min-h-[52px]"
+                className={`w-full flex items-center justify-center gap-3 font-semibold py-4 rounded-lg transition-all min-h-[52px] ${
+                  submitted
+                    ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                    : "bg-white text-black hover:bg-white/90 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+                }`}
               >
-                <Send className="w-5 h-5" />
-                Start Conversation
+                {submitted ? (
+                  <>
+                    <Check className="w-5 h-5" />
+                    Email client opened — send when ready!
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    Start Conversation
+                  </>
+                )}
               </motion.button>
             </form>
           </motion.div>
@@ -207,16 +202,14 @@ export function Footer() {
       <div className="border-t border-white/5">
         <div className="max-w-[1100px] mx-auto px-6 md:px-12 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Signature - Personal Engineering Credit */}
             <p className="text-zinc-600 text-xs">
               Designed in Figma. Engineered in Next.js. Deployed on Vercel.
             </p>
 
-            {/* Performance Badge - Easter Egg */}
             <div className="hidden md:flex items-center gap-4 px-3 py-1.5 rounded-full bg-zinc-900 border border-white/5 text-[10px] font-mono text-zinc-500 hover:border-white/20 hover:text-zinc-300 transition-colors cursor-help group">
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                <span>Next.js 15</span>
+                <span>Next.js 16</span>
               </div>
               <div className="h-3 w-px bg-white/10" />
               <span>Vercel PRO</span>
@@ -224,26 +217,13 @@ export function Footer() {
               <span className="group-hover:text-white transition-colors">0.8s Load Time</span>
             </div>
 
-            {/* Legal Links */}
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              {legalLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-zinc-600 text-xs hover:text-zinc-400 transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-
-            {/* Scroll to top */}
             <Magnetic>
               <motion.button
-                onClick={scrollToTop}
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-12 h-12 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all min-h-[44px] min-w-[44px]"
+                aria-label="Scroll to top"
               >
                 <ArrowUp className="w-5 h-5" />
               </motion.button>

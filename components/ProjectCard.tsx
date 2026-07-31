@@ -17,6 +17,7 @@ interface ProjectProps {
     title: string;
     description: string;
     tech: string[];
+    category: string;
     image: string;
     video: string;
     link: string;
@@ -33,25 +34,29 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (imageRef.current) {
-      gsap.to(imageRef.current, {
+    if (!imageRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to(imageRef.current!, {
         yPercent: -20,
         ease: "none",
         scrollTrigger: {
-          trigger: imageRef.current,
+          trigger: imageRef.current!,
           start: "top bottom",
           end: "bottom top",
           scrub: true,
         },
       });
-    }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   const handleHoverStart = () => {
     setIsHovered(true);
     setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play();
+      if (videoRef.current && videoRef.current.src) {
+        videoRef.current.play().catch(() => {});
         videoRef.current.currentTime = 0;
       }
     }, 50);
@@ -103,6 +108,7 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
                 src={project.image}
                 alt={project.title}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
@@ -271,6 +277,7 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
           src={project.image}
           alt={project.title}
           fill
+          sizes="(max-width: 768px) 100vw, 50vw"
           className={`object-cover transition-all duration-700 ${isHovered ? "opacity-100 grayscale-0" : "opacity-90 grayscale-[20%]"}`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />

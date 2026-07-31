@@ -57,10 +57,10 @@
   --duration-normal: 200ms;
   --duration-slow: 300ms;
 
-  /* Typography - Inter for headings, Onest for body */
-  --font-display: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Onest', var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Menlo', 'Monaco', monospace;
+  /* Typography - Geist Sans for headings, Geist Mono for code */
+  --font-display: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-geist-mono), 'Menlo', 'Monaco', monospace;
 }
 
 * {
@@ -69,7 +69,6 @@
 
 html {
   min-width: 360px;
-  scroll-behavior: smooth;
 }
 
 body {
@@ -311,6 +310,10 @@ h6,
 .animate-gradient-shift {
   background-size: 200% 200%;
   animation: gradient-shift 8s ease infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
 }
 
 /* ============================================

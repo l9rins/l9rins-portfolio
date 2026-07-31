@@ -13,6 +13,10 @@ const filters = ['All', 'Web', 'Mobile', 'Dashboard'];
 export function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState('All');
 
+  const filteredProjects = activeFilter === 'All'
+    ? projects
+    : projects.filter((p) => p.category === activeFilter);
+
   return (
     <motion.section
       id="work"
@@ -99,12 +103,12 @@ export function ProjectsSection() {
         viewport={{ once: true }}
         className="mb-8"
       >
-        <ProjectCard project={projects[0]} featured />
+        <ProjectCard project={filteredProjects[0]} featured />
       </motion.div>
 
       {/* Project Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.slice(1).map((project, index) => (
+        {filteredProjects.slice(1).map((project, index) => (
           <motion.div
             key={project.id}
             initial={{ opacity: 0, y: 50 }}
@@ -125,14 +129,17 @@ export function ProjectsSection() {
         className="flex justify-center mt-16"
       >
         <Magnetic>
-          <motion.button
+          <motion.a
+            href="https://github.com/l9rins?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(255, 255, 255, 0.1)" }}
             whileTap={{ scale: 0.97 }}
             className="flex items-center gap-3 px-8 py-4 bg-zinc-900/80 border border-white/10 rounded-full text-white font-medium hover:border-white/30 transition-all duration-300 group"
           >
             View All Projects
             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </motion.button>
+          </motion.a>
         </Magnetic>
       </motion.div>
     </motion.section>

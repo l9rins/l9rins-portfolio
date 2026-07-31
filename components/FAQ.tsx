@@ -2,70 +2,65 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown, Search, MessageCircle } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 
-// Data from the screenshots
 const faqs = [
-    // Templates
     {
-        category: "Templates",
-        question: "How do I download the templates after purchase?",
-        answer: "After completing your purchase, you will receive an email with a download link. You can also access your downloads directly from your account dashboard under the 'Purchases' section at any time."
+        category: "General",
+        question: "What tech stack do you primarily work with?",
+        answer: "I specialize in React, Next.js, and TypeScript for frontend, with Node.js and Python on the backend. I also have experience with PostgreSQL, MongoDB, Redis, and cloud platforms like AWS and Vercel."
     },
     {
-        category: "Templates",
-        question: "Can I request custom modifications to the templates?",
-        answer: "Yes, we offer custom modification services for all our templates. Please contact our support team with your specific requirements, and we'll provide a quote based on the scope of work."
+        category: "General",
+        question: "Are you available for freelance or contract work?",
+        answer: "Yes, I'm open to senior-level front-end roles, full-stack positions, and high-impact contract projects. Feel free to reach out through the contact form or email me directly."
     },
     {
-        category: "Templates",
-        question: "Do the templates work on mobile devices?",
-        answer: "Absolutely. All our templates are fully responsive and optimized for mobile devices, tablets, and desktops to ensure a seamless user experience across all screen sizes."
-    },
-    // Licensing
-    {
-        category: "Licensing",
-        question: "Are updates included in the price?",
-        answer: "Yes, all future updates are included for free. We regularly update our templates to ensure compatibility with the latest technologies and to add new features."
+        category: "General",
+        question: "What kind of projects do you enjoy most?",
+        answer: "I enjoy building complex, scalable systems — dashboards, real-time platforms, and products where design quality and performance are equally important. I thrive at the intersection of engineering and design."
     },
     {
-        category: "Licensing",
-        question: "Can I use the templates for client projects?",
-        answer: "Yes, you can use the templates for client projects. The Commercial License allows you to use the template for a single end product (personal or client). For multiple clients, you would need a separate license for each project or an Extended License."
+        category: "Process",
+        question: "How do you approach a new project?",
+        answer: "I start by understanding the problem space and user needs, then architect a scalable foundation before writing a single line of UI code. I prioritize performance, accessibility, and maintainability from day one."
     },
     {
-        category: "Licensing",
-        question: "What does the Commercial License allow me to do?",
-        answer: "The Commercial License allows you to use the item to create one single End Product for yourself or for one client (a 'single application'), and the End Product can be sold or distributed for free."
-    },
-    // Components
-    {
-        category: "Components",
-        question: "Are the components compatible with my framework?",
-        answer: "Our components are designed to be framework-agnostic where possible, but we provide specific implementations for React, Vue, and plain HTML/CSS. Check the documentation for each component for specific compatibility details."
+        category: "Process",
+        question: "What's your testing strategy?",
+        answer: "I use a combination of unit tests (Jest/Testing Library), integration tests, and E2E tests where appropriate. I focus on testing critical user flows and business logic rather than chasing 100% coverage for its own sake."
     },
     {
-        category: "Components",
-        question: "How do I import the components into my project?",
-        answer: "You can import components by copying the source code directly or using our CLI tool. Detailed installation instructions are provided in the documentation for each component."
-    },
-    // Support
-    {
-        category: "Support",
-        question: "Is there technical support available if I need help?",
-        answer: "Yes, we provide dedicated technical support via email and our discord community. Our team is available Mon-Fri to assist you with any installation or configuration issues."
+        category: "Process",
+        question: "How do you handle performance optimization?",
+        answer: "I profile first, then optimize. Common wins include code splitting with dynamic imports, proper image optimization with next/image, caching strategies with Redis, and eliminating unnecessary re-renders in React."
     },
     {
-        category: "Support",
-        question: "Can I get a refund if I'm not satisfied?",
-        answer: "We offer a 30-day money-back guarantee if the product is technically defective or not as described. Please review our refund policy for full details."
+        category: "Technical",
+        question: "How do you ensure accessibility in your projects?",
+        answer: "I follow WCAG 2.1 guidelines: semantic HTML, proper ARIA attributes, keyboard navigation, focus management, sufficient color contrast, and testing with screen readers. I also respect prefers-reduced-motion."
+    },
+    {
+        category: "Technical",
+        question: "What's your approach to state management?",
+        answer: "I keep it simple — React's built-in hooks for local state, URL query state with nuqs for filterable views, and Zustand or context for shared global state. I avoid over-engineering state unless the complexity demands it."
+    },
+    {
+        category: "Technical",
+        question: "Do you have experience with design systems?",
+        answer: "Yes. I've built and maintained component libraries using Tailwind CSS, shadcn/ui primitives, and Radix UI. I focus on consistent design tokens, reusable patterns, and documentation that makes adoption frictionless."
+    },
+    {
+        category: "Hiring",
+        question: "What does your ideal role look like?",
+        answer: "A senior or staff-level position where I can own frontend architecture, collaborate closely with design, and ship products that directly impact users. I value teams that care about craft and engineering quality."
     }
 ];
 
-// Get unique categories and their counts
 const categories = Array.from(new Set(faqs.map(item => item.category)));
 
 function FAQItem({ faq, isOpen, onToggle, index }: { faq: typeof faqs[0]; isOpen: boolean; onToggle: () => void; index: number }) {
+    const answerId = `faq-answer-${index}`;
     return (
         <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -79,6 +74,8 @@ function FAQItem({ faq, isOpen, onToggle, index }: { faq: typeof faqs[0]; isOpen
         >
             <button
                 onClick={onToggle}
+                aria-expanded={isOpen}
+                aria-controls={answerId}
                 className="w-full flex items-center justify-between p-6 text-left group"
             >
                 <span className={`font-medium pr-8 transition-colors text-base md:text-lg ${isOpen ? 'text-white' : 'text-zinc-300 group-hover:text-white'}`}>
@@ -96,6 +93,7 @@ function FAQItem({ faq, isOpen, onToggle, index }: { faq: typeof faqs[0]; isOpen
                             ? 'bg-zinc-800 text-white'
                             : 'bg-zinc-900 text-zinc-500 group-hover:bg-zinc-800 group-hover:text-zinc-300'
                             }`}
+                        aria-hidden="true"
                     >
                         <ChevronDown className="w-4 h-4" />
                     </motion.div>
@@ -104,6 +102,8 @@ function FAQItem({ faq, isOpen, onToggle, index }: { faq: typeof faqs[0]; isOpen
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        id={answerId}
+                        role="region"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -120,7 +120,7 @@ function FAQItem({ faq, isOpen, onToggle, index }: { faq: typeof faqs[0]; isOpen
 }
 
 export function FAQ() {
-    const [activeCategory, setActiveCategory] = useState("Templates");
+    const [activeCategory, setActiveCategory] = useState("General");
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -137,11 +137,9 @@ export function FAQ() {
 
     return (
         <section className="py-24 bg-black relative" id="faq">
-            {/* Background Grid - subtle and contained */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
             <div className="max-w-4xl mx-auto px-4 relative z-10">
-                {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -155,11 +153,10 @@ export function FAQ() {
                         Got <span className="text-white">Questions?</span>
                     </h2>
                     <p className="text-zinc-500 max-w-lg mx-auto text-base md:text-lg leading-relaxed">
-                        Find answers to common questions about our templates, components, and licensing options.
+                        Common questions about my work, process, and technical approach.
                     </p>
                 </motion.div>
 
-                {/* Search Bar */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -170,13 +167,13 @@ export function FAQ() {
                     <input
                         type="text"
                         placeholder="Search questions..."
+                        aria-label="Search frequently asked questions"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full bg-zinc-900/50 border border-white/10 rounded-xl py-4 px-12 text-base text-white placeholder-zinc-600 focus:outline-none focus:border-[--accent]/30 focus:bg-zinc-900/80 transition-all shadow-lg shadow-black/20"
                     />
                 </motion.div>
 
-                {/* Category Pills */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -203,7 +200,6 @@ export function FAQ() {
                     ))}
                 </motion.div>
 
-                {/* FAQ List */}
                 <div className="space-y-4">
                     {filteredFaqs.map((faq, i) => (
                         <FAQItem
@@ -220,9 +216,6 @@ export function FAQ() {
                         </div>
                     )}
                 </div>
-
-                {/* Contact CTA */}
-                {/* Removed or simplified as per design focus, keeping it clean */}
             </div>
         </section>
     );
