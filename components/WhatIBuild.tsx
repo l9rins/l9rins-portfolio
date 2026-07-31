@@ -186,7 +186,7 @@ export function WhatIBuild() {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="inline-block text-[9px] uppercase tracking-[0.4em] text-[--accent] mb-5 px-4 py-1.5 border border-[--accent]/20 rounded-full font-medium backdrop-blur-sm bg-[--accent]/[0.03]"
+          className="inline-block text-[9px] uppercase tracking-[0.4em] text-[--accent] mb-5 px-4 py-1.5 border border-[--accent]/20 rounded-full font-medium bg-[--accent]/[0.03]"
         >
           ✦ Services
         </motion.span>

@@ -75,7 +75,7 @@ function SpotlightCardComponent({
                 'border',
                 styles.border,
                 'transition-all duration-200 ease-out',
-                'backdrop-blur-md',
+                'backdrop-blur-[6px]',
                 'group',
                 'focus-within:ring-2 focus-within:ring-white/20 focus-within:ring-offset-2 focus-within:ring-offset-black',
                 className

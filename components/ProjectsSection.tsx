@@ -66,7 +66,7 @@ export function ProjectsSection() {
           initial={{ opacity: 0, x: 12 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="flex gap-1 bg-zinc-900/60 p-1 rounded-full border border-white/[0.06] backdrop-blur-xl"
+          className="flex gap-1 bg-zinc-900/60 p-1 rounded-full border border-white/[0.06]"
         >
           {filters.map((filter) => (
             <Magnetic key={filter} strength={0.3}>

@@ -44,7 +44,7 @@ export function TechMarquee() {
         {[...techStack, ...techStack].map((tech, index) => (
           <motion.div
             key={`${tech.name}-${index}`}
-            className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] backdrop-blur-sm border border-white/[0.05] hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
+            className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
             whileHover={{ scale: 1.05 }}
             onHoverStart={() => setIsHovered(tech.name)}
             onHoverEnd={() => setIsHovered(null)}

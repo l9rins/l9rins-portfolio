@@ -192,7 +192,7 @@ export default function Home() {
         >
           <StatsBar
             stats={heroStats}
-            className="bg-zinc-900/30 backdrop-blur-sm rounded-2xl border border-white/5"
+            className="bg-zinc-900/30 rounded-2xl border border-white/5"
           />
         </motion.div>
       </section>
