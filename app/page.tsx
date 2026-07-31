@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import {
   MapPin,
-  Music,
   Sparkles,
   ArrowRight
 } from "lucide-react";
@@ -20,7 +19,9 @@ import { FAQ } from "@/components/FAQ";
 import { GlowDivider } from "@/components/ui/GlowDivider";
 import { AnimatedGridBackground } from "@/components/ui/AnimatedGridBackground";
 import { StatsBar } from "@/components/ui/StatsCounter";
-import { HeroGraphic } from "@/components/ui/HeroGraphic";
+import { HeroMockups } from "@/components/ui/HeroMockups";
+import { TechLogoBar } from "@/components/TechLogoBar";
+import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 
 const heroStats = [
   { value: 50, suffix: "+", label: "Projects Shipped" },
@@ -135,9 +136,9 @@ export default function Home() {
             </motion.div>
           </SpotlightCard>
 
-          {/* HERO GRAPHIC */}
+          {/* HERO MOCKUPS */}
           <SpotlightCard delay={1.2} className="md:col-span-4 h-full min-h-[200px] flex flex-col items-center justify-center group overflow-hidden">
-            <HeroGraphic />
+            <HeroMockups />
           </SpotlightCard>
 
           {/* MAP CARD */}
@@ -195,7 +196,12 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <GlowDivider variant="dramatic" showParticles />
+      <GlowDivider />
+
+      {/* Tech Logo Trust Bar */}
+      <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
+        <TechLogoBar />
+      </div>
 
       {/* What I Build Section */}
       <section id="services" className="relative z-10 bg-black py-1">
@@ -204,7 +210,7 @@ export default function Home() {
         </div>
       </section>
 
-      <GlowDivider variant="standard" />
+      <GlowDivider />
 
       {/* Projects Section */}
       <section className="relative z-10 bg-black py-14">
@@ -213,7 +219,14 @@ export default function Home() {
         </div>
       </section>
 
-      <GlowDivider variant="subtle" />
+      <GlowDivider />
+
+      {/* Testimonials */}
+      <div className={`${contentMaxWidth} mx-auto px-6 md:px-12`}>
+        <TestimonialMarquee />
+      </div>
+
+      <GlowDivider />
 
       {/* Timeline Section */}
       <section id="about" className="relative z-10 bg-black py-14">
@@ -222,7 +235,7 @@ export default function Home() {
         </div>
       </section>
 
-      <GlowDivider variant="standard" />
+      <GlowDivider />
 
       <FAQ />
 
