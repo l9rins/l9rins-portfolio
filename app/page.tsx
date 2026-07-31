@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import {
   MapPin,
@@ -19,7 +20,6 @@ import { FAQ } from "@/components/FAQ";
 import { GlowDivider } from "@/components/ui/GlowDivider";
 import { AnimatedGridBackground } from "@/components/ui/AnimatedGridBackground";
 import { StatsBar } from "@/components/ui/StatsCounter";
-import { HeroMockups } from "@/components/ui/HeroMockups";
 import { TechLogoBar } from "@/components/TechLogoBar";
 import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 
@@ -136,9 +136,19 @@ export default function Home() {
             </motion.div>
           </SpotlightCard>
 
-          {/* HERO MOCKUPS */}
-          <SpotlightCard delay={1.0} className="md:col-span-4 h-full min-h-[180px] flex flex-col items-center justify-center group overflow-hidden">
-            <HeroMockups />
+          {/* PROFILE PHOTO */}
+          <SpotlightCard delay={1.0} className="md:col-span-4 h-full min-h-[180px] flex items-center justify-center group overflow-hidden p-0">
+            <div className="relative w-full h-full min-h-[180px] overflow-hidden rounded-xl">
+              <Image
+                src="/profile.png"
+                alt="Mark Lorenz Barangan"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+            </div>
           </SpotlightCard>
 
           {/* MAP CARD */}
