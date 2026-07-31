@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import {
-  MapPin,
   Sparkles,
   ArrowRight
 } from "lucide-react";
@@ -23,6 +22,7 @@ import { StatsBar } from "@/components/ui/StatsCounter";
 import { TechLogoBar } from "@/components/TechLogoBar";
 import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 import { PhotoCarousel } from "@/components/PhotoCarousel";
+import { LocationMap } from "@/components/LocationMap";
 
 const heroStats = [
   { value: 50, suffix: "+", label: "Projects Shipped" },
@@ -142,20 +142,10 @@ export default function Home() {
             <PhotoCarousel />
           </div>
 
-          {/* MAP CARD */}
-          <SpotlightCard delay={1.2} className="md:col-span-4 h-full min-h-[140px] flex flex-col items-center justify-center hover-glow-subtle cursor-default">
-            <motion.div
-              whileHover={{ scale: 1.15, rotate: 8 }}
-              transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              className="mb-2"
-            >
-              <MapPin className="w-5 h-5 text-white" />
-            </motion.div>
-            <div className="text-center">
-              <p className="font-mono text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-0.5">Based In</p>
-              <p className="body font-medium text-white text-sm">CEBU, PH</p>
-            </div>
-          </SpotlightCard>
+          {/* LOCATION MAP */}
+          <div className="md:col-span-4 h-full min-h-[140px]">
+            <LocationMap />
+          </div>
 
           {/* TECH STACK */}
           <SpotlightCard delay={1.6} id="stack" className="md:col-span-12 p-3 min-h-[60px]">
