@@ -94,6 +94,7 @@ export function PhotoCarousel() {
             transition={{ duration: 0.3 }}
             onClick={handleAgain}
             className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/15 bg-white/5 text-white text-xs font-medium hover:bg-white/10 hover:border-white/25 transition-all cursor-pointer"
+            style={{ height: '240px', width: '180px', justifyContent: 'center' }}
           >
             <RotateCcw className="w-3.5 h-3.5" />
             Again
@@ -116,7 +117,8 @@ export function PhotoCarousel() {
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.5}
             onDragEnd={handleDragEnd}
-            className="w-[75%] max-w-[200px] aspect-[3/4] rounded-lg overflow-hidden border border-white/[0.1] shadow-2xl cursor-grab active:cursor-grabbing relative"
+            className="w-[75%] max-w-[200px] rounded-lg overflow-hidden border border-white/[0.1] shadow-2xl cursor-grab active:cursor-grabbing relative"
+            style={{ height: '240px' }}
           >
             <Image
               src={photos[currentIndex].src}
