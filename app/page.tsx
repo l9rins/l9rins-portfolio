@@ -136,21 +136,64 @@ export default function Home() {
             </motion.div>
           </SpotlightCard>
 
-          {/* PROFILE PHOTO */}
-          <div className="md:col-span-4 h-full min-h-[180px] relative rounded-xl overflow-hidden border border-white/[0.06] group">
-            <Image
-              src="/profile.png"
-              alt="Mark Lorenz Barangan"
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+          {/* PROFILE PHOTO - Polaroid Stack */}
+          <div className="md:col-span-4 h-full min-h-[200px] relative group" style={{ perspective: '800px' }}>
+            {/* Back card */}
+            <motion.div
+              className="absolute inset-2 rounded-lg overflow-hidden border border-white/[0.06]"
+              style={{ rotate: 6, rotateY: -5 }}
+              initial={{ opacity: 0, y: 20, rotate: 10 }}
+              animate={{ opacity: 0.5, y: 0, rotate: 6 }}
+              transition={{ delay: 1.3, duration: 0.6 }}
+            >
+              <Image
+                src="/profile.png"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover grayscale opacity-60"
+              />
+            </motion.div>
+
+            {/* Middle card */}
+            <motion.div
+              className="absolute inset-1 rounded-lg overflow-hidden border border-white/[0.08]"
+              style={{ rotate: -3, rotateY: 3 }}
+              initial={{ opacity: 0, y: 15, rotate: -6 }}
+              animate={{ opacity: 0.7, y: 0, rotate: -3 }}
+              transition={{ delay: 1.1, duration: 0.6 }}
+            >
+              <Image
+                src="/profile.png"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover grayscale opacity-70"
+              />
+            </motion.div>
+
+            {/* Front card - main */}
+            <motion.div
+              className="absolute inset-0 rounded-lg overflow-hidden border border-white/[0.1] shadow-2xl"
+              initial={{ opacity: 0, y: 10, rotate: 0 }}
+              animate={{ opacity: 1, y: 0, rotate: 0 }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+              whileHover={{ scale: 1.03, rotate: 0, y: -4 }}
+            >
+              <Image
+                src="/profile.png"
+                alt="Mark Lorenz Barangan"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+            </motion.div>
           </div>
 
           {/* MAP CARD */}
-          <SpotlightCard delay={1.2} className="md:col-span-2 h-full min-h-[140px] flex flex-col items-center justify-center hover-glow-subtle cursor-default">
+          <SpotlightCard delay={1.2} className="md:col-span-4 h-full min-h-[140px] flex flex-col items-center justify-center hover-glow-subtle cursor-default">
             <motion.div
               whileHover={{ scale: 1.15, rotate: 8 }}
               transition={{ type: "spring", stiffness: 300, damping: 15 }}
@@ -161,24 +204,6 @@ export default function Home() {
             <div className="text-center">
               <p className="font-mono text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-0.5">Based In</p>
               <p className="body font-medium text-white text-sm">CEBU, PH</p>
-            </div>
-          </SpotlightCard>
-
-          {/* MUSIC CARD */}
-          <SpotlightCard delay={1.4} className="md:col-span-2 h-full min-h-[140px] flex flex-col items-center justify-center neumorphic-dark border-none hover-glow-subtle cursor-default">
-            <div className="flex gap-[3px] items-end mb-2 h-4" aria-hidden="true">
-              {[1, 2, 3, 4].map(i => (
-                <motion.div
-                  key={i}
-                  className="w-1 bg-white rounded-full"
-                  animate={{ height: [6, 16, 6] }}
-                  transition={{ repeat: Infinity, duration: 0.7, delay: i * 0.08 }}
-                />
-              ))}
-            </div>
-            <div className="text-center">
-              <p className="font-mono text-[9px] text-zinc-600 uppercase tracking-[0.2em] mb-0.5">Listening</p>
-              <p className="body font-medium text-white text-sm">Lo-Fi</p>
             </div>
           </SpotlightCard>
 
