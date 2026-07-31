@@ -23,6 +23,7 @@ import { TechLogoBar } from "@/components/TechLogoBar";
 import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { LocationMap } from "@/components/LocationMap";
+import { FloatingDecorations } from "@/components/FloatingDecorations";
 
 const heroStats = [
   { value: 50, suffix: "+", label: "Projects Shipped" },
@@ -67,6 +68,9 @@ export default function Home() {
         <div className="absolute inset-0 z-0 h-[500px] w-full pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-grid-white mask-gradient" />
         </div>
+
+        {/* Floating clouds + airplane */}
+        <FloatingDecorations />
 
         <div className="relative z-10 flex-1 grid grid-cols-1 md:grid-cols-12 gap-2 auto-rows-auto">
 
