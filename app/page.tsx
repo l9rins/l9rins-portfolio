@@ -137,19 +137,17 @@ export default function Home() {
           </SpotlightCard>
 
           {/* PROFILE PHOTO */}
-          <SpotlightCard delay={1.0} className="md:col-span-4 h-full min-h-[180px] flex items-center justify-center group overflow-hidden p-0">
-            <div className="relative w-full h-full min-h-[180px] overflow-hidden rounded-xl">
-              <Image
-                src="/profile.png"
-                alt="Mark Lorenz Barangan"
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
-            </div>
-          </SpotlightCard>
+          <div className="md:col-span-4 h-full min-h-[180px] relative rounded-xl overflow-hidden border border-white/[0.06] group">
+            <Image
+              src="/profile.png"
+              alt="Mark Lorenz Barangan"
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+          </div>
 
           {/* MAP CARD */}
           <SpotlightCard delay={1.2} className="md:col-span-2 h-full min-h-[140px] flex flex-col items-center justify-center hover-glow-subtle cursor-default">
