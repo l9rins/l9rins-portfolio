@@ -138,9 +138,9 @@ export default function Home() {
           </SpotlightCard>
 
           {/* PROFILE PHOTO - Swipeable Carousel */}
-          <SpotlightCard delay={1.0} className="md:col-span-4 h-full min-h-[200px] flex items-center justify-center overflow-hidden">
+          <div className="md:col-span-4 h-full min-h-[200px] flex items-center justify-center rounded-xl border border-white/[0.06] overflow-hidden">
             <PhotoCarousel />
-          </SpotlightCard>
+          </div>
 
           {/* MAP CARD */}
           <SpotlightCard delay={1.2} className="md:col-span-4 h-full min-h-[140px] flex flex-col items-center justify-center hover-glow-subtle cursor-default">
