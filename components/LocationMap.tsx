@@ -47,8 +47,42 @@ export function LocationMap() {
         />
       )}
 
+      {/* Clouds inside the map */}
+      <div className="absolute inset-0 pointer-events-none z-[1]" aria-hidden="true">
+        <img
+          src="/cloud.webp"
+          alt=""
+          draggable={false}
+          className="absolute -top-6 -left-8 w-[200px] h-auto opacity-[0.2] animate-cloud select-none"
+          style={{ filter: 'brightness(1.8) blur(1px)' }}
+        />
+        <img
+          src="/cloud.webp"
+          alt=""
+          draggable={false}
+          className="absolute top-[20%] -right-6 w-[120px] h-auto opacity-[0.12] animate-cloud select-none"
+          style={{ filter: 'brightness(1.5) blur(2px)', animationDuration: '30s', animationDelay: '5s' }}
+        />
+      </div>
+
+      {/* Plane inside the map */}
+      <div className="absolute inset-0 pointer-events-none z-[2]" aria-hidden="true">
+        <img
+          src="/plane.webp"
+          alt=""
+          draggable={false}
+          className="absolute top-[30%] -right-4 w-5 h-5 animate-plane select-none"
+        />
+        <img
+          src="/plane-shadow.webp"
+          alt=""
+          draggable={false}
+          className="absolute top-[30%] -right-4 w-5 h-5 animate-plane-shadow select-none"
+        />
+      </div>
+
       {/* Fixed dot - stays in center of card, never moves with map */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[999]">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[10]">
         <div className="relative">
           <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
           <div className="absolute inset-0 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-30" />

@@ -23,7 +23,6 @@ import { TechLogoBar } from "@/components/TechLogoBar";
 import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { LocationMap } from "@/components/LocationMap";
-import { FloatingDecorations } from "@/components/FloatingDecorations";
 
 const heroStats = [
   { value: 50, suffix: "+", label: "Projects Shipped" },
@@ -61,9 +60,6 @@ export default function Home() {
           }}
         />
       </div>
-
-      {/* Floating clouds + airplane - at page level for full width */}
-      <FloatingDecorations />
 
       {/* ===== HERO SECTION ===== */}
       <section id="hero" className="relative z-10 min-h-screen pt-20 pb-8 max-w-[1100px] mx-auto px-6 md:px-10 flex flex-col">
