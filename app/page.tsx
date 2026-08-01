@@ -62,15 +62,15 @@ export default function Home() {
         />
       </div>
 
+      {/* Floating clouds + airplane - at page level for full width */}
+      <FloatingDecorations />
+
       {/* ===== HERO SECTION ===== */}
-      <section id="hero" className="relative z-10 min-h-screen pt-20 pb-8 max-w-[1050px] mx-auto px-6 md:px-10 flex flex-col">
+      <section id="hero" className="relative z-10 min-h-screen pt-20 pb-8 max-w-[1100px] mx-auto px-6 md:px-10 flex flex-col">
 
         <div className="absolute inset-0 z-0 h-[500px] w-full pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-grid-white mask-gradient" />
         </div>
-
-        {/* Floating clouds + airplane */}
-        <FloatingDecorations />
 
         <div className="relative z-10 flex-1 grid grid-cols-1 md:grid-cols-12 gap-2 auto-rows-auto">
 

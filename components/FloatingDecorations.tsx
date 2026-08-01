@@ -6,13 +6,13 @@
  */
 export function FloatingDecorations() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]" aria-hidden="true">
+    <div className="absolute inset-0 overflow-visible pointer-events-none z-[1]" aria-hidden="true">
       {/* Cloud - top left, drifts slowly */}
       <img
         src="/cloud.webp"
         alt=""
         draggable={false}
-        className="absolute -top-10 -left-10 w-[320px] h-auto opacity-[0.06] blur-[2px] animate-cloud pointer-events-none select-none"
+        className="absolute top-0 -left-20 w-[400px] h-auto opacity-[0.12] blur-[1px] animate-cloud pointer-events-none select-none"
       />
 
       {/* Plane - flies from bottom-right to top-left */}
@@ -20,7 +20,7 @@ export function FloatingDecorations() {
         src="/plane.webp"
         alt=""
         draggable={false}
-        className="absolute -right-20 -bottom-20 w-6 h-6 animate-plane pointer-events-none select-none"
+        className="absolute top-1/4 -right-16 w-8 h-8 animate-plane pointer-events-none select-none"
       />
 
       {/* Plane shadow - follows plane */}
@@ -28,7 +28,7 @@ export function FloatingDecorations() {
         src="/plane-shadow.webp"
         alt=""
         draggable={false}
-        className="absolute -right-20 -bottom-20 w-6 h-6 animate-plane-shadow pointer-events-none select-none"
+        className="absolute top-1/4 -right-16 w-8 h-8 animate-plane-shadow pointer-events-none select-none"
       />
     </div>
   );

@@ -1,14 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Map, Marker } from 'pigeon-maps';
+import { Map } from 'pigeon-maps';
 
 /**
  * Custom dark tile provider using CartoDB dark matter tiles
+ * with labels/roads for better street visibility
  */
 const darkProvider = (x: number, y: number, z: number) => {
   const s = 'abc'[Math.abs(x + y) % 3];
-  return `https://${s}.basemaps.cartocdn.com/dark_all/${z}/${x}/${y}{r}.png`;
+  return `https://${s}.basemaps.cartocdn.com/dark_all/${z}/${x}/${y}@2x.png`;
 };
 
 /**
@@ -44,24 +45,19 @@ export function LocationMap() {
       {mounted && (
         <Map
           center={[10.3157, 123.9065]}
-          zoom={13}
+          zoom={15}
           provider={darkProvider}
           mouseEvents={true}
           touchEvents={true}
           attribution={false}
           animate={true}
-          boxClassname="!w-full !h-full group-hover:brightness-[1.1] transition-all duration-500"
-        >
-          <Marker
-            anchor={[10.3157, 123.9065]}
-            color="transparent"
-            width={0}
-            height={0}
-          />
-        </Map>
+          zoomSnap={false}
+          metaWheelZoom={false}
+          boxClassname="!w-full !h-full"
+        />
       )}
 
-      {/* Pulsing location dot (on top of map) */}
+      {/* Pulsing location dot - ALWAYS stays fixed, not affected by map drag */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
         <div className="relative">
           <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
@@ -78,6 +74,9 @@ export function LocationMap() {
       <div className="absolute bottom-2 left-2 z-10">
         <p className="text-[8px] font-mono text-white/50 uppercase tracking-[0.15em]">Cebu, PH</p>
       </div>
+
+      {/* Vignette overlay for depth */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.4)_100%)]" />
     </div>
   );
 }
