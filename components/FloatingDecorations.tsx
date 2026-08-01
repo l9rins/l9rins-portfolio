@@ -1,34 +1,44 @@
 'use client';
 
 /**
- * FloatingDecorations - Clouds + airplane that float across the hero
- * Uses plain <img> tags for decorative images (no next/image container clipping)
+ * FloatingDecorations - Clouds + airplane that float across the viewport
+ * duyle.dev inspired - large, visible, atmospheric decorations
  */
 export function FloatingDecorations() {
   return (
-    <div className="absolute inset-0 overflow-visible pointer-events-none z-[1]" aria-hidden="true">
-      {/* Cloud - top left, drifts slowly */}
+    <div className="fixed inset-0 overflow-visible pointer-events-none z-[5]" aria-hidden="true">
+      {/* Cloud 1 - large, top-left area, slow drift */}
       <img
         src="/cloud.webp"
         alt=""
         draggable={false}
-        className="absolute top-0 -left-20 w-[400px] h-auto opacity-[0.12] blur-[1px] animate-cloud pointer-events-none select-none"
+        className="absolute -top-10 left-[5%] w-[500px] max-w-none h-auto opacity-[0.25] animate-cloud pointer-events-none select-none"
+        style={{ filter: 'brightness(1.8) blur(1px)' }}
       />
 
-      {/* Plane - flies from bottom-right to top-left */}
+      {/* Cloud 2 - smaller, right side, slower drift */}
+      <img
+        src="/cloud.webp"
+        alt=""
+        draggable={false}
+        className="absolute top-[15%] right-[8%] w-[280px] max-w-none h-auto opacity-[0.15] animate-cloud pointer-events-none select-none"
+        style={{ filter: 'brightness(1.5) blur(2px)', animationDuration: '30s', animationDelay: '5s' }}
+      />
+
+      {/* Plane - flies across viewport bottom-right to top-left */}
       <img
         src="/plane.webp"
         alt=""
         draggable={false}
-        className="absolute top-1/4 -right-16 w-8 h-8 animate-plane pointer-events-none select-none"
+        className="absolute top-[30%] -right-12 w-12 h-12 animate-plane pointer-events-none select-none"
       />
 
-      {/* Plane shadow - follows plane */}
+      {/* Plane shadow */}
       <img
         src="/plane-shadow.webp"
         alt=""
         draggable={false}
-        className="absolute top-1/4 -right-16 w-8 h-8 animate-plane-shadow pointer-events-none select-none"
+        className="absolute top-[30%] -right-12 w-12 h-12 animate-plane-shadow pointer-events-none select-none"
       />
     </div>
   );
