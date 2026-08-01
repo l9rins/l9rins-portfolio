@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Map } from 'pigeon-maps';
 
 const darkProvider = (x: number, y: number, z: number) => {
@@ -12,6 +12,8 @@ export function LocationMap() {
   const [time, setTime] = useState('');
   const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dotStyle, setDotStyle] = useState<React.CSSProperties>({});
 
   useEffect(() => {
     setMounted(true);
@@ -32,8 +34,32 @@ export function LocationMap() {
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    const updateDotPosition = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      setDotStyle({
+        position: 'fixed' as const,
+        left: `${rect.left + rect.width / 2}px`,
+        top: `${rect.top + rect.height / 2}px`,
+        transform: 'translate(-50%, -50%)',
+        zIndex: 10,
+        pointerEvents: 'none' as const,
+      });
+    };
+
+    updateDotPosition();
+    window.addEventListener('resize', updateDotPosition);
+    window.addEventListener('scroll', updateDotPosition);
+    return () => {
+      window.removeEventListener('resize', updateDotPosition);
+      window.removeEventListener('scroll', updateDotPosition);
+    };
+  }, []);
+
   return (
     <div
+      ref={containerRef}
       className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.06]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -42,7 +68,7 @@ export function LocationMap() {
       {mounted && (
         <Map
           center={[10.3157, 123.9065]}
-          zoom={14}
+          zoom={15}
           provider={darkProvider}
           mouseEvents={true}
           touchEvents={true}
@@ -51,6 +77,14 @@ export function LocationMap() {
           zoomSnap={false}
         />
       )}
+
+      {/* Fixed pin - uses position:fixed so it never moves with map drag */}
+      <div style={dotStyle}>
+        <div className="relative">
+          <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
+          <div className="absolute inset-0 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-30" />
+        </div>
+      </div>
 
       {/* Clouds - hide on hover */}
       <div className={`absolute inset-0 pointer-events-none z-[1] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
@@ -84,14 +118,6 @@ export function LocationMap() {
           draggable={false}
           className="absolute top-[30%] -right-4 w-5 h-5 animate-plane-shadow select-none"
         />
-      </div>
-
-      {/* Fixed dot - stays in center of card, never moves with map */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[10]">
-        <div className="relative">
-          <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
-          <div className="absolute inset-0 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-30" />
-        </div>
       </div>
 
       {/* Clock - top right */}
