@@ -46,10 +46,10 @@ export function LocationMap() {
           center={[10.3157, 123.9065]}
           zoom={13}
           provider={darkProvider}
-          mouseEvents={false}
-          touchEvents={false}
+          mouseEvents={true}
+          touchEvents={true}
           attribution={false}
-          animate={false}
+          animate={true}
           boxClassname="!w-full !h-full group-hover:brightness-[1.1] transition-all duration-500"
         >
           <Marker
