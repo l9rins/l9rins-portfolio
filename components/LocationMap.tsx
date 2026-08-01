@@ -11,6 +11,7 @@ const darkProvider = (x: number, y: number, z: number) => {
 export function LocationMap() {
   const [time, setTime] = useState('');
   const [mounted, setMounted] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -32,7 +33,11 @@ export function LocationMap() {
   }, []);
 
   return (
-    <div className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.06]">
+    <div
+      className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.06]"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       {/* Dark map - draggable */}
       {mounted && (
         <Map
@@ -47,8 +52,8 @@ export function LocationMap() {
         />
       )}
 
-      {/* Clouds inside the map */}
-      <div className="absolute inset-0 pointer-events-none z-[1]" aria-hidden="true">
+      {/* Clouds - hide on hover */}
+      <div className={`absolute inset-0 pointer-events-none z-[1] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
         <img
           src="/cloud.webp"
           alt=""
@@ -65,8 +70,8 @@ export function LocationMap() {
         />
       </div>
 
-      {/* Plane inside the map */}
-      <div className="absolute inset-0 pointer-events-none z-[2]" aria-hidden="true">
+      {/* Plane - hide on hover */}
+      <div className={`absolute inset-0 pointer-events-none z-[2] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
         <img
           src="/plane.webp"
           alt=""
