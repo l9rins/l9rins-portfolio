@@ -141,6 +141,81 @@ video {
 
 /* Film grain removed for performance - SVG feTurbulence was the #1 GPU killer */
 
+/* ============================================
+   FLOATING DECORATIONS - duyle.dev inspired
+   ============================================ */
+
+@keyframes cloud {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(15px) translateY(-5px);
+  }
+  50% {
+    transform: translateX(30px) translateY(3px);
+  }
+  75% {
+    transform: translateX(10px) translateY(-8px);
+  }
+}
+
+@keyframes plane {
+  0% {
+    transform: translate(0, 0) rotate(-45deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.15;
+  }
+  95% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translate(-120vw, -80vh) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes plane-shadow {
+  0% {
+    transform: translate(0, 0) rotate(-45deg) scale(1);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.06;
+  }
+  50% {
+    transform: translate(-60vw, -40vh) rotate(-45deg) scale(0.6);
+    opacity: 0.04;
+  }
+  95% {
+    opacity: 0.02;
+  }
+  100% {
+    transform: translate(-120vw, -80vh) rotate(-45deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.animate-cloud {
+  animation: cloud 20s ease-in-out infinite;
+}
+
+.animate-plane {
+  animation: plane 12s linear infinite;
+  animation-delay: 2.5s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.animate-plane-shadow {
+  animation: plane-shadow 12s linear infinite;
+  animation-delay: 2.5s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
 /* BASE TYPOGRAPHY - REFINED WEIGHTS */
 /* Enforcing Semibold (600) max for refined feel per user request */
 h1,
