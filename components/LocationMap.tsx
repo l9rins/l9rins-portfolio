@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { Map } from 'pigeon-maps';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Map, Marker } from 'pigeon-maps';
 
 const darkProvider = (x: number, y: number, z: number) => {
   const s = 'abc'[Math.abs(x + y) % 3];
@@ -13,7 +13,7 @@ export function LocationMap() {
   const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [dotStyle, setDotStyle] = useState<React.CSSProperties>({});
+  const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -34,28 +34,22 @@ export function LocationMap() {
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    const updateDotPosition = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      setDotStyle({
-        position: 'fixed' as const,
-        left: `${rect.left + rect.width / 2}px`,
-        top: `${rect.top + rect.height / 2}px`,
-        transform: 'translate(-50%, -50%)',
-        zIndex: 10,
-        pointerEvents: 'none' as const,
-      });
-    };
-
-    updateDotPosition();
-    window.addEventListener('resize', updateDotPosition);
-    window.addEventListener('scroll', updateDotPosition);
-    return () => {
-      window.removeEventListener('resize', updateDotPosition);
-      window.removeEventListener('scroll', updateDotPosition);
-    };
+  const positionDot = useCallback(() => {
+    if (!containerRef.current || !dotRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    dotRef.current.style.left = `${rect.left + rect.width / 2}px`;
+    dotRef.current.style.top = `${rect.top + rect.height / 2}px`;
   }, []);
+
+  useEffect(() => {
+    positionDot();
+    window.addEventListener('resize', positionDot);
+    window.addEventListener('scroll', positionDot, true);
+    return () => {
+      window.removeEventListener('resize', positionDot);
+      window.removeEventListener('scroll', positionDot, true);
+    };
+  }, [positionDot]);
 
   return (
     <div
@@ -64,7 +58,6 @@ export function LocationMap() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Dark map - draggable */}
       {mounted && (
         <Map
           center={[10.3157, 123.9065]}
@@ -73,13 +66,17 @@ export function LocationMap() {
           mouseEvents={true}
           touchEvents={true}
           attribution={false}
-          animate={true}
+          animate={false}
           zoomSnap={false}
         />
       )}
 
-      {/* Fixed pin - uses position:fixed so it never moves with map drag */}
-      <div style={dotStyle}>
+      {/* Blue pin - position:fixed, manually positioned at container center. 
+          fixed positioning is immune to pigeon-maps internal CSS transforms */}
+      <div
+        ref={dotRef}
+        className="fixed -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[10]"
+      >
         <div className="relative">
           <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
           <div className="absolute inset-0 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-30" />
@@ -120,12 +117,12 @@ export function LocationMap() {
         />
       </div>
 
-      {/* Clock - top right */}
+      {/* Clock */}
       <div className="absolute top-2 right-2 z-10 px-2 py-1 rounded bg-black/60 backdrop-blur-sm border border-white/[0.08]">
         <span className="text-[9px] font-mono text-white/80 tracking-wider">{time}</span>
       </div>
 
-      {/* Label - bottom left */}
+      {/* Label */}
       <div className="absolute bottom-2 left-2 z-10">
         <p className="text-[8px] font-mono text-white/50 uppercase tracking-[0.15em]">Cebu, PH</p>
       </div>
