@@ -1,17 +1,23 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { Map } from 'pigeon-maps';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { Map, Overlay } from 'pigeon-maps';
 
 const darkProvider = (x: number, y: number, z: number) => {
   const s = 'abc'[Math.abs(x + y) % 3];
   return `https://${s}.basemaps.cartocdn.com/dark_all/${z}/${x}/${y}@2x.png`;
 };
 
+const CEBU: [number, number] = [10.3157, 123.9065];
+
 export function LocationMap() {
   const [time, setTime] = useState('');
   const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [zoom, setZoom] = useState(2);
+  const [center, setCenter] = useState<[number, number]>([20, 0]);
+  const [flying, setFlying] = useState(true);
+  const frameRef = useRef<number>(0);
 
   useEffect(() => {
     setMounted(true);
@@ -32,67 +38,143 @@ export function LocationMap() {
     return () => clearInterval(id);
   }, []);
 
+  // Fly-in animation: zoom 2 → 15, center from global → Cebu
+  const flyIn = useCallback(() => {
+    const duration = 3000;
+    const start = performance.now();
+    const startZoom = 2;
+    const endZoom = 15;
+    const startCenter: [number, number] = [20, 0];
+
+    const ease = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const t = Math.min(elapsed / duration, 1);
+      const eased = ease(t);
+
+      const newZoom = startZoom + (endZoom - startZoom) * eased;
+      const newLat = startCenter[0] + (CEBU[0] - startCenter[0]) * eased;
+      const newLng = startCenter[1] + (CEBU[1] - startCenter[1]) * eased;
+
+      setZoom(newZoom);
+      setCenter([newLat, newLng]);
+
+      if (t < 1) {
+        frameRef.current = requestAnimationFrame(tick);
+      } else {
+        setFlying(false);
+      }
+    };
+
+    frameRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const timer = setTimeout(flyIn, 500);
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(frameRef.current);
+    };
+  }, [mounted, flyIn]);
+
+  // Dynamic sizing based on zoom (duyle.dev approach)
+  const planeSize = Math.round(24 * Math.pow(1.5, zoom - 11));
+  const cloudOpacity = zoom > 11 && zoom < 14 ? 0.15 : 0;
+  const planeOpacity = zoom > 11 && zoom < 14 ? 1 : 0;
+
   return (
     <div
       className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.03]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* Black background behind map to cover pigeon-maps gray default */}
+      <div className="absolute inset-0 bg-black" />
+
       {/* Map - draggable */}
       {mounted && (
         <Map
-          center={[10.3157, 123.9065]}
-          zoom={15}
+          center={center}
+          zoom={zoom}
           provider={darkProvider}
-          mouseEvents={true}
-          touchEvents={true}
+          mouseEvents={!flying}
+          touchEvents={!flying}
           attribution={false}
           animate={false}
           zoomSnap={false}
-        />
+        >
+          <Overlay anchor={CEBU} offset={[6, 6]}>
+            <div className="relative pointer-events-none">
+              <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
+              <div className="absolute inset-0 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-30" />
+            </div>
+          </Overlay>
+        </Map>
       )}
 
-      {/* Blue pin - absolute positioned SIBLING of Map, not child.
-          pigeon-maps internal transforms only affect its own children,
-          so this stays centered in the card regardless of map drag. */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[10]">
-        <div className="relative">
-          <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
-          <div className="absolute inset-0 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-30" />
-        </div>
-      </div>
+      {/* Loading overlay - blocks interaction during fly-in */}
+      {flying && (
+        <div className="absolute inset-0 z-[5] cursor-default" />
+      )}
 
-      {/* Clouds - hide on hover */}
-      <div className={`absolute inset-0 pointer-events-none z-[1] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
+      {/* Clouds - hide on hover, dynamic opacity based on zoom */}
+      <div
+        className={`absolute inset-0 pointer-events-none z-[1] transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}
+        data-hidden={flying}
+        aria-hidden="true"
+        style={{ opacity: flying ? 0 : undefined }}
+      >
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute -top-6 -left-8 w-[200px] h-auto opacity-[0.2] animate-cloud select-none"
-          style={{ filter: 'brightness(1.8) blur(1px)' }}
+          className="absolute -top-6 -left-8 h-auto select-none"
+          width={planeSize * 8}
+          style={{
+            opacity: cloudOpacity,
+            filter: 'brightness(1.8) blur(1px)',
+          }}
         />
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute top-[20%] -right-6 w-[120px] h-auto opacity-[0.12] animate-cloud select-none"
-          style={{ filter: 'brightness(1.5) blur(2px)', animationDuration: '30s', animationDelay: '5s' }}
+          className="absolute top-[20%] -right-6 h-auto select-none"
+          width={planeSize * 5}
+          style={{
+            opacity: cloudOpacity * 0.6,
+            filter: 'brightness(1.5) blur(2px)',
+            animationDuration: '30s',
+            animationDelay: '5s',
+          }}
         />
       </div>
 
-      {/* Plane - hide on hover */}
-      <div className={`absolute inset-0 pointer-events-none z-[2] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
+      {/* Plane - hide on hover, dynamic size based on zoom */}
+      <div
+        className={`absolute inset-0 pointer-events-none z-[2] transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}
+        style={{ opacity: flying ? 0 : undefined }}
+        aria-hidden="true"
+      >
         <img
           src="/plane.webp"
           alt=""
           draggable={false}
-          className="absolute top-[30%] -right-4 w-5 h-5 animate-plane select-none"
+          className="absolute top-[30%] -right-5 animate-plane select-none"
+          width={planeSize}
+          height={planeSize}
+          style={{ opacity: planeOpacity }}
         />
         <img
           src="/plane-shadow.webp"
           alt=""
           draggable={false}
-          className="absolute top-[30%] -right-4 w-5 h-5 animate-plane-shadow select-none"
+          className="absolute top-[30%] -right-5 animate-plane-shadow select-none"
+          width={planeSize}
+          height={planeSize}
+          style={{ opacity: planeOpacity }}
         />
       </div>
 
