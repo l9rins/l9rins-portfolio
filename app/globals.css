@@ -139,6 +139,11 @@ video {
   -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
 
+/* Override pigeon-maps default gray background that shows at tile edges */
+.pigeon-tiles {
+  background: #000 !important;
+}
+
 /* Film grain removed for performance - SVG feTurbulence was the #1 GPU killer */
 
 /* ============================================

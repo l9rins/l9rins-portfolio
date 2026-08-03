@@ -34,7 +34,7 @@ export function LocationMap() {
 
   return (
     <div
-      className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.06]"
+      className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.03]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
