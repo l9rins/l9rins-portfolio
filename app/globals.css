@@ -139,21 +139,10 @@ video {
   -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
 
-/* Fix pigeon-maps scrollbars & tile lines */
-.pigeon-map-container * {
-  -ms-overflow-style: none !important;
-  scrollbar-width: none !important;
-}
-.pigeon-map-container ::-webkit-scrollbar {
-  display: none !important;
-}
-
-/* Fix 1px gaps (lines) between map tiles due to subpixel rendering */
-.pigeon-tiles-box img {
-  outline: 1px solid transparent;
-  margin: -0.5px;
-  width: calc(100% + 1px) !important;
-  height: calc(100% + 1px) !important;
+/* Override pigeon-maps default gray background (#dddddd) on root container.
+   Root div has no class, so use :has() to target it as parent of .pigeon-tiles */
+div:has(> .pigeon-tiles-box) {
+  background: #000 !important;
 }
 
 /* Film grain removed for performance - SVG feTurbulence was the #1 GPU killer */
