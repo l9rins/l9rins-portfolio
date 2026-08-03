@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Map, Marker } from 'pigeon-maps';
+import { useState, useEffect, useRef } from 'react';
+import { Map } from 'pigeon-maps';
 
 const darkProvider = (x: number, y: number, z: number) => {
   const s = 'abc'[Math.abs(x + y) % 3];
@@ -12,8 +12,6 @@ export function LocationMap() {
   const [time, setTime] = useState('');
   const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -34,30 +32,13 @@ export function LocationMap() {
     return () => clearInterval(id);
   }, []);
 
-  const positionDot = useCallback(() => {
-    if (!containerRef.current || !dotRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    dotRef.current.style.left = `${rect.left + rect.width / 2}px`;
-    dotRef.current.style.top = `${rect.top + rect.height / 2}px`;
-  }, []);
-
-  useEffect(() => {
-    positionDot();
-    window.addEventListener('resize', positionDot);
-    window.addEventListener('scroll', positionDot, true);
-    return () => {
-      window.removeEventListener('resize', positionDot);
-      window.removeEventListener('scroll', positionDot, true);
-    };
-  }, [positionDot]);
-
   return (
     <div
-      ref={containerRef}
       className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.06]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* Map - draggable */}
       {mounted && (
         <Map
           center={[10.3157, 123.9065]}
@@ -71,12 +52,10 @@ export function LocationMap() {
         />
       )}
 
-      {/* Blue pin - position:fixed, manually positioned at container center. 
-          fixed positioning is immune to pigeon-maps internal CSS transforms */}
-      <div
-        ref={dotRef}
-        className="fixed -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[10]"
-      >
+      {/* Blue pin - absolute positioned SIBLING of Map, not child.
+          pigeon-maps internal transforms only affect its own children,
+          so this stays centered in the card regardless of map drag. */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[10]">
         <div className="relative">
           <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
           <div className="absolute inset-0 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-30" />
