@@ -139,8 +139,9 @@ video {
   -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
 
-/* Override pigeon-maps default gray background that shows at tile edges */
-.pigeon-tiles {
+/* Override pigeon-maps default gray background (#dddddd) on root container.
+   Root div has no class, so use :has() to target it as parent of .pigeon-tiles */
+div:has(> .pigeon-tiles-box) {
   background: #000 !important;
 }
 
