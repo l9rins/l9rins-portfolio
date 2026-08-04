@@ -22,6 +22,8 @@ import { StatsBar } from "@/components/ui/StatsCounter";
 import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { LocationMap } from "@/components/LocationMap";
+import { NoiseBackground } from "@/components/NoiseBackground";
+import { TextGenerateEffect } from "@/components/TextGenerateEffect";
 
 const heroStats = [
   { value: 50, suffix: "+", label: "Projects Shipped" },
@@ -36,6 +38,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black page-spotlight text-white relative font-body">
       <Navbar />
+
+      {/* Noise texture overlay */}
+      <NoiseBackground />
 
       {/* Global Animated Grid Background */}
       <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
@@ -84,17 +89,13 @@ export default function Home() {
                 </Badge>
               </motion.div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tighter mb-4 leading-[0.95]"
-              >
-                <span className="text-zinc-400">Full Stack</span>
-                <br />
-                <span className="text-white">Engineer </span>
-                <span className="text-gradient-animated">Building Scalable Systems</span>
-              </motion.h1>
+              <TextGenerateEffect
+                words="Full Stack Engineer Building Scalable Systems"
+                initialDelay={0.2}
+                speed={0.12}
+                duration={0.6}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-white"
+              />
 
               <motion.p
                 initial={{ opacity: 0, y: 15 }}
