@@ -124,34 +124,34 @@ export function LocationMap() {
         <div className="absolute inset-0 z-[20] cursor-default" />
       )}
 
-      {/* Clouds - hide on hover */}
-      <div className={`absolute inset-0 pointer-events-none z-[1] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
+      {/* Clouds - on top of map, hide on hover */}
+      <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute -top-4 -left-6 h-auto opacity-[0.1] animate-cloud select-none"
+          className="absolute -top-4 -left-6 h-auto opacity-30 animate-cloud select-none"
           style={{
             width: `${cloudSize1}px`,
-            filter: 'brightness(1.4) blur(1px)',
+            filter: 'brightness(0.9) blur(0.5px)',
           }}
         />
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute top-[15%] -right-4 h-auto opacity-[0.06] animate-cloud select-none"
+          className="absolute top-[15%] -right-4 h-auto opacity-20 animate-cloud select-none"
           style={{
             width: `${cloudSize2}px`,
-            filter: 'brightness(1.3) blur(1.5px)',
+            filter: 'brightness(0.8) blur(1px)',
             animationDuration: '30s',
             animationDelay: '5s',
           }}
         />
       </div>
 
-      {/* Plane - hide on hover */}
-      <div className={`absolute inset-0 pointer-events-none z-[2] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
+      {/* Plane - on top of map, hide on hover */}
+      <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
         <img
           src="/plane.webp"
           alt=""
@@ -169,17 +169,17 @@ export function LocationMap() {
       </div>
 
       {/* Clock */}
-      <div className="absolute top-2.5 right-2.5 z-10 px-2 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/[0.08]">
+      <div className="absolute top-2.5 right-2.5 z-20 px-2 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/[0.08]">
         <span className="text-[9px] font-mono text-white/90 tracking-wider">{time}</span>
       </div>
 
       {/* Label */}
-      <div className="absolute bottom-2.5 left-2.5 z-10">
+      <div className="absolute bottom-2.5 left-2.5 z-20">
         <p className="text-[8px] font-mono text-white/50 uppercase tracking-[0.15em]">Cebu, PH</p>
       </div>
 
       {/* Subtle vignette */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(0,0,0,0.3)_100%)]" />
+      <div className="absolute inset-0 pointer-events-none z-20 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(0,0,0,0.3)_100%)]" />
     </div>
   );
 }
