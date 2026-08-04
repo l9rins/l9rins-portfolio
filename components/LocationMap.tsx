@@ -81,7 +81,7 @@ export function LocationMap() {
 
   return (
     <div
-      className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.06] pigeon-map-container"
+      className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-black pigeon-map-container"
       style={{ isolation: 'isolate' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
