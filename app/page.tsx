@@ -121,7 +121,7 @@ export default function Home() {
 
               <motion.div variants={fadeUp}>
                 <TextGenerateEffect
-                  words="Full Stack Engineer Building Scalable Systems"
+                  words="Cloud Security + Full-Stack Engineer"
                   initialDelay={0.4}
                   speed={0.1}
                   duration={0.5}
