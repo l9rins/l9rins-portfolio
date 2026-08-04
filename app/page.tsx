@@ -168,13 +168,13 @@ export default function Home() {
           </motion.div>
 
           {/* TECH STACK */}
-          <motion.div variants={fadeUp}>
-            <SpotlightCard delay={1.6} id="stack" className="md:col-span-12 p-3 min-h-[60px]">
+          <motion.div variants={fadeUp} className="md:col-span-12">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-[6px] p-3">
               <div className="flex items-center gap-3 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
                 <TechMarquee />
-                <span className="font-mono text-[10px] text-zinc-600 ml-3 uppercase tracking-[0.2em]">Tech Stack</span>
+                <span className="font-mono text-[10px] text-zinc-600 ml-3 uppercase tracking-[0.2em] shrink-0">Tech Stack</span>
               </div>
-            </SpotlightCard>
+            </div>
           </motion.div>
 
         </motion.div>
