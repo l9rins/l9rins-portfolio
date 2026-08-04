@@ -126,14 +126,14 @@ export default function Home() {
                 className="body text-zinc-500 max-w-lg mt-3 mb-6 text-xs md:text-sm leading-relaxed"
               >
                 I bridge{" "}
-                <span className="group relative inline-block cursor-default">
-                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4 transition-colors duration-200 group-hover:text-black">complex engineering</span>
-                  <span className="absolute inset-0 -mx-1 -my-0.5 bg-white/90 rounded-sm scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left -z-10" />
+                <span className="group/ce relative inline-block cursor-default">
+                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4 transition-colors duration-200 group-hover/ce:text-black">complex engineering</span>
+                  <span className="absolute inset-0 -mx-1 -my-0.5 bg-white scale-x-0 group-hover/ce:scale-x-100 transition-transform duration-200 origin-left -z-10" />
                 </span>
                 {" "}and{" "}
-                <span className="group relative inline-block cursor-default">
-                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4 transition-colors duration-200 group-hover:text-black">high-end design</span>
-                  <span className="absolute inset-0 -mx-1 -my-0.5 bg-white/90 rounded-sm scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left -z-10" />
+                <span className="group/hd relative inline-block cursor-default">
+                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4 transition-colors duration-200 group-hover/hd:text-black">high-end design</span>
+                  <span className="absolute inset-0 -mx-1 -my-0.5 bg-white scale-x-0 group-hover/hd:scale-x-100 transition-transform duration-200 origin-left -z-10" />
                 </span>.
                 I engineer experiences that hit a <span className="text-[--accent] font-semibold">99+ Lighthouse score</span> by default.
               </motion.p>
