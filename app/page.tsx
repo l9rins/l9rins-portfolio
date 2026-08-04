@@ -102,8 +102,16 @@ export default function Home() {
         >
 
           {/* BIO CARD */}
-          <SpotlightCard className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[360px]">
-            <div className="p-1.5">
+          <div className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[360px] relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] overflow-hidden">
+            {/* Corner glow */}
+            <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-white/20 to-white/10 opacity-[0.05] rounded-full blur-2xl" />
+            {/* Dot grid */}
+            <div className="absolute inset-0 z-0 opacity-[0.05] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+            {/* Bottom gradient */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+            {/* Animated top line */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <div className="relative z-10 p-6">
               <motion.div variants={fadeUp} className="mb-4">
                 <Badge className="bg-[--accent]/10 text-[--accent] border-[--accent]/30 px-3 py-1 text-[10px] font-mono tracking-wide uppercase animate-border-glow">
                   <Sparkles className="w-2.5 h-2.5 mr-1.5" />
@@ -139,7 +147,7 @@ export default function Home() {
               </motion.p>
             </div>
 
-            <motion.div variants={fadeUp} className="flex gap-3 mt-auto flex-wrap p-1.5">
+            <motion.div variants={fadeUp} className="flex gap-3 mt-auto flex-wrap px-6 pb-6">
               <motion.button
                 onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
                 whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(255, 255, 255, 0.2)" }}
@@ -161,7 +169,7 @@ export default function Home() {
                 Download CV
               </motion.a>
             </motion.div>
-          </SpotlightCard>
+          </div>
 
           {/* PROFILE PHOTO - Swipeable Carousel */}
           <motion.div variants={slideFromRight} className="md:col-span-4 h-full min-h-[200px] flex items-center justify-center rounded-xl border border-white/[0.06] overflow-hidden">
