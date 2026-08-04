@@ -58,6 +58,8 @@ export function StatsCounter({
                             setDisplayValue(`${(latest / 1000000).toFixed(1)}M`);
                         } else if (value >= 1000) {
                             setDisplayValue(`${Math.round(latest / 1000)}K`);
+                        } else if (value < 1) {
+                            setDisplayValue(latest.toFixed(1));
                         } else {
                             setDisplayValue(Math.round(latest).toString());
                         }
