@@ -228,17 +228,19 @@ export default function Home() {
             transition={{ delay: 1.8, duration: 0.6 }}
             className="mt-4 relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-200 overflow-hidden"
           >
-            {/* Spotlight cursor glow */}
-            <motion.div
-              className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-              style={{
-                background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.04), transparent 40%)`,
-              }}
-            />
+            {/* Corner glow */}
+            <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-white/20 to-white/10 opacity-[0.05] rounded-full blur-2xl" />
             {/* Dot grid */}
-            <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+            <div className="absolute inset-0 z-0 opacity-[0.05] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+            {/* Bottom gradient */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
             {/* Animated top line */}
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <motion.div
+              className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            />
             <StatsBar
               stats={heroStats}
               className="relative z-10"
