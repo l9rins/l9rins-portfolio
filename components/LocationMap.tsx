@@ -26,7 +26,6 @@ export function LocationMap() {
   const [isAnimating, setIsAnimating] = useState(true);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -46,32 +45,6 @@ export function LocationMap() {
     const id = setInterval(update, 1000);
     return () => clearInterval(id);
   }, []);
-
-  // Force pigeon-maps to recalculate tile coverage after CSS Grid layout settles.
-  // Without this, the map measures a 0×0 or partial container on first render,
-  // leaving black bands that only disappear on manual window resize.
-  useEffect(() => {
-    if (!mounted) return;
-    const fireResize = () => window.dispatchEvent(new Event('resize'));
-    // Fire at multiple intervals to catch layout settling
-    const t1 = setTimeout(fireResize, 100);
-    const t2 = setTimeout(fireResize, 300);
-    const t3 = setTimeout(fireResize, 800);
-
-    // Also observe the container for any size changes (e.g. font loading, images)
-    let observer: ResizeObserver | null = null;
-    if (containerRef.current) {
-      observer = new ResizeObserver(() => fireResize());
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      observer?.disconnect();
-    };
-  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -101,14 +74,8 @@ export function LocationMap() {
     };
   }, [mounted]);
 
-  const decorScale = Math.min(Math.pow(1.5, zoom - 8), 1.8);
-  const cloudSize1 = 50 * decorScale;
-  const cloudSize2 = 35 * decorScale;
-  const planeSize = 14 * decorScale;
-
   return (
     <div
-      ref={containerRef}
       className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-black pigeon-map-container"
       style={{ isolation: 'isolate' }}
       onMouseEnter={() => setHovered(true)}
@@ -152,47 +119,33 @@ export function LocationMap() {
         <div className="absolute inset-0 z-[20] cursor-default" />
       )}
 
-      {/* Clouds - on top of map, hide on hover */}
-      <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
+      {/* Decorations - fade out on hover, duyle.dev style */}
+      <div
+        className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}
+        aria-hidden="true"
+      >
+        {/* Cloud — large, top-left, gentle drift */}
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute -top-2 -left-4 h-auto opacity-40 animate-cloud select-none"
-          style={{
-            width: `${cloudSize1}px`,
-            filter: 'brightness(0.8)',
-          }}
+          className="absolute -top-10 -left-10 w-60 h-auto animate-cloud blur-[1px] opacity-20 select-none"
         />
-        <img
-          src="/cloud.webp"
-          alt=""
-          draggable={false}
-          className="absolute top-[20%] -right-2 h-auto opacity-25 animate-cloud select-none"
-          style={{
-            width: `${cloudSize2}px`,
-            filter: 'brightness(0.7)',
-            animationDuration: '30s',
-            animationDelay: '5s',
-          }}
-        />
-      </div>
 
-      {/* Plane - on top of map, hide on hover */}
-      <div className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
+        {/* Plane — starts off-screen bottom-right, flies diagonally across */}
         <img
           src="/plane.webp"
           alt=""
           draggable={false}
-          className="absolute top-[20%] right-[15%] animate-plane select-none"
-          style={{ width: `${planeSize}px`, height: `${planeSize}px`, opacity: 0.6 }}
+          className="absolute -right-5 -bottom-5 w-6 h-6 animate-plane select-none [animation-delay:2.5s]"
         />
+
+        {/* Plane shadow — same path, offset, shrinks as it flies */}
         <img
           src="/plane-shadow.webp"
           alt=""
           draggable={false}
-          className="absolute top-[20%] right-[15%] animate-plane-shadow select-none"
-          style={{ width: `${planeSize}px`, height: `${planeSize}px`, opacity: 0.3 }}
+          className="absolute -right-5 -bottom-5 w-6 h-6 animate-plane-shadow select-none [animation-delay:2.5s]"
         />
       </div>
 
