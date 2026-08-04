@@ -75,9 +75,9 @@ export function LocationMap() {
   }, [mounted]);
 
   const decorScale = Math.min(Math.pow(1.5, zoom - 8), 1.8);
-  const cloudSize1 = 30 * decorScale;
-  const cloudSize2 = 20 * decorScale;
-  const planeSize = 6 * decorScale;
+  const cloudSize1 = 50 * decorScale;
+  const cloudSize2 = 35 * decorScale;
+  const planeSize = 14 * decorScale;
 
   return (
     <div
@@ -130,20 +130,20 @@ export function LocationMap() {
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute -top-4 -left-6 h-auto opacity-30 animate-cloud select-none"
+          className="absolute -top-2 -left-4 h-auto opacity-40 animate-cloud select-none"
           style={{
             width: `${cloudSize1}px`,
-            filter: 'brightness(0.9) blur(0.5px)',
+            filter: 'brightness(0.8)',
           }}
         />
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute top-[15%] -right-4 h-auto opacity-20 animate-cloud select-none"
+          className="absolute top-[20%] -right-2 h-auto opacity-25 animate-cloud select-none"
           style={{
             width: `${cloudSize2}px`,
-            filter: 'brightness(0.8) blur(1px)',
+            filter: 'brightness(0.7)',
             animationDuration: '30s',
             animationDelay: '5s',
           }}
@@ -156,15 +156,15 @@ export function LocationMap() {
           src="/plane.webp"
           alt=""
           draggable={false}
-          className="absolute top-[25%] right-[10%] animate-plane select-none"
-          style={{ width: `${planeSize}px`, height: `${planeSize}px` }}
+          className="absolute top-[20%] right-[15%] animate-plane select-none"
+          style={{ width: `${planeSize}px`, height: `${planeSize}px`, opacity: 0.6 }}
         />
         <img
           src="/plane-shadow.webp"
           alt=""
           draggable={false}
-          className="absolute top-[25%] right-[10%] animate-plane-shadow select-none"
-          style={{ width: `${planeSize}px`, height: `${planeSize}px` }}
+          className="absolute top-[20%] right-[15%] animate-plane-shadow select-none"
+          style={{ width: `${planeSize}px`, height: `${planeSize}px`, opacity: 0.3 }}
         />
       </div>
 
