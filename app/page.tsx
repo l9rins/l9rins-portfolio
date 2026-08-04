@@ -22,7 +22,7 @@ import { StatsBar } from "@/components/ui/StatsCounter";
 import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { LocationMap } from "@/components/LocationMap";
-import { NoiseBackground } from "@/components/NoiseBackground";
+
 import { TextGenerateEffect } from "@/components/TextGenerateEffect";
 
 const heroStats = [
@@ -63,9 +63,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black page-spotlight text-white relative font-body">
       <Navbar />
-
-      {/* Noise texture overlay */}
-      <NoiseBackground />
 
       {/* Global Animated Grid Background */}
       <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
