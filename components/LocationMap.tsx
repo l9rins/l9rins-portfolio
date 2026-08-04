@@ -26,6 +26,7 @@ export function LocationMap() {
   const [isAnimating, setIsAnimating] = useState(true);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -45,6 +46,32 @@ export function LocationMap() {
     const id = setInterval(update, 1000);
     return () => clearInterval(id);
   }, []);
+
+  // Force pigeon-maps to recalculate tile coverage after CSS Grid layout settles.
+  // Without this, the map measures a 0×0 or partial container on first render,
+  // leaving black bands that only disappear on manual window resize.
+  useEffect(() => {
+    if (!mounted) return;
+    const fireResize = () => window.dispatchEvent(new Event('resize'));
+    // Fire at multiple intervals to catch layout settling
+    const t1 = setTimeout(fireResize, 100);
+    const t2 = setTimeout(fireResize, 300);
+    const t3 = setTimeout(fireResize, 800);
+
+    // Also observe the container for any size changes (e.g. font loading, images)
+    let observer: ResizeObserver | null = null;
+    if (containerRef.current) {
+      observer = new ResizeObserver(() => fireResize());
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      observer?.disconnect();
+    };
+  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -81,6 +108,7 @@ export function LocationMap() {
 
   return (
     <div
+      ref={containerRef}
       className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-black pigeon-map-container"
       style={{ isolation: 'isolate' }}
       onMouseEnter={() => setHovered(true)}
