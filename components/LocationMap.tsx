@@ -26,6 +26,7 @@ export function LocationMap() {
   const [isAnimating, setIsAnimating] = useState(true);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -74,8 +75,35 @@ export function LocationMap() {
     };
   }, [mounted]);
 
+  // Force pigeon-maps to recalculate tile coverage after mount.
+  // Pigeon-maps measures container dimensions at mount time, but in a CSS Grid
+  // the container hasn't reached its final size during the first render.
+  // Dispatching resize events catches the grid settling at different stages.
+  useEffect(() => {
+    if (!mounted) return;
+
+    const fireResize = () => window.dispatchEvent(new Event('resize'));
+    const t1 = setTimeout(fireResize, 100);
+    const t2 = setTimeout(fireResize, 300);
+    const t3 = setTimeout(fireResize, 800);
+
+    let observer: ResizeObserver | undefined;
+    if (containerRef.current) {
+      observer = new ResizeObserver(fireResize);
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      observer?.disconnect();
+    };
+  }, [mounted]);
+
   return (
     <div
+      ref={containerRef}
       className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-black pigeon-map-container"
       style={{ isolation: 'isolate' }}
       onMouseEnter={() => setHovered(true)}
@@ -119,35 +147,13 @@ export function LocationMap() {
         <div className="absolute inset-0 z-[20] cursor-default" />
       )}
 
-      {/* Decorations - fade out on hover, duyle.dev style */}
-      <div
-        className={`absolute inset-0 pointer-events-none z-10 transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}
-        aria-hidden="true"
-      >
-        {/* Cloud — large, top-left, gentle drift */}
-        <img
-          src="/cloud.webp"
-          alt=""
-          draggable={false}
-          className="absolute -top-10 -left-10 w-60 h-auto animate-cloud blur-[1px] opacity-20 select-none"
-        />
-
-        {/* Plane — starts off-screen bottom-right, flies diagonally across */}
-        <img
-          src="/plane.webp"
-          alt=""
-          draggable={false}
-          className="absolute -right-5 -bottom-5 w-6 h-6 animate-plane select-none [animation-delay:2.5s] scale-x-[-1]"
-        />
-
-        {/* Plane shadow — same path, offset, shrinks as it flies */}
-        <img
-          src="/plane-shadow.webp"
-          alt=""
-          draggable={false}
-          className="absolute -right-5 -bottom-5 w-6 h-6 animate-plane-shadow select-none [animation-delay:2.5s]"
-        />
-      </div>
+      {/* Cloud decoration — fades out on hover */}
+      <img
+        src="/cloud.webp"
+        alt=""
+        draggable={false}
+        className={`absolute -top-10 -left-10 w-60 h-auto animate-cloud blur-[1px] opacity-20 select-none pointer-events-none z-10 transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}
+      />
 
       {/* Clock */}
       <div className="absolute top-2.5 right-2.5 z-20 px-2 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/[0.08]">
