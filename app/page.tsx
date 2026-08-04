@@ -102,7 +102,7 @@ export default function Home() {
         >
 
           {/* BIO CARD */}
-          <div className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[360px] relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] overflow-hidden">
+          <motion.div variants={scaleIn} className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[360px] relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] overflow-hidden">
             {/* Corner glow */}
             <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-white/20 to-white/10 opacity-[0.05] rounded-full blur-2xl" />
             {/* Dot grid */}
@@ -169,7 +169,7 @@ export default function Home() {
                 Download CV
               </motion.a>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* PROFILE PHOTO - Swipeable Carousel */}
           <motion.div variants={slideFromRight} className="md:col-span-4 h-full min-h-[200px] flex items-center justify-center rounded-xl border border-white/[0.06] overflow-hidden">
