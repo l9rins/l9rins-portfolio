@@ -88,18 +88,19 @@ export function StatsCounter({
     return (
         <motion.div
             ref={ref}
-            className={`text-center ${className}`}
+            className={`text-center group cursor-default ${className}`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.05 }}
             transition={{ delay, duration: 0.6 }}
             viewport={{ once: true }}
         >
-            <div className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight ${valueClassName}`}>
+            <div className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight transition-colors duration-200 group-hover:text-[--accent] ${valueClassName}`}>
                 {prefix}
                 {displayValue}
                 {suffix}
             </div>
-            <div className={`text-[10px] md:text-xs text-zinc-500 uppercase tracking-[0.2em] mt-2 font-medium ${labelClassName}`}>
+            <div className={`text-[10px] md:text-xs text-zinc-500 uppercase tracking-[0.2em] mt-2 font-medium transition-colors duration-200 group-hover:text-zinc-400 ${labelClassName}`}>
                 {label}
             </div>
         </motion.div>
@@ -130,7 +131,7 @@ export function StatsBar({ stats, className = "" }: StatsBarProps) {
             viewport={{ once: true }}
         >
             {stats.map((stat, i) => (
-                <div key={i} className="relative">
+                <div key={i} className="relative group/stat">
                     <StatsCounter
                         value={stat.value}
                         suffix={stat.suffix}
@@ -140,7 +141,9 @@ export function StatsBar({ stats, className = "" }: StatsBarProps) {
                     />
                     {/* Divider line between stats */}
                     {i < stats.length - 1 && (
-                        <div className="hidden md:block absolute right-[-2rem] top-1/2 -translate-y-1/2 w-px h-12 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+                        <div className="hidden md:block absolute right-[-2rem] top-1/2 -translate-y-1/2 w-px h-12 overflow-hidden">
+                            <div className="w-full h-full bg-gradient-to-b from-transparent via-white/10 to-transparent group-hover/stat:via-white/25 transition-all duration-300" />
+                        </div>
                     )}
                 </div>
             ))}

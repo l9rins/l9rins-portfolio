@@ -222,17 +222,28 @@ export default function Home() {
 
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.8, duration: 0.6 }}
-          className="mt-4"
-        >
-          <StatsBar
-            stats={heroStats}
-            className="bg-zinc-900/30 rounded-2xl border border-white/5"
-          />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.8, duration: 0.6 }}
+            className="mt-4 relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-200 overflow-hidden"
+          >
+            {/* Spotlight cursor glow */}
+            <motion.div
+              className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+              style={{
+                background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.04), transparent 40%)`,
+              }}
+            />
+            {/* Dot grid */}
+            <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+            {/* Animated top line */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <StatsBar
+              stats={heroStats}
+              className="relative z-10"
+            />
+          </motion.div>
       </section>
 
       <GlowDivider />
