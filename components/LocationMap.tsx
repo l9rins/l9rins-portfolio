@@ -137,7 +137,7 @@ export function LocationMap() {
           src="/plane.webp"
           alt=""
           draggable={false}
-          className="absolute -right-5 -bottom-5 w-6 h-6 animate-plane select-none [animation-delay:2.5s]"
+          className="absolute -right-5 -bottom-5 w-6 h-6 animate-plane select-none [animation-delay:2.5s] scale-x-[-1]"
         />
 
         {/* Plane shadow — same path, offset, shrinks as it flies */}
