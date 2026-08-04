@@ -84,8 +84,8 @@ export function LocationMap() {
     };
   }, [mounted]);
 
-  // Dynamic scale for clouds/plane based on zoom (Duy's formula)
-  const decorScale = Math.pow(1.5, zoom - 11);
+  // Dynamic scale for clouds/plane based on zoom, capped to prevent oversized decorations
+  const decorScale = Math.min(Math.pow(1.5, zoom - 11), 2.5);
   const cloudSize1 = 24 * decorScale;
   const cloudSize2 = 16 * decorScale;
   const planeSize = 5 * decorScale;
@@ -131,17 +131,17 @@ export function LocationMap() {
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute -top-6 -left-8 h-auto opacity-[0.2] animate-cloud select-none"
+          className="absolute -top-6 -left-8 h-auto opacity-[0.12] animate-cloud select-none"
           style={{
             width: `${cloudSize1}px`,
-            filter: 'brightness(1.8) blur(1px)',
+            filter: 'brightness(1.5) blur(1.5px)',
           }}
         />
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute top-[20%] -right-6 h-auto opacity-[0.12] animate-cloud select-none"
+          className="absolute top-[20%] -right-6 h-auto opacity-[0.08] animate-cloud select-none"
           style={{
             width: `${cloudSize2}px`,
             filter: 'brightness(1.5) blur(2px)',
