@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Map, Overlay } from 'pigeon-maps';
 
 const darkProvider = (x: number, y: number, z: number) => {
@@ -8,16 +8,12 @@ const darkProvider = (x: number, y: number, z: number) => {
   return `https://${s}.basemaps.cartocdn.com/dark_all/${z}/${x}/${y}@2x.png`;
 };
 
-// Cebu coordinates
 const CEBU: [number, number] = [10.3157, 123.9065];
 
-// Fly-in config
 const FLY_START_ZOOM = 3;
-const FLY_END_ZOOM = 15;
-const FLY_DURATION_MS = 3000;
-const FLY_FRAME_MS = 16; // ~60fps
+const FLY_END_ZOOM = 12;
+const FLY_DURATION_MS = 2500;
 
-// Easing: cubic ease-out for smooth deceleration
 function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
 }
@@ -26,14 +22,11 @@ export function LocationMap() {
   const [time, setTime] = useState('');
   const [mounted, setMounted] = useState(false);
   const [hovered, setHovered] = useState(false);
-
-  // Fly-in state
   const [zoom, setZoom] = useState(FLY_START_ZOOM);
   const [isAnimating, setIsAnimating] = useState(true);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
 
-  // Clock
   useEffect(() => {
     setMounted(true);
     const update = () => {
@@ -53,7 +46,6 @@ export function LocationMap() {
     return () => clearInterval(id);
   }, []);
 
-  // Fly-in animation
   useEffect(() => {
     if (!mounted) return;
 
@@ -63,8 +55,7 @@ export function LocationMap() {
       const progress = Math.min(elapsed / FLY_DURATION_MS, 1);
       const easedProgress = easeOutCubic(progress);
 
-      const currentZoom = FLY_START_ZOOM + (FLY_END_ZOOM - FLY_START_ZOOM) * easedProgress;
-      setZoom(currentZoom);
+      setZoom(FLY_START_ZOOM + (FLY_END_ZOOM - FLY_START_ZOOM) * easedProgress);
 
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
@@ -73,10 +64,9 @@ export function LocationMap() {
       }
     };
 
-    // Small delay so the map renders first at zoom 3
     const timeout = setTimeout(() => {
       animationRef.current = requestAnimationFrame(animate);
-    }, 300);
+    }, 500);
 
     return () => {
       clearTimeout(timeout);
@@ -84,18 +74,21 @@ export function LocationMap() {
     };
   }, [mounted]);
 
-  // Dynamic scale for clouds/plane based on zoom, capped to prevent oversized decorations
-  const decorScale = Math.min(Math.pow(1.5, zoom - 11), 2.5);
-  const cloudSize1 = 24 * decorScale;
-  const cloudSize2 = 16 * decorScale;
-  const planeSize = 5 * decorScale;
+  const decorScale = Math.min(Math.pow(1.5, zoom - 8), 1.8);
+  const cloudSize1 = 30 * decorScale;
+  const cloudSize2 = 20 * decorScale;
+  const planeSize = 6 * decorScale;
 
   return (
     <div
-      className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.03] pigeon-map-container"
+      className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-white/[0.06] pigeon-map-container"
+      style={{ isolation: 'isolate' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* Black base behind map */}
+      <div className="absolute inset-0 bg-black" />
+
       {/* Map */}
       {mounted && (
         <Map
@@ -111,10 +104,16 @@ export function LocationMap() {
             if (!isAnimating) setZoom(newZoom);
           }}
         >
-          <Overlay anchor={CEBU} offset={[6, 6]}>
+          <Overlay anchor={CEBU} offset={[7, 7]}>
             <div className="relative pointer-events-none">
-              <div className="w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.6)] border-2 border-white/80" />
-              <div className="absolute inset-0 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-30" />
+              <div className="absolute -inset-1.5 bg-blue-500/20 rounded-full animate-ping" />
+              <div
+                className="w-3.5 h-3.5 rounded-full border-2 border-white"
+                style={{
+                  background: 'radial-gradient(circle at 35% 35%, #60a5fa, #3b82f6)',
+                  boxShadow: '0 0 10px rgba(59,130,246,0.7), 0 0 20px rgba(59,130,246,0.3)',
+                }}
+              />
             </div>
           </Overlay>
         </Map>
@@ -125,62 +124,62 @@ export function LocationMap() {
         <div className="absolute inset-0 z-[20] cursor-default" />
       )}
 
-      {/* Clouds - hide on hover, scale with zoom */}
+      {/* Clouds - hide on hover */}
       <div className={`absolute inset-0 pointer-events-none z-[1] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute -top-6 -left-8 h-auto opacity-[0.12] animate-cloud select-none"
+          className="absolute -top-4 -left-6 h-auto opacity-[0.1] animate-cloud select-none"
           style={{
             width: `${cloudSize1}px`,
-            filter: 'brightness(1.5) blur(1.5px)',
+            filter: 'brightness(1.4) blur(1px)',
           }}
         />
         <img
           src="/cloud.webp"
           alt=""
           draggable={false}
-          className="absolute top-[20%] -right-6 h-auto opacity-[0.08] animate-cloud select-none"
+          className="absolute top-[15%] -right-4 h-auto opacity-[0.06] animate-cloud select-none"
           style={{
             width: `${cloudSize2}px`,
-            filter: 'brightness(1.5) blur(2px)',
+            filter: 'brightness(1.3) blur(1.5px)',
             animationDuration: '30s',
             animationDelay: '5s',
           }}
         />
       </div>
 
-      {/* Plane - hide on hover, scale with zoom */}
+      {/* Plane - hide on hover */}
       <div className={`absolute inset-0 pointer-events-none z-[2] transition-opacity duration-300 ${hovered ? 'opacity-0' : 'opacity-100'}`} aria-hidden="true">
         <img
           src="/plane.webp"
           alt=""
           draggable={false}
-          className="absolute top-[30%] -right-4 animate-plane select-none"
+          className="absolute top-[25%] right-[10%] animate-plane select-none"
           style={{ width: `${planeSize}px`, height: `${planeSize}px` }}
         />
         <img
           src="/plane-shadow.webp"
           alt=""
           draggable={false}
-          className="absolute top-[30%] -right-4 animate-plane-shadow select-none"
+          className="absolute top-[25%] right-[10%] animate-plane-shadow select-none"
           style={{ width: `${planeSize}px`, height: `${planeSize}px` }}
         />
       </div>
 
       {/* Clock */}
-      <div className="absolute top-2 right-2 z-10 px-2 py-1 rounded bg-black/60 backdrop-blur-sm border border-white/[0.08]">
-        <span className="text-[9px] font-mono text-white/80 tracking-wider">{time}</span>
+      <div className="absolute top-2.5 right-2.5 z-10 px-2 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/[0.08]">
+        <span className="text-[9px] font-mono text-white/90 tracking-wider">{time}</span>
       </div>
 
       {/* Label */}
-      <div className="absolute bottom-2 left-2 z-10">
+      <div className="absolute bottom-2.5 left-2.5 z-10">
         <p className="text-[8px] font-mono text-white/50 uppercase tracking-[0.15em]">Cebu, PH</p>
       </div>
 
-      {/* Vignette */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.4)_100%)]" />
+      {/* Subtle vignette */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(0,0,0,0.3)_100%)]" />
     </div>
   );
 }

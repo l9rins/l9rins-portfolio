@@ -163,6 +163,18 @@ div:has(> .pigeon-tiles-box) {
   height: calc(100% + 1px) !important;
 }
 
+/* Remove default background from pigeon-maps Overlay wrapper divs */
+.pigeon-map-container .pigeon-click-block,
+.pigeon-map-container div[style*="position: absolute"] > div {
+  background: transparent !important;
+}
+
+/* Ensure the map container clips properly against rounded corners */
+.pigeon-map-container {
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
 /* Film grain removed for performance - SVG feTurbulence was the #1 GPU killer */
 
 /* Noise background overlay - subtle living grain texture */
