@@ -163,12 +163,9 @@ video {
   max-width: none !important;
 }
 
-/* FIX #2: Fill subpixel tile gaps — box-shadow follows transforms (unlike outline) */
+/* FIX #2: Fill subpixel tile gaps — black background shows through gaps */
 .pigeon-tiles-box {
   background: black !important;
-}
-.pigeon-tiles-box img {
-  box-shadow: 0 0 0 0.5px black;
 }
 
 /* FIX #3: Pigeon-maps root div has a default background of rgb(221,221,221).
