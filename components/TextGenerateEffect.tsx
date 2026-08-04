@@ -1,13 +1,9 @@
 'use client';
 
-import { useEffect, memo } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import { motion, stagger, useAnimate } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-/**
- * TextGenerateEffect - Word-by-word blur-to-focus reveal animation.
- * Words appear from blurred to sharp with staggered timing.
- */
 export const TextGenerateEffect = memo(function TextGenerateEffect({
   words,
   className,
@@ -24,9 +20,13 @@ export const TextGenerateEffect = memo(function TextGenerateEffect({
   initialDelay?: number;
 }) {
   const [scope, animate] = useAnimate();
+  const hasAnimated = useRef(false);
   const wordsArray = words.split(' ').slice(0, 30);
 
   useEffect(() => {
+    if (hasAnimated.current) return;
+    hasAnimated.current = true;
+
     const timer = setTimeout(() => {
       animate(
         'span',
@@ -42,32 +42,27 @@ export const TextGenerateEffect = memo(function TextGenerateEffect({
     }, initialDelay * 1000);
 
     return () => clearTimeout(timer);
-  }, [scope.current, animate, duration, filter, speed, initialDelay]);
-
-  const renderWords = () => {
-    return (
-      <motion.div ref={scope}>
-        {wordsArray.map((word, idx) => (
-          <motion.span
-            key={`${word}-${idx}`}
-            className="inline-block opacity-0"
-            style={{
-              filter: filter ? 'blur(10px)' : 'none',
-              fontSize: 'inherit',
-            }}
-          >
-            {word}{' '}
-          </motion.span>
-        ))}
-      </motion.div>
-    );
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={cn('font-bold', className)}>
-      <div className="mt-4">
-        <div style={{ fontSize: 'inherit', willChange: 'transform' }}>
-          {renderWords()}
+      <div>
+        <div style={{ fontSize: 'inherit' }}>
+          <motion.div ref={scope}>
+            {wordsArray.map((word, idx) => (
+              <motion.span
+                key={`${word}-${idx}`}
+                className="inline-block opacity-0"
+                style={{
+                  filter: filter ? 'blur(10px)' : 'none',
+                  fontSize: 'inherit',
+                }}
+              >
+                {word}{' '}
+              </motion.span>
+            ))}
+          </motion.div>
         </div>
       </div>
     </div>
