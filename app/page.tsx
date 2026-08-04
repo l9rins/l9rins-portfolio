@@ -126,15 +126,9 @@ export default function Home() {
                 className="body text-zinc-500 max-w-lg mt-3 mb-6 text-xs md:text-sm leading-relaxed"
               >
                 I bridge{" "}
-                <span className="group relative inline-block">
-                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4">complex engineering</span>
-                  <span className="pointer-events-none inline-flex overflow-hidden align-baseline whitespace-nowrap text-[--accent] transition-all duration-500 ease-out select-none max-w-0 opacity-0 group-hover:max-w-[120px] group-hover:opacity-100 ml-1 text-xs font-medium">{" "}at scale</span>
-                </span>{" "}
-                and{" "}
-                <span className="group relative inline-block">
-                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4">high-end design</span>
-                  <span className="pointer-events-none inline-flex overflow-hidden align-baseline whitespace-nowrap text-[--accent] transition-all duration-500 ease-out select-none max-w-0 opacity-0 group-hover:max-w-[120px] group-hover:opacity-100 ml-1 text-xs font-medium">{" "}that converts</span>
-                </span>.
+                <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4">complex engineering</span>
+                {" "}and{" "}
+                <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4">high-end design</span>.
                 I engineer experiences that hit a <span className="text-[--accent] font-semibold">99+ Lighthouse score</span> by default.
               </motion.p>
             </div>
