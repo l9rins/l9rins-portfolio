@@ -19,7 +19,6 @@ import { FAQ } from "@/components/FAQ";
 import { GlowDivider } from "@/components/ui/GlowDivider";
 import { AnimatedGridBackground } from "@/components/ui/AnimatedGridBackground";
 import { StatsBar } from "@/components/ui/StatsCounter";
-import { TechLogoBar } from "@/components/TechLogoBar";
 import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { LocationMap } from "@/components/LocationMap";
@@ -161,7 +160,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.8, duration: 0.6 }}
-          className="mt-8 pt-6 border-t border-white/5"
+          className="mt-4"
         >
           <StatsBar
             stats={heroStats}
@@ -171,11 +170,6 @@ export default function Home() {
       </section>
 
       <GlowDivider />
-
-      {/* Tech Logo Trust Bar */}
-      <div className={`${contentMaxWidth} mx-auto px-6 md:px-10`}>
-        <TechLogoBar />
-      </div>
 
       {/* What I Build Section */}
       <section id="services" className="relative z-10 bg-black py-0.5">
