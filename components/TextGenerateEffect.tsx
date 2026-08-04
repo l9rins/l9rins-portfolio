@@ -49,17 +49,17 @@ export const TextGenerateEffect = memo(function TextGenerateEffect({
     <div className={cn('font-bold', className)}>
       <div>
         <div style={{ fontSize: 'inherit' }}>
-          <motion.div ref={scope}>
+          <motion.div ref={scope} className="flex flex-wrap">
             {wordsArray.map((word, idx) => (
               <motion.span
                 key={`${word}-${idx}`}
-                className="inline-block opacity-0"
+                className="inline-block opacity-0 mr-[0.3em]"
                 style={{
                   filter: filter ? 'blur(10px)' : 'none',
                   fontSize: 'inherit',
                 }}
               >
-                {word}{' '}
+                {word}
               </motion.span>
             ))}
           </motion.div>

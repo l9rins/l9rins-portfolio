@@ -156,6 +156,26 @@ video {
   background: transparent !important;
 }
 
+/* FIX #1: Tailwind Preflight sets img { max-width: 100% } which caps scaled
+   transition tiles (e.g. 1024px tiles inside a 512px container) causing massive
+   gaps. Override to let tiles render at their actual size. */
+.pigeon-map-container img {
+  max-width: none !important;
+}
+
+/* FIX #2: Fill subpixel tile gaps with dark outline */
+.pigeon-tiles-box img {
+  outline: 1px solid rgba(0, 0, 0, 0.9);
+}
+
+/* FIX #3: Pigeon-maps root div has a default background of rgb(221,221,221).
+   Override it to black so any subpixel gaps between tiles show black instead
+   of light gray. Target the root div[dir="ltr"] that pigeon-maps creates. */
+.pigeon-map-container > div[dir="ltr"],
+.pigeon-map-container div:has(> .pigeon-tiles-box) {
+  background: #0b0b0c !important;
+}
+
 /* Ensure the map container clips properly against rounded corners */
 .pigeon-map-container {
   isolation: isolate;
