@@ -1,12 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import {
   Sparkles,
   ArrowRight
 } from "lucide-react";
+import { useRef, useState, MouseEvent } from "react";
 import { SpotlightCard } from "@/components/SpotlightCard";
 import { TechMarquee } from "@/components/TechMarquee";
 import { ProjectsSection } from "@/components/ProjectsSection";
@@ -60,6 +61,17 @@ const slideFromRight = {
 };
 
 export default function Home() {
+  const heroCardRef = useRef<HTMLDivElement>(null);
+  const heroMouseX = useMotionValue(0);
+  const heroMouseY = useMotionValue(0);
+
+  const handleHeroMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!heroCardRef.current) return;
+    const rect = heroCardRef.current.getBoundingClientRect();
+    heroMouseX.set(e.clientX - rect.left);
+    heroMouseY.set(e.clientY - rect.top);
+  };
+
   return (
     <div className="min-h-screen bg-black page-spotlight text-white relative font-body">
       <Navbar />
@@ -102,7 +114,19 @@ export default function Home() {
         >
 
           {/* BIO CARD */}
-          <motion.div variants={scaleIn} className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[360px] relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] overflow-hidden">
+          <motion.div
+            ref={heroCardRef}
+            onMouseMove={handleHeroMouseMove}
+            variants={scaleIn}
+            className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[360px] relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-200 overflow-hidden"
+          >
+            {/* Spotlight cursor glow */}
+            <motion.div
+              className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+              style={{
+                background: `radial-gradient(400px circle at ${heroMouseX}px ${heroMouseY}px, rgba(255,255,255,0.06), transparent 40%)`,
+              }}
+            />
             {/* Corner glow */}
             <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-white/20 to-white/10 opacity-[0.05] rounded-full blur-2xl" />
             {/* Dot grid */}
@@ -110,7 +134,12 @@ export default function Home() {
             {/* Bottom gradient */}
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
             {/* Animated top line */}
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <motion.div
+              className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            />
             <div className="relative z-10 p-6">
               <motion.div variants={fadeUp} className="mb-4">
                 <Badge className="bg-[--accent]/10 text-[--accent] border-[--accent]/30 px-3 py-1 text-[10px] font-mono tracking-wide uppercase animate-border-glow">
