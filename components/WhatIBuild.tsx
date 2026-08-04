@@ -25,8 +25,8 @@ const services = [
     icon: Code,
     title: "Full-stack & Smart Contract Development",
     description: "Showcases your project's value through animations & experience. Built for performance.",
-    color: "from-white/10 to-gray-500/10",
-    accentColor: "#cccccc",
+    color: "from-white/15 to-white/5",
+    accentColor: "#e5e5e5",
     stats: { value: "99%", label: "Uptime" },
   },
   {
