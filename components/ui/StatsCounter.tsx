@@ -1,48 +1,33 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, animate } from "framer-motion";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 interface StatsCounterProps {
     value: number;
     suffix?: string;
     prefix?: string;
     label: string;
+    icon?: ReactNode;
     duration?: number;
     delay?: number;
     className?: string;
-    valueClassName?: string;
-    labelClassName?: string;
 }
 
-/**
- * Animated Stats Counter - Inspired by V21 Studio's credibility bar
- * Counts up to the target value when the element comes into view
- */
 export function StatsCounter({
     value,
     suffix = "",
     prefix = "",
     label,
+    icon,
     duration = 2,
     delay = 0,
     className = "",
-    valueClassName = "",
-    labelClassName = "",
 }: StatsCounterProps) {
     const [isInView, setIsInView] = useState(false);
+    const [shimmer, setShimmer] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const count = useMotionValue(0);
-    const rounded = useTransform(count, (latest) => {
-        // Format large numbers with K, M suffixes
-        if (value >= 1000000) {
-            return `${(latest / 1000000).toFixed(1)}M`;
-        }
-        if (value >= 1000) {
-            return `${(latest / 1000).toFixed(0)}K`;
-        }
-        return Math.round(latest).toString();
-    });
     const [displayValue, setDisplayValue] = useState("0");
 
     useEffect(() => {
@@ -69,7 +54,6 @@ export function StatsCounter({
                     duration,
                     ease: [0.16, 1, 0.3, 1],
                     onUpdate: (latest) => {
-                        // Format the value based on magnitude
                         if (value >= 1000000) {
                             setDisplayValue(`${(latest / 1000000).toFixed(1)}M`);
                         } else if (value >= 1000) {
@@ -78,6 +62,7 @@ export function StatsCounter({
                             setDisplayValue(Math.round(latest).toString());
                         }
                     },
+                    onComplete: () => setShimmer(true),
                 });
                 return () => controls.stop();
             }, delay * 1000);
@@ -89,32 +74,60 @@ export function StatsCounter({
         <motion.div
             ref={ref}
             className={`text-center group cursor-default ${className}`}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, filter: "blur(8px)", y: 10 }}
+            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
             whileHover={{ scale: 1.05 }}
-            transition={{ delay, duration: 0.6 }}
+            transition={{ delay, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
         >
-            <div className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight transition-colors duration-200 group-hover:text-[--accent] ${valueClassName}`}>
-                {prefix}
-                {displayValue}
-                {suffix}
+            {/* Icon */}
+            {icon && (
+                <div className="flex justify-center mb-2 text-zinc-500 group-hover:text-[--accent] transition-colors duration-200">
+                    {icon}
+                </div>
+            )}
+
+            {/* Value with shimmer */}
+            <div className="relative inline-block">
+                <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight transition-colors duration-200 group-hover:text-[--accent]">
+                    {prefix}{displayValue}{suffix}
+                </div>
+
+                {/* Shimmer sweep after count-up */}
+                {shimmer && (
+                    <motion.div
+                        className="absolute inset-0 pointer-events-none overflow-hidden"
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: 0 }}
+                        transition={{ delay: 0.1, duration: 0.3 }}
+                    >
+                        <motion.div
+                            className="absolute inset-0 -skew-x-12"
+                            initial={{ x: "-100%" }}
+                            animate={{ x: "200%" }}
+                            transition={{ duration: 0.8, ease: "easeInOut" }}
+                            style={{
+                                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)",
+                            }}
+                        />
+                    </motion.div>
+                )}
             </div>
-            <div className={`text-[10px] md:text-xs text-zinc-500 uppercase tracking-[0.2em] mt-2 font-medium transition-colors duration-200 group-hover:text-zinc-400 ${labelClassName}`}>
+
+            {/* Label */}
+            <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-[0.2em] mt-2 font-medium transition-colors duration-200 group-hover:text-zinc-400">
                 {label}
             </div>
         </motion.div>
     );
 }
 
-/**
- * Stats Bar - V21 Studio-style horizontal credibility bar
- */
 interface StatItem {
     value: number;
     suffix?: string;
     prefix?: string;
     label: string;
+    icon?: ReactNode;
 }
 
 interface StatsBarProps {
@@ -124,11 +137,8 @@ interface StatsBarProps {
 
 export function StatsBar({ stats, className = "" }: StatsBarProps) {
     return (
-        <motion.div
+        <div
             className={`flex flex-wrap items-center justify-center gap-8 md:gap-16 py-8 px-6 ${className}`}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
         >
             {stats.map((stat, i) => (
                 <div key={i} className="relative group/stat">
@@ -137,7 +147,8 @@ export function StatsBar({ stats, className = "" }: StatsBarProps) {
                         suffix={stat.suffix}
                         prefix={stat.prefix}
                         label={stat.label}
-                        delay={i * 0.15}
+                        icon={stat.icon}
+                        delay={i * 0.1}
                     />
                     {/* Divider line between stats */}
                     {i < stats.length - 1 && (
@@ -147,6 +158,6 @@ export function StatsBar({ stats, className = "" }: StatsBarProps) {
                     )}
                 </div>
             ))}
-        </motion.div>
+        </div>
     );
 }

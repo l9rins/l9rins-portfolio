@@ -5,7 +5,11 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import {
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Eye,
+  Layers,
+  Gauge,
+  Timer
 } from "lucide-react";
 import { useRef, useState, MouseEvent } from "react";
 import { SpotlightCard } from "@/components/SpotlightCard";
@@ -27,10 +31,10 @@ import { LocationMap } from "@/components/LocationMap";
 import { TextGenerateEffect } from "@/components/TextGenerateEffect";
 
 const heroStats = [
-  { value: 50, suffix: "+", label: "Projects Shipped" },
-  { value: 15, suffix: "M", label: "Users Impacted" },
-  { value: 99, suffix: "%", label: "Client Satisfaction" },
-  { value: 5, suffix: "+", label: "Years Experience" },
+  { value: 830, suffix: "K+", label: "Organic Views", icon: <Eye className="w-3.5 h-3.5" /> },
+  { value: 4, label: "Production Apps", icon: <Layers className="w-3.5 h-3.5" /> },
+  { value: 99, suffix: "%", label: "Lighthouse Score", icon: <Gauge className="w-3.5 h-3.5" /> },
+  { value: 0.2, prefix: "<", suffix: "s", label: "Avg. Latency", icon: <Timer className="w-3.5 h-3.5" /> },
 ];
 
 const contentMaxWidth = "max-w-[1100px]";
