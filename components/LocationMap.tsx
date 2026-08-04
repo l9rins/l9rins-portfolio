@@ -152,7 +152,7 @@ export function LocationMap() {
         src="/cloud.webp"
         alt=""
         draggable={false}
-        className={`absolute -top-10 -left-10 w-60 h-auto animate-cloud blur-[1px] opacity-20 select-none pointer-events-none z-10 transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}
+        className={`absolute -top-10 -left-10 w-40 h-auto animate-cloud blur-[2px] opacity-[0.07] select-none pointer-events-none z-10 transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}
       />
 
       {/* Clock */}
