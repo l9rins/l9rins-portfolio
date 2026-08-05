@@ -11,7 +11,7 @@ import {
   Code,
   Award,
   Briefcase,
-  TrendingUp
+  TrendingUp,
 } from "lucide-react";
 import { useRef, useState, MouseEvent } from "react";
 import { TechMarquee } from "@/components/TechMarquee";

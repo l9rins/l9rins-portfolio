@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
             "style-src 'self' 'unsafe-inline'",
-            "img-src 'self' https://images.unsplash.com https://picsum.photos https://cdn.dribbble.com https://api.dicebear.com blob: data:",
+            "img-src 'self' https://images.unsplash.com https://picsum.photos https://cdn.dribbble.com https://api.dicebear.com https://*.basemaps.cartocdn.com blob: data:",
             "font-src 'self'",
             "connect-src 'self' https://vitals.vercel-insights.com",
             "media-src 'self'",
