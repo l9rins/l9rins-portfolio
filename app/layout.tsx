@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import SmoothScroll from "@/components/SmoothScroll";
+import { RightClickBlocker } from "@/components/RightClickBlocker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mark Lorenz Barangan - Design Engineer & Developer",
+  title: "Mark Lorenz Barangan - Cloud Security + Full-Stack Engineer",
   description:
-    "Building innovative digital experiences that people love. Full-stack developer passionate about creating seamless user experiences.",
+    "Cloud security and full-stack engineer based in Cebu, building on AWS, Stellar, and AI/ML. Open to senior roles and high-impact projects.",
   icons: {
     icon: "/favicon.ico",
   },
@@ -27,17 +28,17 @@ export const metadata: Metadata = {
     canonical: "https://marklorenzbarangan.vercel.app",
   },
   openGraph: {
-    title: "Mark Lorenz Barangan - Design Engineer & Developer",
+    title: "Mark Lorenz Barangan - Cloud Security + Full-Stack Engineer",
     description:
-      "Building innovative digital experiences that people love.",
+      "Cloud security and full-stack engineer based in Cebu, building on AWS, Stellar, and AI/ML.",
     type: "website",
     url: "https://marklorenzbarangan.vercel.app",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mark Lorenz Barangan - Design Engineer & Developer",
+    title: "Mark Lorenz Barangan - Cloud Security + Full-Stack Engineer",
     description:
-      "Building innovative digital experiences that people love.",
+      "Cloud security and full-stack engineer based in Cebu, building on AWS, Stellar, and AI/ML.",
   },
 };
 
@@ -57,7 +58,7 @@ export default function RootLayout({
               "@type": "Person",
               name: "Mark Lorenz Barangan",
               url: "https://marklorenzbarangan.vercel.app",
-              jobTitle: "Design Engineer & Developer",
+              jobTitle: "Cloud Security + Full-Stack Engineer",
               sameAs: [
                 "https://github.com/l9rins/",
                 "https://x.com/realmarquee_dev",
@@ -79,6 +80,7 @@ export default function RootLayout({
             </a>
             <main>{children}</main>
           </SmoothScroll>
+          <RightClickBlocker />
         </ThemeProvider>
         <script
           dangerouslySetInnerHTML={{

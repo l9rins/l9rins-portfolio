@@ -19,7 +19,7 @@ const timelineData: TimelineItem[] = [
     id: 1,
     title: "Full Stack Web Developer",
     company: "Graham & Doddsville",
-    period: "August 2025 - November 2025",
+    period: "August 2025 - July 2026",
     description: "Architected a custom value investing education platform from the ground up.",
     achievements: [
       "Owned the complete frontend to backend development lifecycle.",

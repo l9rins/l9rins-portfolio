@@ -52,7 +52,7 @@ export function Footer() {
             Let&apos;s Build Something <span className="text-[--accent]">Scalable.</span>
           </h2>
           <p className="text-zinc-500 max-w-md mx-auto text-xs leading-relaxed">
-            Currently open to senior-level front-end roles or high-impact design systems.
+            Currently open to senior-level cloud security, full-stack, or AI/ML engineering roles.
           </p>
 
         </motion.div>
