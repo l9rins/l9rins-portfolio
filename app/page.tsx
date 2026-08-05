@@ -11,7 +11,7 @@ import {
   Code,
   Award,
   Briefcase,
-  Users
+  TrendingUp
 } from "lucide-react";
 import { useRef, useState, MouseEvent } from "react";
 import { TechMarquee } from "@/components/TechMarquee";
@@ -34,8 +34,8 @@ import { TextGenerateEffect } from "@/components/TextGenerateEffect";
 const heroStats = [
   { value: 24, label: "Open Source Projects", icon: <Code className="w-3.5 h-3.5" /> },
   { value: 10, suffix: "+", label: "Certifications", icon: <Award className="w-3.5 h-3.5" /> },
-  { value: 4, label: "Freelance Clients", icon: <Briefcase className="w-3.5 h-3.5" /> },
-  { value: 983, label: "LinkedIn Followers", icon: <Users className="w-3.5 h-3.5" /> },
+  { value: 4, suffix: "+", label: "Years of Experience", icon: <Briefcase className="w-3.5 h-3.5" /> },
+  { value: 830, suffix: "K+", label: "Organic Reach Generated", icon: <TrendingUp className="w-3.5 h-3.5" /> },
 ];
 
 const contentMaxWidth = "max-w-[1100px]";
