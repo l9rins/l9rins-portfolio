@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue } from "framer-motion";
-import { Cloud, Code, Brain, Link, Sparkles, ArrowUpRight } from "lucide-react";
+import { Cloud, Code, Brain, Link, ArrowUpRight } from "lucide-react";
 import { useRef, MouseEvent } from "react";
 
 const services = [
@@ -115,16 +115,6 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
                 transition={{ duration: 0.5 }}
               />
             </motion.div>
-            {service.isNew && (
-              <motion.span
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center gap-1 px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider bg-white/15 text-white border border-white/15 rounded-full"
-              >
-                <Sparkles className="w-2.5 h-2.5 animate-pulse" />
-                NEW
-              </motion.span>
-            )}
           </div>
 
           {/* Title */}

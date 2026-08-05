@@ -236,7 +236,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.8, duration: 0.6 }}
-            className="mt-4 relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-200 overflow-hidden"
+            className="mt-4 relative rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-200 overflow-hidden"
           >
             {/* Corner glow */}
             <div className="absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br from-white/20 to-white/10 opacity-[0.05] rounded-full blur-2xl" />

@@ -153,7 +153,7 @@ export function FAQ() {
                         </span>
                     </div>
                     <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-2">
-                        Questions<span className="text-[--accent]">?</span>
+                        Got <span className="text-[--accent]">Questions?</span>
                     </h2>
                     <p className="text-zinc-500 max-w-md mx-auto text-xs leading-relaxed">
                         Common questions about my work, process, and technical approach.
