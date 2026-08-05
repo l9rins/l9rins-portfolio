@@ -1,42 +1,41 @@
 "use client";
 
 import { motion, useMotionValue } from "framer-motion";
-import { Globe, Palette, Code, Play, Sparkles, ArrowUpRight } from "lucide-react";
+import { Cloud, Code, Brain, Link, Sparkles, ArrowUpRight } from "lucide-react";
 import { useRef, MouseEvent } from "react";
 
 const services = [
   {
-    icon: Globe,
-    title: "Website & Product Design",
-    description: "Optimised for results, with stunning design in mind. Creating experiences users remember.",
+    icon: Cloud,
+    title: "Cloud Security",
+    description: "AWS, JumpCloud, Fortinet, ISC2 — hardening cloud infrastructure and identity management for production environments.",
     color: "from-white/20 to-white/10",
     accentColor: "#ffffff",
-    stats: { value: "30+", label: "Projects" },
-  },
-  {
-    icon: Palette,
-    title: "Branding & Pitch Decks",
-    description: "Visual identity with deep brand strategy and guidelines. Make your startup stand out.",
-    color: "from-white/15 to-white/5",
-    accentColor: "#e5e5e5",
-    stats: { value: "50+", label: "Brands" },
+    stats: { value: "5+", label: "Certifications" },
   },
   {
     icon: Code,
-    title: "Full-stack & Smart Contract Development",
-    description: "Showcases your project's value through animations & experience. Built for performance.",
+    title: "Full-Stack Development",
+    description: "Spring Boot, React, Node.js — end-to-end application development from database to deployment.",
     color: "from-white/20 to-white/10",
     accentColor: "#ffffff",
-    stats: { value: "99%", label: "Uptime" },
+    stats: { value: "24", label: "Projects" },
   },
   {
-    icon: Play,
-    title: "Launch Videos",
-    description: "Make sure no one misses your next launch! Cinematic quality that converts.",
+    icon: Brain,
+    title: "AI/ML Systems",
+    description: "Anthropic API, Python, Streamlit — intelligent systems for cybersecurity coaching, candidate scoring, and predictive analytics.",
     color: "from-white/20 to-white/10",
     accentColor: "#ffffff",
-    isNew: true,
-    stats: { value: "2M+", label: "Views" },
+    stats: { value: "4", label: "AI Apps" },
+  },
+  {
+    icon: Link,
+    title: "Blockchain & Fintech",
+    description: "Stellar SDK, on-chain lending protocols — APAC Demo Day winner, building decentralized financial infrastructure.",
+    color: "from-white/20 to-white/10",
+    accentColor: "#ffffff",
+    stats: { value: "APAC", label: "Demo Day" },
   },
 ];
 
@@ -176,28 +175,22 @@ export function WhatIBuild() {
 
       {/* Section Header */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="text-center mb-10"
       >
-        <motion.span
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          className="inline-block text-[9px] uppercase tracking-[0.4em] text-[--accent] mb-5 px-4 py-1.5 border border-[--accent]/20 rounded-full font-medium bg-[--accent]/[0.03]"
-        >
-          ✦ Services
-        </motion.span>
-
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter mb-3">
-          <span className="text-zinc-500">Tailor Made</span>{" "}
-          <span className="text-white">Solutions</span>
+        <div className="inline-flex items-center gap-1.5 mb-3">
+          <Code className="w-3.5 h-3.5 text-zinc-600" />
+          <span className="text-[9px] uppercase tracking-[0.3em] text-[--accent] font-medium">
+            What I Build
+          </span>
+        </div>
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-2">
+          Engineering <span className="text-[--accent]">Pillars</span>
         </h2>
-
-        <p className="text-zinc-500 text-xs md:text-sm max-w-md mx-auto mt-2">
-          Premium digital services designed to elevate your brand and captivate your audience.
+        <p className="text-zinc-500 max-w-md mx-auto text-xs leading-relaxed">
+          Specialized systems across four domains — from cloud infrastructure to decentralized finance.
         </p>
       </motion.div>
 

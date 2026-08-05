@@ -1,15 +1,11 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowUpRight, Github, Eye, TrendingUp, Users, Zap } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface ProjectProps {
   project: {
@@ -17,7 +13,8 @@ interface ProjectProps {
     title: string;
     description: string;
     tech: string[];
-    category: string;
+    tags?: string[];
+    category?: string;
     image: string;
     video: string;
     link: string;
@@ -32,25 +29,7 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!imageRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.to(imageRef.current!, {
-        yPercent: -20,
-        ease: "none",
-        scrollTrigger: {
-          trigger: imageRef.current!,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
+  const inView = useInView(imageRef, { once: true, margin: "-50px" });
 
   const handleHoverStart = () => {
     setIsHovered(true);
@@ -103,7 +82,16 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
             />
 
             {/* Static thumbnail */}
-            <div ref={imageRef} className={`absolute inset-0 z-20 transition-all duration-700 ${isHovered ? "opacity-0 scale-110" : "opacity-100 scale-100"}`}>
+            <motion.div
+              ref={imageRef}
+              className="absolute inset-0 z-20"
+              initial={{ scale: 1.2, opacity: 0 }}
+              animate={{
+                scale: isHovered ? 1.25 : inView ? 1.1 : 1.2,
+                opacity: isHovered ? 0 : 1,
+              }}
+              transition={{ duration: 0.7, ease: [0.25, 0.8, 0.25, 1] }}
+            >
               <Image
                 src={project.image}
                 alt={project.title}
@@ -112,11 +100,11 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
-            </div>
+            </motion.div>
 
             {/* Video layer */}
             {project.video && (
-              <div className="absolute inset-0 z-10">
+              <div className={`absolute inset-0 z-10 transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-0"}`}>
                 <video
                   ref={videoRef}
                   src={project.video}

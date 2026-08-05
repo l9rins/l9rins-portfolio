@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Briefcase, ChevronRight } from "lucide-react";
+import { Briefcase, ChevronRight, Clock } from "lucide-react";
 
 interface TimelineItem {
   id: number;
@@ -76,10 +76,16 @@ export function Timeline() {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight">
-            Career <span className="text-zinc-500">History</span>
+          <div className="inline-flex items-center gap-1.5 mb-3">
+            <Clock className="w-3.5 h-3.5 text-zinc-600" />
+            <span className="text-[9px] uppercase tracking-[0.3em] text-[--accent] font-medium">
+              Career History
+            </span>
+          </div>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-2">
+            My <span className="text-[--accent]">Journey</span>
           </h2>
-          <p className="text-zinc-500 max-w-md mx-auto text-xs md:text-sm leading-relaxed">
+          <p className="text-zinc-500 max-w-md mx-auto text-xs leading-relaxed">
             A dynamic journey through full-stack development, creative leadership, and digital strategy.
           </p>
         </motion.div>

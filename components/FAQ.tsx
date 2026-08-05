@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search, HelpCircle } from "lucide-react";
 
 const faqs = [
     {
@@ -146,13 +146,16 @@ export function FAQ() {
                     viewport={{ once: true }}
                     className="text-center mb-10"
                 >
-                    <span className="inline-block py-1 px-2.5 rounded-full bg-zinc-900 border border-white/[0.06] text-[9px] uppercase tracking-[0.2em] text-zinc-500 mb-4 font-medium">
-                        FAQ
-                    </span>
-                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                        Got <span className="text-white">Questions?</span>
+                    <div className="inline-flex items-center gap-1.5 mb-3">
+                        <HelpCircle className="w-3.5 h-3.5 text-zinc-600" />
+                        <span className="text-[9px] uppercase tracking-[0.3em] text-[--accent] font-medium">
+                            FAQ
+                        </span>
+                    </div>
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-2">
+                        Questions<span className="text-[--accent]">?</span>
                     </h2>
-                    <p className="text-zinc-500 max-w-md mx-auto text-xs md:text-sm leading-relaxed">
+                    <p className="text-zinc-500 max-w-md mx-auto text-xs leading-relaxed">
                         Common questions about my work, process, and technical approach.
                     </p>
                 </motion.div>

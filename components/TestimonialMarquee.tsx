@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Quote } from 'lucide-react';
 
 interface Testimonial {
     quote: string;
@@ -73,9 +74,19 @@ export function TestimonialMarquee() {
 
     return (
         <section className="relative py-12 overflow-hidden">
-            <div className="text-center mb-6">
-                <h2 className="text-[10px] font-mono text-zinc-600 tracking-widest mb-1.5">What People Say</h2>
-                <div className="w-6 h-px bg-white/10 mx-auto" />
+            <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-1.5 mb-3">
+                    <Quote className="w-3.5 h-3.5 text-zinc-600" />
+                    <span className="text-[9px] uppercase tracking-[0.3em] text-[--accent] font-medium">
+                        People
+                    </span>
+                </div>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-tight mb-2">
+                    What They <span className="text-[--accent]">Say</span>
+                </h2>
+                <p className="text-zinc-500 max-w-md mx-auto text-xs leading-relaxed">
+                    Feedback from colleagues, clients, and collaborators.
+                </p>
             </div>
 
             <div className="relative">

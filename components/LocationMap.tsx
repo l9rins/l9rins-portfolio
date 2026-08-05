@@ -36,7 +36,6 @@ export function LocationMap() {
         now.toLocaleTimeString('en-US', {
           hour: '2-digit',
           minute: '2-digit',
-          second: '2-digit',
           hour12: true,
           timeZone: 'Asia/Manila',
         })
@@ -157,8 +156,8 @@ export function LocationMap() {
       />
 
       {/* Clock */}
-      <div className="absolute top-2.5 right-2.5 z-20 px-2 py-1 rounded-md bg-black/70 backdrop-blur-md border border-white/[0.08]">
-        <span className="text-[9px] font-mono text-white/90 tracking-wider">{time}</span>
+      <div className="absolute top-2.5 right-2.5 z-20 px-2 py-[3px] bg-black/60 backdrop-blur-md border border-white/[0.08] flex items-center">
+        <span className="text-[9px] font-mono text-white/80 tracking-wider tabular-nums">{time}</span>
       </div>
 
       {/* Label */}

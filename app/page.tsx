@@ -6,13 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import {
   Sparkles,
   ArrowRight,
-  Eye,
-  Layers,
-  Gauge,
-  Timer
+  ArrowDownRight,
+  FileText,
+  Code,
+  Award,
+  Briefcase,
+  Users
 } from "lucide-react";
 import { useRef, useState, MouseEvent } from "react";
-import { SpotlightCard } from "@/components/SpotlightCard";
 import { TechMarquee } from "@/components/TechMarquee";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { Timeline } from "@/components/Timeline";
@@ -31,10 +32,10 @@ import { LocationMap } from "@/components/LocationMap";
 import { TextGenerateEffect } from "@/components/TextGenerateEffect";
 
 const heroStats = [
-  { value: 830, suffix: "K+", label: "Organic Views", icon: <Eye className="w-3.5 h-3.5" /> },
-  { value: 4, label: "Production Apps", icon: <Layers className="w-3.5 h-3.5" /> },
-  { value: 99, suffix: "%", label: "Lighthouse Score", icon: <Gauge className="w-3.5 h-3.5" /> },
-  { value: 0.2, prefix: "<", suffix: "s", label: "Avg. Latency", icon: <Timer className="w-3.5 h-3.5" /> },
+  { value: 24, label: "Open Source Projects", icon: <Code className="w-3.5 h-3.5" /> },
+  { value: 10, suffix: "+", label: "Certifications", icon: <Award className="w-3.5 h-3.5" /> },
+  { value: 4, label: "Freelance Clients", icon: <Briefcase className="w-3.5 h-3.5" /> },
+  { value: 983, label: "LinkedIn Followers", icon: <Users className="w-3.5 h-3.5" /> },
 ];
 
 const contentMaxWidth = "max-w-[1100px]";
@@ -166,40 +167,47 @@ export default function Home() {
                 variants={fadeUp}
                 className="body text-zinc-500 max-w-lg mt-3 mb-6 text-xs md:text-sm leading-relaxed"
               >
-                I bridge{" "}
+                I build things that ship; from{" "}
                 <span className="group/ce relative inline-block cursor-default">
-                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4 transition-colors duration-200 group-hover/ce:text-black">complex engineering</span>
+                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4 transition-colors duration-200 group-hover/ce:text-black">blockchain microfinance</span>
                   <span className="absolute inset-0 -mx-1 -my-0.5 bg-white scale-x-0 group-hover/ce:scale-x-100 transition-transform duration-200 origin-left -z-10" />
                 </span>
-                {" "}and{" "}
+                {" "}protocols on Stellar to AI-powered{" "}
                 <span className="group/hd relative inline-block cursor-default">
-                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4 transition-colors duration-200 group-hover/hd:text-black">high-end design</span>
+                  <span className="text-white font-medium decoration-[--accent]/40 underline decoration-dashed underline-offset-4 transition-colors duration-200 group-hover/hd:text-black">cloud security</span>
                   <span className="absolute inset-0 -mx-1 -my-0.5 bg-white scale-x-0 group-hover/hd:scale-x-100 transition-transform duration-200 origin-left -z-10" />
-                </span>.
-                I engineer experiences that hit a <span className="text-[--accent] font-semibold">99+ Lighthouse score</span> by default.
+                </span>
+                {" "}tools on AWS. Based in Cebu, building for the world.
               </motion.p>
             </div>
 
             <motion.div variants={fadeUp} className="flex gap-3 mt-auto flex-wrap px-6 pb-6">
               <motion.button
                 onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}
-                whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(255, 255, 255, 0.2)" }}
+                whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="flex items-center gap-1.5 bg-white text-black font-semibold text-xs px-5 py-2.5 rounded-lg shadow-[0_0_15px_rgba(255,255,255,0.1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="group/view relative flex items-center gap-1.5 bg-white text-black font-semibold text-xs px-5 py-2.5 rounded-lg overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                View Work
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span className="absolute inset-0 -translate-x-full group-hover/view:translate-x-full transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none" />
+                <span className="absolute inset-0 rounded-lg opacity-0 group-hover/view:opacity-100 transition-opacity duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] pointer-events-none" />
+                <span className="relative z-10">View Work</span>
+                <ArrowDownRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover/view:translate-x-0.5 group-hover/view:translate-y-0.5" />
               </motion.button>
               <motion.a
                 href="/Barangan_Resume.pdf"
-                download="Barangan_Resume.pdf"
-                whileHover={{ scale: 1.03, borderColor: "rgba(255,255,255,0.5)" }}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="border border-white/20 text-white hover:bg-white/5 font-semibold text-xs px-5 py-2.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black cursor-pointer inline-flex items-center justify-center"
+                className="group/resume relative flex items-center gap-1.5 bg-white/5 border border-white/10 text-white font-semibold text-xs px-5 py-2.5 rounded-lg hover:bg-white/10 hover:border-white/20 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
               >
-                Download CV
+                <span className="absolute inset-0 -translate-x-full group-hover/cv:translate-x-full transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+                <span className="absolute inset-0 rounded-lg opacity-0 group-hover/cv:opacity-100 transition-opacity duration-300 border border-white/40 pointer-events-none" />
+                <span className="absolute inset-0 bg-white/5 opacity-0 group-hover/cv:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <FileText className="w-3.5 h-3.5 relative z-10" />
+                <span className="relative z-10">Resume</span>
               </motion.a>
             </motion.div>
           </motion.div>
@@ -216,11 +224,9 @@ export default function Home() {
 
           {/* TECH STACK */}
           <motion.div variants={fadeUp} className="md:col-span-12">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-[6px] p-3">
-              <div className="flex items-center gap-3 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
-                <TechMarquee />
-                <span className="font-mono text-[10px] text-zinc-600 ml-3 uppercase tracking-[0.2em] shrink-0">Tech Stack</span>
-              </div>
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-[6px] p-3 flex items-center gap-3 overflow-hidden">
+              <TechMarquee />
+              <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-[0.2em] shrink-0 border-l border-white/[0.06] pl-3">Tech Stack</span>
             </div>
           </motion.div>
 
@@ -257,7 +263,7 @@ export default function Home() {
       {/* What I Build Section */}
       <motion.section
         id="services"
-        className="relative z-10 bg-black py-0.5"
+        className="relative z-10 bg-black py-16"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-80px" }}
