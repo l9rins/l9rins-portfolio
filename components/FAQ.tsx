@@ -187,7 +187,7 @@ export function FAQ() {
                         <button
                             key={category}
                             onClick={() => setActiveCategory(category)}
-                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] transition-all duration-200 ${activeCategory === category
+                            className={`flex items-center gap-1.5 px-3.5 py-2.5 min-h-[44px] min-w-[44px] rounded-full text-[11px] transition-all duration-200 ${activeCategory === category
                                 ? "bg-zinc-800 text-white border border-white/15"
                                 : "bg-transparent text-zinc-500 hover:text-zinc-300 border border-transparent hover:border-zinc-800"
                                 }`}

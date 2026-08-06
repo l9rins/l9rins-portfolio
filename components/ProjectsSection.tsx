@@ -19,7 +19,7 @@ export function ProjectsSection() {
   return (
     <motion.section
       id="work"
-      className="relative z-10 py-10 max-w-7xl mx-auto px-4"
+      className="relative z-10 py-10 max-w-7xl mx-auto"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

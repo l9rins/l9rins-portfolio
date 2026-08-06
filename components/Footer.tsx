@@ -96,7 +96,7 @@ export function Footer() {
                     rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-9 h-9 rounded-lg bg-zinc-900/80 border border-white/[0.06] flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 hover:shadow-[0_0_12px_rgba(255,255,255,0.08)] transition-all"
+                    className="w-11 h-11 rounded-lg bg-zinc-900/80 border border-white/[0.06] flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 hover:shadow-[0_0_12px_rgba(255,255,255,0.08)] transition-all"
                   >
                     <Icon className="w-4 h-4" />
                   </motion.a>
@@ -195,7 +195,7 @@ export function Footer() {
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-9 h-9 rounded-lg bg-zinc-900 border border-white/[0.06] flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 hover:shadow-[0_0_12px_rgba(255,255,255,0.08)] transition-all"
+                className="w-11 h-11 rounded-lg bg-zinc-900 border border-white/[0.06] flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 hover:shadow-[0_0_12px_rgba(255,255,255,0.08)] transition-all"
                 aria-label="Scroll to top"
               >
                 <ArrowUp className="w-4 h-4" />
