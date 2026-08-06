@@ -37,7 +37,7 @@ export function TechMarquee() {
   return (
     <div className="flex-1 min-w-0 overflow-hidden">
       <motion.div
-        className="flex gap-4 w-max"
+        className="flex gap-3 md:gap-4 w-max"
         animate={{
           x: ["0%", "-33.333%"],
         }}

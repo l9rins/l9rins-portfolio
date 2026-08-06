@@ -23,7 +23,7 @@ export function PhotoCarousel() {
   const resetCards = () => setCards(initialCards);
 
   return (
-    <div className="relative grid h-[233px] w-[175px] place-items-center mx-auto select-none">
+    <div className="relative grid h-[190px] w-[145px] md:h-[233px] md:w-[175px] place-items-center mx-auto select-none">
       {/* Reset button when all cards swiped */}
       {cards.length === 0 && (
         <div style={{ gridRow: 1, gridColumn: 1 }} className="z-20">
@@ -87,7 +87,7 @@ function SwipeCard({
 
   return (
     <motion.div
-      className="absolute h-[233px] w-[175px] origin-bottom overflow-hidden rounded-lg hover:cursor-grab active:cursor-grabbing"
+      className="absolute h-[190px] w-[145px] md:h-[233px] md:w-[175px] origin-bottom overflow-hidden rounded-lg hover:cursor-grab active:cursor-grabbing"
       style={{
         gridRow: 1,
         gridColumn: 1,
@@ -110,7 +110,7 @@ function SwipeCard({
         alt={card.alt}
         width={175}
         height={233}
-        sizes="175px"
+        sizes="(max-width: 768px) 145px, 175px"
         draggable={false}
         className="h-full w-full select-none object-cover"
         priority={isFront}

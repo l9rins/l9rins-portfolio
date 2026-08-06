@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import SmoothScroll from "@/components/SmoothScroll";
-import { RightClickBlocker } from "@/components/RightClickBlocker";
+// import { RightClickBlocker } from "@/components/RightClickBlocker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,7 +80,7 @@ export default function RootLayout({
             </a>
             <main>{children}</main>
           </SmoothScroll>
-          <RightClickBlocker />
+          {/* <RightClickBlocker /> */}
         </ThemeProvider>
         <script
           dangerouslySetInnerHTML={{

@@ -103,7 +103,7 @@ export function Timeline() {
             />
           </div>
 
-          <div className="space-y-12 md:space-y-20">
+          <div className="space-y-8 md:space-y-20">
             {timelineData.map((item, index) => (
               <div key={item.id} className={`relative flex flex-col md:flex-row gap-6 md:gap-0 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
 

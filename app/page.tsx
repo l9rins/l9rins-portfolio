@@ -105,7 +105,7 @@ export default function Home() {
       </div>
 
       {/* ===== HERO SECTION ===== */}
-      <section id="hero" className="relative z-10 min-h-screen pt-20 pb-8 max-w-[1100px] mx-auto px-6 md:px-10 flex flex-col">
+      <section id="hero" className="relative z-10 min-h-[auto] md:min-h-screen pt-16 md:pt-20 pb-6 md:pb-8 max-w-[1100px] mx-auto px-6 md:px-10 flex flex-col">
 
         <div className="absolute inset-0 z-0 h-[500px] w-full pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-grid-white mask-gradient" />
@@ -123,7 +123,7 @@ export default function Home() {
             ref={heroCardRef}
             onMouseMove={handleHeroMouseMove}
             variants={scaleIn}
-            className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[360px] relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-200 overflow-hidden"
+            className="md:col-span-8 md:row-span-2 flex flex-col justify-between h-full min-h-[280px] md:min-h-[360px] relative group rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-200 overflow-hidden"
           >
             {/* Spotlight cursor glow */}
             <motion.div
@@ -213,12 +213,12 @@ export default function Home() {
           </motion.div>
 
           {/* PROFILE PHOTO - Swipeable Carousel */}
-          <motion.div variants={slideFromRight} className="md:col-span-4 h-full min-h-[200px] flex items-center justify-center rounded-xl border border-white/[0.06] overflow-hidden">
+          <motion.div variants={slideFromRight} className="md:col-span-4 h-full min-h-[200px] md:min-h-[220px] flex items-center justify-center rounded-xl border border-white/[0.06] overflow-hidden">
             <PhotoCarousel />
           </motion.div>
 
           {/* LOCATION MAP */}
-          <motion.div variants={scaleIn} className="md:col-span-4 h-full min-h-[140px]">
+          <motion.div variants={scaleIn} className="md:col-span-4 h-full min-h-[120px] md:min-h-[140px]">
             <LocationMap />
           </motion.div>
 

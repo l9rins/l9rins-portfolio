@@ -70,7 +70,7 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
         {/* Corner gradient blob */}
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-[60px] pointer-events-none" />
 
-        <div className="grid md:grid-cols-2 min-h-[400px] relative z-10">
+        <div className="grid md:grid-cols-2 min-h-[320px] md:min-h-[400px] relative z-10">
           {/* Left: Image/Video */}
           <div className="relative aspect-video md:aspect-auto overflow-hidden">
             {/* Gradient accent bar */}
@@ -125,7 +125,7 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
           </div>
 
           {/* Right: Content - The "Control Panel" with texture */}
-          <div className="relative p-8 md:p-10 flex flex-col justify-between bg-gradient-to-br from-zinc-900 to-zinc-950 overflow-hidden">
+          <div className="relative p-5 md:p-8 lg:p-10 flex flex-col justify-between bg-gradient-to-br from-zinc-900 to-zinc-950 overflow-hidden">
             {/* Info Panel Texture - Dot Grid for precision feel */}
             <div className="absolute inset-0 z-0 opacity-[0.05] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
@@ -239,7 +239,7 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="group relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 cursor-pointer transition-all duration-500 hover:border-[--accent]/40"
+      className="group relative w-full aspect-[4/3] md:aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 cursor-pointer transition-all duration-500 hover:border-[--accent]/40"
       onMouseEnter={handleHoverStart}
       onMouseLeave={handleHoverEnd}
       whileHover={{ y: -4 }}

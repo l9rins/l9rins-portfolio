@@ -109,7 +109,7 @@ function FAQItem({ faq, isOpen, onToggle, index }: { faq: typeof faqs[0]; isOpen
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
                     >
-                        <div className="px-4 pb-4 text-zinc-400 text-xs leading-relaxed border-t border-white/[0.04] pt-3 max-w-4xl">
+                        <div className="px-4 pb-4 text-zinc-400 text-[13px] md:text-xs leading-relaxed border-t border-white/[0.04] pt-3 max-w-4xl">
                             {faq.answer}
                         </div>
                     </motion.div>

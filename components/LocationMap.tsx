@@ -103,7 +103,7 @@ export function LocationMap() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full min-h-[140px] rounded-xl overflow-hidden border border-black pigeon-map-container"
+      className="relative w-full h-full min-h-[110px] md:min-h-[140px] rounded-xl overflow-hidden border border-black pigeon-map-container"
       style={{ isolation: 'isolate' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
