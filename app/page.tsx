@@ -213,7 +213,7 @@ export default function Home() {
           </motion.div>
 
           {/* PROFILE PHOTO - Swipeable Carousel */}
-          <motion.div variants={slideFromRight} className="md:col-span-4 h-full min-h-[200px] md:min-h-[220px] flex items-center justify-center rounded-xl border border-white/[0.06] overflow-hidden">
+          <motion.div variants={slideFromRight} className="hidden md:flex md:col-span-4 h-full min-h-[220px] items-center justify-center rounded-xl border border-white/[0.06] overflow-hidden">
             <PhotoCarousel />
           </motion.div>
 
