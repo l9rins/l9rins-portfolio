@@ -76,7 +76,7 @@ function StarRating({ count = 5, isHovered = false }: { count?: number; isHovere
                             ease: [0.34, 1.56, 0.64, 1],
                         }}
                     >
-                        <Star className="w-3 h-3 fill-yellow-500/80 text-yellow-500/80" />
+                        <Star className="w-3 h-3 fill-white/60 text-white/60" />
                     </motion.div>
                 </motion.div>
             ))}
