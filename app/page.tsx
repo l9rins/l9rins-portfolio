@@ -233,9 +233,9 @@ export default function Home() {
         </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.6 }}
+            initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ delay: 1.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="mt-4 relative rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-200 overflow-hidden"
           >
             {/* Corner glow */}

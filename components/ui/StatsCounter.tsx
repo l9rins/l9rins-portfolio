@@ -146,7 +146,7 @@ export function StatsBar({ stats, className = "" }: StatsBarProps) {
                     initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
                     animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                     transition={{
-                        delay: 2.0 + i * 0.12,
+                        delay: 1.8 + i * 0.12,
                         duration: 0.6,
                         ease: [0.22, 1, 0.36, 1],
                     }}
