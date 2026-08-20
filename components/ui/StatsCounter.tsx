@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, animate, stagger, useAnimate } from "framer-motion";
+import { motion, useMotionValue, animate } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 interface StatsCounterProps {
@@ -76,11 +76,8 @@ export function StatsCounter({
         <motion.div
             ref={ref}
             className={`text-center group cursor-default ${className}`}
-            initial={{ opacity: 0, filter: "blur(8px)", y: 10 }}
-            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
             whileHover={{ scale: 1.05 }}
-            transition={{ delay, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
             {/* Icon */}
             {icon && (
@@ -138,59 +135,37 @@ interface StatsBarProps {
 }
 
 export function StatsBar({ stats, className = "" }: StatsBarProps) {
-    const [scope, animate] = useAnimate();
-    const hasAnimated = useRef(false);
-
-    useEffect(() => {
-        if (hasAnimated.current) return;
-        hasAnimated.current = true;
-
-        const timer = setTimeout(() => {
-            animate(
-                '.stat-item',
-                {
-                    opacity: 1,
-                    filter: 'blur(0px)',
-                    y: 0,
-                },
-                {
-                    duration: 0.6,
-                    delay: stagger(0.12),
-                    ease: [0.22, 1, 0.36, 1],
-                }
-            );
-        }, 1000);
-
-        return () => clearTimeout(timer);
-    }, [animate]);
-
     return (
         <div
-            ref={scope}
             className={`flex flex-wrap items-center justify-center gap-8 md:gap-16 py-8 px-6 ${className}`}
         >
             {stats.map((stat, i) => (
-                <div key={i} className="relative group/stat">
-                    <div
-                        className="stat-item opacity-0"
-                        style={{ filter: 'blur(10px)', transform: 'translateY(10px)' }}
-                    >
-                        <StatsCounter
-                            value={stat.value}
-                            suffix={stat.suffix}
-                            prefix={stat.prefix}
-                            label={stat.label}
-                            icon={stat.icon}
-                            delay={i * 0.1 + 1}
-                        />
-                    </div>
+                <motion.div
+                    key={i}
+                    className="relative group/stat"
+                    initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+                    animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                    transition={{
+                        delay: 2.0 + i * 0.12,
+                        duration: 0.6,
+                        ease: [0.22, 1, 0.36, 1],
+                    }}
+                >
+                    <StatsCounter
+                        value={stat.value}
+                        suffix={stat.suffix}
+                        prefix={stat.prefix}
+                        label={stat.label}
+                        icon={stat.icon}
+                        delay={i * 0.1 + 1}
+                    />
                     {/* Divider line between stats */}
                     {i < stats.length - 1 && (
                         <div className="hidden md:block absolute right-[-2rem] top-1/2 -translate-y-1/2 w-px h-12 overflow-hidden">
                             <div className="w-full h-full bg-gradient-to-b from-transparent via-white/10 to-transparent group-hover/stat:via-white/25 transition-all duration-300" />
                         </div>
                     )}
-                </div>
+                </motion.div>
             ))}
         </div>
     );
