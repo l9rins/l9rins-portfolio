@@ -72,7 +72,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       />
 
       {/* Card */}
-      <div className="relative h-full bg-zinc-900/80 border border-white/[0.06] rounded-xl p-4 hover:border-white/[0.12] transition-all duration-200 overflow-hidden min-h-[200px] md:min-h-[260px] flex flex-col">
+      <div className="relative h-full bg-zinc-900/80 border border-white/[0.06] rounded-xl p-4 hover:border-white/[0.12] hover:bg-zinc-900/95 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden min-h-[200px] md:min-h-[260px] flex flex-col">
         {/* Corner glow */}
         <div
           className={`absolute -top-16 -right-16 w-32 h-32 bg-gradient-to-br ${service.color} opacity-[0.05] rounded-full blur-2xl group-hover:opacity-[0.08] transition-opacity duration-300`}

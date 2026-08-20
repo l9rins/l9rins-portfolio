@@ -109,7 +109,7 @@ export function Timeline() {
 
                 {/* Timeline Dot */}
                 <div className="absolute left-[18px] md:left-1/2 -translate-x-1/2 w-3 h-3 bg-black border-[1.5px] border-white rounded-full z-20 shadow-[0_0_8px_rgba(255,255,255,0.4)] mt-1.5 md:mt-0 group-hover:scale-125 transition-transform duration-200">
-                  <div className="absolute inset-0 bg-white rounded-full animate-ping opacity-20" />
+                  <div className="absolute inset-0 bg-white rounded-full opacity-0 group-hover:animate-ping group-hover:opacity-20 transition-opacity" />
                 </div>
 
                 {/* Content */}

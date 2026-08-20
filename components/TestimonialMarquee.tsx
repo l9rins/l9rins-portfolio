@@ -45,7 +45,7 @@ const testimonials: Testimonial[] = [
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
     return (
-        <div className="flex-shrink-0 w-[280px] md:w-[260px] mx-2 p-4 md:p-3.5 rounded-xl border border-white/[0.05] bg-white/[0.015] hover:border-white/[0.10] transition-colors duration-200">
+        <div className="flex-shrink-0 w-[280px] md:w-[260px] mx-2 p-4 md:p-3.5 rounded-xl border border-white/[0.05] bg-white/[0.015] hover:border-white/[0.10] hover:bg-white/[0.03] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]">
             <p className="text-xs md:text-[11px] text-zinc-400 leading-relaxed mb-3">&ldquo;{testimonial.quote}&rdquo;</p>
             <div className="flex items-center gap-2">
                 <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-white/[0.06] flex items-center justify-center">

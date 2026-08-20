@@ -298,7 +298,7 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
       {/* Content overlay */}
       <div className="absolute inset-0 z-30 p-5 flex flex-col justify-between">
         {/* Top: Action buttons */}
-        <div className="flex justify-end gap-2 translate-y-[-20px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+        <div className="flex justify-end gap-2 translate-y-[-20px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]">
           <motion.a
             href={project.link}
             target="_blank"
@@ -330,7 +330,7 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
           </h3>
 
           {/* Tech Pills - show on hover */}
-          <div className="flex flex-wrap gap-1.5 mb-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+          <div className="flex flex-wrap gap-1.5 mb-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-75">
             {project.tech.slice(0, 3).map((t) => (
               <Badge
                 key={t}
@@ -341,13 +341,13 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
             ))}
           </div>
 
-          <p className="text-zinc-400 text-xs line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-150 mb-3">
+          <p className="text-zinc-400 text-xs line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100 mb-3">
             {project.description}
           </p>
 
           {/* Project Stats - show on hover */}
           {project.stats && (
-            <div className="flex justify-between gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 py-2 border-t border-white/5">
+            <div className="flex justify-between gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-150 py-2 border-t border-white/5">
               {project.stats.map((s) => (
                 <div key={s.label} className="flex flex-col">
                   <span className="text-white font-bold text-[10px]">{s.value}</span>

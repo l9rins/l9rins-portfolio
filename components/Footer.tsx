@@ -125,7 +125,7 @@ export function Footer() {
                   aria-label="Your name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/40 shadow-[inset_0_1px_3px_0_rgba(0,0,0,0.4)] transition-all"
+                  className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.04)] shadow-[inset_0_1px_3px_0_rgba(0,0,0,0.4)] transition-all duration-200"
                 />
                 <input
                   type="email"
@@ -133,7 +133,7 @@ export function Footer() {
                   aria-label="Your email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/40 shadow-[inset_0_1px_3px_0_rgba(0,0,0,0.4)] transition-all"
+                  className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.04)] shadow-[inset_0_1px_3px_0_rgba(0,0,0,0.4)] transition-all duration-200"
                 />
               </div>
               <textarea
@@ -142,13 +142,13 @@ export function Footer() {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 rows={4}
-                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500/40 shadow-[inset_0_1px_3px_0_rgba(0,0,0,0.4)] transition-all resize-none min-h-[80px]"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.04)] shadow-[inset_0_1px_3px_0_rgba(0,0,0,0.4)] transition-all duration-200 resize-none min-h-[80px]"
               />
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                className={`w-full flex items-center justify-center gap-2 font-semibold py-2.5 rounded-lg text-xs transition-all ${
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className={`group/submit w-full relative flex items-center justify-center gap-2 font-semibold py-2.5 rounded-lg text-xs transition-all overflow-hidden ${
                   submitted
                     ? "bg-green-500/20 text-green-400 border border-green-500/30"
                     : "bg-white text-black hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
@@ -161,8 +161,9 @@ export function Footer() {
                   </>
                 ) : (
                   <>
-                    <Send className="w-3.5 h-3.5" />
-                    Start Conversation
+                    <span className="absolute inset-0 -translate-x-full group-hover/submit:translate-x-full transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none" />
+                    <Send className="w-3.5 h-3.5 relative z-10" />
+                    <span className="relative z-10">Start Conversation</span>
                   </>
                 )}
               </motion.button>
