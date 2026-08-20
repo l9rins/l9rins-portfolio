@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Github, Twitter, Linkedin, Mail, Send, MapPin, Globe, ArrowUp, Check
+  Github, Twitter, Linkedin, Mail, Send, MapPin, Globe, ArrowUp, Check, Loader2
 } from "lucide-react";
 import { Magnetic } from "@/components/ui/Magnetic";
 
@@ -83,11 +83,11 @@ export function Footer() {
             {/* Social Links */}
             <div className="flex gap-2 mb-5">
               {[
-                { icon: Github, href: "https://github.com/l9rins/", label: "GitHub" },
-                { icon: Twitter, href: "https://x.com/realmarquee_dev", label: "Twitter" },
-                { icon: Linkedin, href: "https://www.linkedin.com/in/l9rinsishere/", label: "LinkedIn" },
-                { icon: Mail, href: "mailto:marklorenzbarangan@gmail.com", label: "Email" },
-              ].map(({ icon: Icon, href, label }, i) => (
+                { icon: Github, href: "https://github.com/l9rins/", label: "GitHub", brandColor: "rgba(255,255,255,0.12)" },
+                { icon: Twitter, href: "https://x.com/realmarquee_dev", label: "Twitter", brandColor: "rgba(29,161,242,0.15)" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/l9rinsishere/", label: "LinkedIn", brandColor: "rgba(10,102,194,0.15)" },
+                { icon: Mail, href: "mailto:marklorenzbarangan@gmail.com", label: "Email", brandColor: "rgba(234,67,53,0.12)" },
+              ].map(({ icon: Icon, href, label, brandColor }, i) => (
                 <Magnetic key={i} strength={0.4}>
                   <motion.a
                     href={href}
@@ -96,7 +96,8 @@ export function Footer() {
                     rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-11 h-11 rounded-lg bg-zinc-900/80 border border-white/[0.06] flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 hover:shadow-[0_0_12px_rgba(255,255,255,0.08)] transition-all"
+                    className="w-11 h-11 rounded-lg bg-zinc-900/80 border border-white/[0.06] flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/20 hover:shadow-[0_0_12px_rgba(255,255,255,0.08)] transition-[border-radius,background-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:rounded-full"
+                    style={{ ['--brand' as string]: brandColor }}
                   >
                     <Icon className="w-4 h-4" />
                   </motion.a>
@@ -146,26 +147,44 @@ export function Footer() {
               />
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                className={`group/submit w-full relative flex items-center justify-center gap-2 font-semibold py-2.5 rounded-lg text-xs transition-all overflow-hidden ${
+                whileHover={submitted ? {} : { scale: 1.02 }}
+                whileTap={submitted ? {} : { scale: 0.97 }}
+                animate={submitted ? { borderRadius: '9999px' } : { borderRadius: '0.5rem' }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className={`group/submit w-full relative flex items-center justify-center gap-2 font-semibold py-2.5 text-xs transition-colors overflow-hidden ${
                   submitted
                     ? "bg-green-500/20 text-green-400 border border-green-500/30"
                     : "bg-white text-black hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
                 }`}
               >
-                {submitted ? (
-                  <>
-                    <Check className="w-3.5 h-3.5" />
-                    Email client opened — send when ready!
-                  </>
-                ) : (
-                  <>
-                    <span className="absolute inset-0 -translate-x-full group-hover/submit:translate-x-full transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none" />
-                    <Send className="w-3.5 h-3.5 relative z-10" />
-                    <span className="relative z-10">Start Conversation</span>
-                  </>
-                )}
+                <AnimatePresence mode="wait">
+                  {submitted ? (
+                    <motion.span
+                      key="success"
+                      className="flex items-center gap-2"
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                      transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      Email client opened — send when ready!
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="idle"
+                      className="flex items-center gap-2"
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <span className="absolute inset-0 -translate-x-full group-hover/submit:translate-x-full transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-black/10 to-transparent pointer-events-none" />
+                      <Send className="w-3.5 h-3.5 relative z-10" />
+                      <span className="relative z-10">Start Conversation</span>
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </motion.button>
             </form>
           </motion.div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue } from "framer-motion";
-import { Cloud, Code, Brain, Link, ArrowUpRight } from "lucide-react";
+import { Cloud, Code, Brain, Link, ArrowUpRight, ExternalLink } from "lucide-react";
 import { useRef, MouseEvent } from "react";
 
 const services = [
@@ -145,8 +145,18 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
               whileTap={{ scale: 0.95 }}
               className="hidden md:flex items-center gap-1 text-[11px] font-medium text-zinc-500 hover:text-white transition-colors group/btn"
             >
-              Learn
-              <ArrowUpRight className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+              <span className="relative w-3 h-3">
+                <span className="absolute inset-0 transition-all duration-200 group-hover/btn:opacity-0 group-hover/btn:scale-50 group-hover/btn:rotate-[-45deg]">
+                  <ArrowUpRight className="w-3 h-3" />
+                </span>
+                <span className="absolute inset-0 opacity-0 scale-50 rotate-45 transition-all duration-200 group-hover/btn:opacity-100 group-hover/btn:scale-100 group-hover/btn:rotate-0">
+                  <ExternalLink className="w-3 h-3" />
+                </span>
+              </span>
+              <span className="transition-all duration-200">
+                <span className="group-hover/btn:hidden">Learn</span>
+                <span className="hidden group-hover/btn:inline">Explore</span>
+              </span>
             </motion.button>
           </div>
         </div>

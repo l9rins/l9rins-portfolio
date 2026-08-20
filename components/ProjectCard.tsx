@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { ArrowUpRight, Github, Eye, TrendingUp, Users, Zap } from "lucide-react";
+import { ArrowUpRight, Github, Eye, TrendingUp, Users, Zap, Folder } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
@@ -305,9 +305,12 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center"
+            className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center group/btn"
           >
-            <Eye className="w-4 h-4" />
+            <span className="relative w-4 h-4">
+              <Folder className="absolute inset-0 w-4 h-4 transition-all duration-200 group-hover/btn:opacity-0 group-hover/btn:scale-50 group-hover/btn:rotate-[-45deg]" />
+              <Eye className="absolute inset-0 w-4 h-4 opacity-0 scale-50 rotate-45 transition-all duration-200 group-hover/btn:opacity-100 group-hover/btn:scale-100 group-hover/btn:rotate-0" />
+            </span>
           </motion.a>
           {project.github && (
             <motion.a
@@ -316,9 +319,12 @@ export function ProjectCard({ project, featured = false }: ProjectProps) {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center"
+              className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:bg-white text-white hover:text-black transition-all duration-300 min-h-[48px] min-w-[48px] flex items-center justify-center group/btn"
             >
-              <Github className="w-4 h-4" />
+              <span className="relative w-4 h-4">
+                <Folder className="absolute inset-0 w-4 h-4 transition-all duration-200 group-hover/btn:opacity-0 group-hover/btn:scale-50 group-hover/btn:rotate-[-45deg]" />
+                <Github className="absolute inset-0 w-4 h-4 opacity-0 scale-50 rotate-45 transition-all duration-200 group-hover/btn:opacity-100 group-hover/btn:scale-100 group-hover/btn:rotate-0" />
+              </span>
             </motion.a>
           )}
         </div>

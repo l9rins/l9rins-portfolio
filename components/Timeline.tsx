@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Briefcase, ChevronRight, Clock } from "lucide-react";
+import { Briefcase, ChevronRight, Clock, Check } from "lucide-react";
 
 interface TimelineItem {
   id: number;
@@ -137,7 +137,26 @@ export function Timeline() {
                     <ul className="space-y-2 mb-4">
                       {item.achievements.map((achievement, i) => (
                         <li key={i} className="flex items-start gap-2 text-[11px] text-zinc-300">
-                          <ChevronRight className="w-3 h-3 text-white shrink-0 mt-0.5" aria-hidden="true" />
+                          <span className="relative w-3 h-3 shrink-0 mt-0.5">
+                            <motion.span
+                              className="absolute inset-0"
+                              initial={{ opacity: 0, scale: 0.5 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.06 + 0.3, duration: 0.2 }}
+                            >
+                              <ChevronRight className="w-3 h-3 text-white" />
+                            </motion.span>
+                            <motion.span
+                              className="absolute inset-0"
+                              initial={{ opacity: 0, scale: 0.5 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.06 + 0.5, duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+                            >
+                              <Check className="w-3 h-3 text-green-400" />
+                            </motion.span>
+                          </span>
                           {achievement}
                         </li>
                       ))}

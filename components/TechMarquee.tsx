@@ -50,19 +50,30 @@ export function TechMarquee() {
         {items.map((tech, index) => (
           <motion.div
             key={`${tech.name}-${index}`}
-            className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.08] transition-all duration-200 cursor-pointer"
+            className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.08] transition-all duration-200 cursor-pointer relative overflow-hidden"
             whileHover={{ scale: 1.05 }}
             onHoverStart={() => setIsHovered(tech.name)}
             onHoverEnd={() => setIsHovered(null)}
           >
+            {/* Brand color glow on hover */}
             <span
-              className="transition-colors duration-200"
-              style={{ color: isHovered === tech.name ? tech.color : undefined }}
+              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 pointer-events-none"
+              style={{
+                background: `radial-gradient(circle at 20% 50%, ${tech.color}18, transparent 70%)`,
+                opacity: isHovered === tech.name ? 1 : 0,
+              }}
+            />
+            <span
+              className="relative z-10 transition-all duration-300"
+              style={{
+                color: isHovered === tech.name ? tech.color : undefined,
+                transform: isHovered === tech.name ? 'rotate(360deg)' : 'rotate(0deg)',
+              }}
             >
               {tech.icon}
             </span>
             <span
-              className={`text-[10px] font-medium whitespace-nowrap transition-colors duration-200 ${
+              className={`relative z-10 text-[10px] font-medium whitespace-nowrap transition-colors duration-200 ${
                 isHovered === tech.name ? "text-white" : "text-zinc-500"
               }`}
             >

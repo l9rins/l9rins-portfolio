@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Quote, Star } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 interface Testimonial {
     quote: string;
@@ -50,7 +50,7 @@ const testimonials: Testimonial[] = [
     },
 ];
 
-function StarRating({ count = 5 }: { count?: number }) {
+function StarRating({ count = 5, isHovered = false }: { count?: number; isHovered?: boolean }) {
     return (
         <div className="flex gap-0.5 mb-2.5">
             {Array.from({ length: count }).map((_, i) => (
@@ -65,7 +65,19 @@ function StarRating({ count = 5 }: { count?: number }) {
                         ease: [0.34, 1.56, 0.64, 1],
                     }}
                 >
-                    <Star className="w-3 h-3 fill-yellow-500/80 text-yellow-500/80" />
+                    <motion.div
+                        animate={isHovered
+                            ? { scale: [1, 1.2, 1], rotate: [0, 10, 0] }
+                            : {}
+                        }
+                        transition={{
+                            delay: i * 0.08,
+                            duration: 0.3,
+                            ease: [0.34, 1.56, 0.64, 1],
+                        }}
+                    >
+                        <Star className="w-3 h-3 fill-yellow-500/80 text-yellow-500/80" />
+                    </motion.div>
                 </motion.div>
             ))}
         </div>
@@ -74,6 +86,7 @@ function StarRating({ count = 5 }: { count?: number }) {
 
 function TestimonialCard({ testimonial, index }: { testimonial: Testimonial; index: number }) {
     const cardRef = useRef<HTMLDivElement>(null);
+    const [isHovered, setIsHovered] = useState(false);
 
     const { scrollYProgress } = useScroll({
         target: cardRef,
@@ -85,6 +98,8 @@ function TestimonialCard({ testimonial, index }: { testimonial: Testimonial; ind
     return (
         <div
             ref={cardRef}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             className="flex-shrink-0 w-[280px] md:w-[260px] mx-2 rounded-xl border border-white/[0.05] bg-white/[0.015] hover:border-white/[0.10] hover:bg-white/[0.03] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] relative overflow-hidden p-4 md:p-3.5"
         >
             {/* Quote mark parallax */}
@@ -98,7 +113,7 @@ function TestimonialCard({ testimonial, index }: { testimonial: Testimonial; ind
 
             {/* Content */}
             <div className="relative z-10">
-                <StarRating count={testimonial.rating} />
+                <StarRating count={testimonial.rating} isHovered={isHovered} />
                 <p className="text-xs md:text-[11px] text-zinc-400 leading-relaxed mb-3">&ldquo;{testimonial.quote}&rdquo;</p>
                 <div className="flex items-center gap-2">
                     <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-white/[0.06] flex items-center justify-center">

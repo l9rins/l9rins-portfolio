@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import Image from 'next/image';
 import { RotateCcw } from 'lucide-react';
@@ -66,6 +66,8 @@ function SwipeCard({
   depth: number;
 }) {
   const x = useMotionValue(0);
+  const [isIdle, setIsIdle] = useState(false);
+  const idleTimer = useRef<NodeJS.Timeout | null>(null);
 
   const rotateRaw = useTransform(x, [-150, 150], [-18, 18]);
   const opacity = useTransform(x, [-100, 0, 100], [0, 1, 0]);
@@ -77,13 +79,36 @@ function SwipeCard({
     return `${rotateRaw.get() + offset}deg`;
   });
 
+  // Breathing animation for idle background cards
+  useEffect(() => {
+    if (isFront || depth === 0) {
+      setIsIdle(false);
+      return;
+    }
+
+    const resetIdle = () => {
+      if (idleTimer.current) clearTimeout(idleTimer.current);
+      setIsIdle(false);
+      idleTimer.current = setTimeout(() => setIsIdle(true), 3000);
+    };
+
+    resetIdle();
+    return () => {
+      if (idleTimer.current) clearTimeout(idleTimer.current);
+    };
+  }, [isFront, depth, cards.length]);
+
   const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
+    setIsIdle(false);
+    if (idleTimer.current) clearTimeout(idleTimer.current);
     if (Math.abs(info.offset.x) > 100) {
       setCards((pv) => pv.filter((v) => v.id !== card.id));
     } else {
       animate(x, 0, { type: 'spring', stiffness: 400, damping: 40 });
     }
   };
+
+  const breatheScale = isFront ? 1 : Math.max(0.85, 0.94 - depth * 0.04);
 
   return (
     <motion.div
@@ -99,7 +124,18 @@ function SwipeCard({
           : undefined,
       }}
       animate={{
-        scale: isFront ? 1 : Math.max(0.85, 0.94 - depth * 0.04),
+        scale: isIdle && !isFront
+          ? [breatheScale, breatheScale + 0.02, breatheScale]
+          : breatheScale,
+      }}
+      transition={isIdle && !isFront ? {
+        scale: {
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }
+      } : {
+        scale: { duration: 0.3 }
       }}
       drag={isFront ? 'x' : false}
       dragConstraints={{ left: -150, right: 150, top: 0, bottom: 0 }}
